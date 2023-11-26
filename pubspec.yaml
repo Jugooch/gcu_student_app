@@ -15,6 +15,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  provider: 6.1.1
 
 dev_dependencies:
   flutter_test:
@@ -29,5 +30,6 @@ flutter:
   generate: true
 
   assets:
+    - assets/data/
     # Add assets from the images directory to the application.
     - assets/images/

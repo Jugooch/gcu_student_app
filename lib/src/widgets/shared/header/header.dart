@@ -12,10 +12,8 @@ class Header extends StatelessWidget {
 
       child: Center(
         child: Image.asset(
-          'assets/images/GCU_Logo.png', // Replace with the path to your logo asset
+          'assets/images/GCU_Logo.png',
           height: 37, // Set the desired logo height
-          // You can adjust the logo width if needed:
-          // width: 100,
         ),
       ),
     );

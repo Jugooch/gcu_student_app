@@ -1,21 +1,34 @@
 import 'custom_barcode.dart';
 import 'package:gcu_student_app/src/widgets/home/widgets/loading_bar.dart';
 import 'package:flutter/material.dart';
+import '../../../app_styling.dart';
+import '../../../current_theme.dart';
+import 'package:provider/provider.dart';
 
 class StudentId extends StatelessWidget {
   const StudentId({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var themeNotifier = Provider.of<ThemeNotifier>(context);
     return Container(
       margin: const EdgeInsets.all(32.0),
       height: 508.0,
       decoration: BoxDecoration(
+        color: AppStyles.getStudentIdBackground(themeNotifier.currentMode),
         border: Border.all(
-          color: const Color(0xFF391A69),
+          color: AppStyles.getPrimaryDark(themeNotifier.currentMode),
           width: 8.0,
         ),
         borderRadius: BorderRadius.circular(16.0),
+        boxShadow: [
+          BoxShadow(
+            color: AppStyles.darkBlack.withOpacity(.12),
+            spreadRadius: 0,
+            blurRadius: 4,
+            offset: Offset(0, 4), // changes position of shadow
+          ),
+        ],
       ),
       child: Column(
         children: [
@@ -39,10 +52,10 @@ class StudentId extends StatelessWidget {
                 const SizedBox(height: 8.0),
 
                 //2. Student Name Text Widget
-                const Text(
+                Text(
                   'Justice Gooch',
                   style: TextStyle(
-                    color: Color(0xFF090410),
+                    color: AppStyles.getTextPrimary(themeNotifier.currentMode),
                     fontSize: 24.0,
                   ),
                   textAlign: TextAlign.center,
@@ -95,7 +108,7 @@ class StudentId extends StatelessWidget {
                 // Handle button press
               },
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(const Color(0xFF391A69)),
+                backgroundColor: MaterialStateProperty.all(AppStyles.getPrimaryDark(themeNotifier.currentMode)),
                 minimumSize: MaterialStateProperty.all(
                   const Size(0.5, 0), // 50% width
                 ),

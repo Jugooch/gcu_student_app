@@ -1,3 +1,4 @@
+import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/widgets/shared/header/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,10 +17,11 @@ import 'widgets/profile/profile_view.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key, 
-    required this.settingsController,
+    required this.settingsController, required this.themeNotifier,
   });
 
   final SettingsController settingsController;
+  final ThemeNotifier themeNotifier;
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -32,8 +34,6 @@ class _MyAppState extends State<MyApp> {
     const EventsView(),
     const CommunityView(),
     const ProfileView(),
-    // Add your Community and Profile screens here
-    // For example: CommunityScreen() and ProfileScreen()
   ];
 
   void _onItemTapped(int index) {
@@ -82,9 +82,9 @@ class _MyAppState extends State<MyApp> {
           },
           home: Scaffold(
             appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(64),
-          child: Header(),
-          ),
+              preferredSize: Size.fromHeight(64),
+              child: Header(),
+            ),
             body: screens[_selectedIndex],
             bottomNavigationBar: NavBar(onItemTapped: _onItemTapped),
           ),

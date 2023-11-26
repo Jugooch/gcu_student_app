@@ -11,6 +11,7 @@ class CustomBarcode extends StatelessWidget {
       height: 80.0,
       margin: const EdgeInsets.symmetric(horizontal: 16.0), // 16px margin on all sides
       decoration: BoxDecoration(
+        color: Colors.white,
         border: Border.all(
           color: const Color(0xFF090410), // Stroke color
           width: 6.0, // Stroke width
