@@ -72,8 +72,10 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
 ///////////////////////
   @override
   Widget build(BuildContext context) {
+    //global styling file
     var themeNotifier = Provider.of<ThemeNotifier>(context);
 
+    //Main Container
     return Container(
       width: double.infinity,
       margin: EdgeInsets.all(32.0),
@@ -131,7 +133,11 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
               ],
             ),
           ),
+
+          //spacing
           const SizedBox(height: 8.0),
+
+          //Build out the quick access items
           Padding(
             padding: EdgeInsets.only(bottom: 16.0),
             child: Align(
@@ -157,6 +163,8 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
 ///////////////////////
   //Helper Methods
 ///////////////////////
+
+//decides width of container based on screen size
   double calculateSpacing(double screenWidth) {
     int desiredItemsPerRow = 4;
     double totalSpacing = 16.0 * (desiredItemsPerRow - 1);
@@ -164,6 +172,7 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
     return (itemWidth)/4; // Adjust the spacing based on your preference
   }
 
+  //Puts together each individual quick access item
   Widget _buildQuickAccessItem(
       {required QuickAccessItem item, required themeNotifier}) {
     if (item.icon != Icons.add) {
@@ -218,7 +227,9 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
       );
     } else {
       return InkWell(
-          onTap: () {},
+          onTap: () {
+            _showAddMenu(context, themeNotifier);
+          },
           child: SizedBox(
             width: 64,
             height: 64,
@@ -246,9 +257,10 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
     }
   }
 
+  //shows the delete button on the items
   void _showXIconDialog(QuickAccessItem item) {
     setState(() {
-      // Start the animation only if it's not already running
+      // Start the animation
       _shakeController.reset();
       _shakeController.forward();
       quickAccessItems.forEach((element) {
@@ -263,6 +275,7 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
     });
   }
 
+  //saves the current state of the menu
   void _saveQuickAccessItems(QuickAccessItem item) {
     setState(() {
       quickAccessItems.forEach((element) {
@@ -277,6 +290,7 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
     });
   }
 
+  //builds the x that shakes when being edited
   Widget _buildShakingXIcon(item) {
     return Positioned(
       top: 0,
@@ -310,16 +324,126 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
     );
   }
 
+//removes an item from the quick access list
   void _removeQuickAccessItem(item) {
     setState(() {
+      var totalItems = quickAccessItems.map((e) => e.isIncluded == true);
       var selectedItem =
           quickAccessItems.firstWhere((element) => element == item);
       if (selectedItem != null) {
         selectedItem.isIncluded = false;
       }
+      if(totalItems.length != quickAccessItems.length){
+        var addButton = quickAccessItems.firstWhere((element) => element.label == '');
+        addButton.isIncluded = true;
+      }
     });
   }
 
+  // Add an item to the quick access list
+  void _addQuickAccessItem(QuickAccessItem item) {
+    setState(() {
+      var totalItems = quickAccessItems.where((e) => e.isIncluded == true);
+      var selectedItem =
+          quickAccessItems.firstWhere((element) => element == item);
+      if (selectedItem != null) {
+        selectedItem.isIncluded = true;
+      }
+      if(totalItems.length == quickAccessItems.length){
+        var addButton = quickAccessItems.firstWhere((element) => element.label == '');
+        addButton.isIncluded = false;
+      }
+    });
+  }
+
+// Show the Add Menu
+void _showAddMenu(BuildContext context, ThemeNotifier themeNotifier) {
+  showModalBottomSheet<void>(
+    context: context,
+    backgroundColor: AppStyles.getCardBackground(themeNotifier.currentMode),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+    ),
+    builder: (BuildContext context) {
+      // Filter out items where isIncluded is false
+      List<QuickAccessItem> includedItems = quickAccessItems.where((item) => !item.isIncluded).toList();
+
+      return Column(
+        children: [
+          Container(
+            width: double.infinity,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+            ),
+            child: Container(
+              height: 55.0, // Set the desired height
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppStyles.getInactiveIcon(themeNotifier.currentMode),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+                  ),
+                ),
+                child: Icon(Icons.keyboard_arrow_down),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              height: includedItems.length * 65.0, // Adjust the height based on your item size (assuming 65.0 is the item height)
+              child: ListView.builder(
+                itemCount: includedItems.length * 2 - 1, // Double the itemCount to include separators
+                itemBuilder: (BuildContext context, int index) {
+                  if (index.isEven) {
+                    QuickAccessItem item = includedItems[index ~/ 2];
+                    return _buildQuickAccessMenuItem(item, context, themeNotifier);
+                  } else {
+                    return Container(height: 1.0, color: AppStyles.getTextPrimary(themeNotifier.currentMode));
+                  }
+                },
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+
+
+
+// Builds each menu item in the add menu
+Widget _buildQuickAccessMenuItem(
+  QuickAccessItem item, BuildContext context, ThemeNotifier themeNotifier,
+) {
+  return ListTile(
+    onTap: () {
+      Navigator.pop(context); // Close the menu
+      _addQuickAccessItem(item);
+    },
+    title: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Icon(item.icon, color: AppStyles.getTextPrimary(themeNotifier.currentMode)),
+            SizedBox(width: 12.0),
+            Text(item.label, style: TextStyle(color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
+          ],
+        ),
+        Icon(Icons.keyboard_arrow_right, color: AppStyles.getTextTertiary(themeNotifier.currentMode)),
+      ],
+    ),
+  );
+}
+
+  //builds the add button for the menu
   Widget _buildAddButton({required IconData icon, required themeNotifier}) {
     return SizedBox(
       width: 64,

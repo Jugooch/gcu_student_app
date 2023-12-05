@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/services.dart';
 
@@ -14,7 +13,7 @@ class HomeService {
   //this getter gathers all the quick access items from the json data
   Future<List<QuickAccessItem>> getAllQuickAccessItems() async {
     try {
- // Use rootBundle to access files included with the app
+      // Use rootBundle to access files included with the app
       String jsonString = await rootBundle.loadString('assets/data/quick-access-data.json');
       List<dynamic> jsonList = jsonDecode(jsonString);
 

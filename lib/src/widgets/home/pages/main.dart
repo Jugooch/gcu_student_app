@@ -6,6 +6,8 @@ import '../../../app_styling.dart';
 import '../../../current_theme.dart';
 import 'package:provider/provider.dart';
 
+//Default Home Page
+
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
 

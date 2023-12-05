@@ -25,8 +25,7 @@ void main() async {
   AppModeManager().initialize();
 
   // Run the app and pass in the SettingsController. The app listens to the
-  // SettingsController for changes, then passes it further down to the
-  // SettingsView.
+  // themeNotifier for changes
   runApp(
     ChangeNotifierProvider(
       create: (_) => themeNotifier,

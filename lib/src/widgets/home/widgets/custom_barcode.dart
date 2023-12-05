@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 class CustomBarcode extends StatelessWidget {
   const CustomBarcode({super.key});
 
+///////////////////////
+  //Main Widget
+///////////////////////
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,15 +19,15 @@ class CustomBarcode extends StatelessWidget {
           color: const Color(0xFF090410), // Stroke color
           width: 6.0, // Stroke width
         ),
-        borderRadius: BorderRadius.circular(6.0), // A
+        borderRadius: BorderRadius.circular(6.0),
       ),
       child: Center(
         child: BarcodeWidget(
           margin: const EdgeInsets.all(8.0),
           barcode: Barcode.code128(),
-          data: 'https://pub.dev/packages/barcode_widget', // Your barcode data
+          data: 'https://pub.dev/packages/barcode_widget', // Barcode data
           drawText: false,
-          width: double.infinity, // Width of the barcode lines
+          width: double.infinity,
           height: 64.0, // Height of the barcode
           color: const Color(0xFF090410), // Barcode color
         ),
