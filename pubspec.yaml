@@ -32,4 +32,5 @@ flutter:
   assets:
     - assets/data/
     # Add assets from the images directory to the application.
-    - assets/images/
+    - assets/images/Me.png
+    - assets/images/GCU_Logo.png

@@ -26,6 +26,7 @@ class AppModeManager {
   }
 }
 
+//Keeps track of the current theme of the app
 class ThemeNotifier extends ChangeNotifier {
   AppMode _currentMode = AppMode.light;
 

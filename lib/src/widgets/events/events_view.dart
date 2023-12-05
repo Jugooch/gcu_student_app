@@ -1,6 +1,5 @@
-import 'package:gcu_student_app/src/widgets/events/widgets/main_article.dart';
-import '../shared/side_scrolling/side_scrolling.dart';
 import 'package:flutter/material.dart';
+import './pages/pages.dart';
 
 class EventsView extends StatefulWidget {
   const EventsView({super.key});
@@ -10,17 +9,31 @@ class EventsView extends StatefulWidget {
 }
 
 class _EventsState extends State<EventsView> {
+
+
+///////////////////////
+  //Properties
+/////////////////////// 
+
+// Default page identifier
+  String currentPage = 'main';
+  final Map<String, Widget> pages = {
+    'main': const MainPage(),
+    'calendar': const CalendarPage(),
+    'event': const EventPage(),
+    'article': const NewsArticlePage(),
+  };
+
+
+///////////////////////
+  //Main Widget
+///////////////////////
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       appBar: null,
-      body:
-        SideScrollingWidget(
-          children: [
-            MainArticleButton(),
-            MainArticleButton(),
-            MainArticleButton(),
-          ],
+      body: Center(
+        child: pages[currentPage] ?? Container(), // Display the current page
       ),
     );
   }

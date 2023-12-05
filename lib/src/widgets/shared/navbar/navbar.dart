@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class NavBar extends StatefulWidget {
+  // Callback function to notify the parent about the selected item
   final Function(int) onItemTapped;
 
+  // Constructor for the NavBar widget
   const NavBar({super.key, required this.onItemTapped});
 
   @override
@@ -21,9 +23,9 @@ class NavBarState extends State<NavBar> {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       currentIndex: _selectedIndex,
-      backgroundColor: const Color.fromRGBO(82, 36, 152, 1),
-      selectedItemColor: const Color.fromRGBO(255, 255, 255, 1),
-      unselectedItemColor: const Color.fromRGBO(213, 189, 239, 1),
+      backgroundColor: const Color.fromRGBO(82, 36, 152, 1), // Background color
+      selectedItemColor: const Color.fromRGBO(255, 255, 255, 1), // Selected item color
+      unselectedItemColor: const Color.fromRGBO(213, 189, 239, 1), // Unselected item color
       onTap: (index) {
         widget.onItemTapped(index); // Notify the parent about the selection
         setState(() {
@@ -32,8 +34,8 @@ class NavBarState extends State<NavBar> {
       },
       items: List.generate(4, (index) {
         return BottomNavigationBarItem(
-          icon: Icon(_icons[index]),
-          label: _labels[index],
+          icon: Icon(_icons[index]), // Icon for the tab
+          label: _labels[index], // Label for the tab
         );
       }),
     );

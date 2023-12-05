@@ -37,6 +37,10 @@ class AppStyles {
   static const Color darkInactiveIcon = Color(0xFF8D8D8D);
   static const Color darkBackground = Color(0xFF23292E);
 
+///////////////////////
+  //Getter Methods based on current Mode
+///////////////////////
+
   static Color getBackground(AppMode mode){
     return mode == AppMode.light ? lightBackground : darkBackground;
   }

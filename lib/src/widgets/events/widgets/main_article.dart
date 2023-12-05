@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:gcu_student_app/src/services/services.dart';
 
-class MainArticleButton extends StatelessWidget {
-  const MainArticleButton({super.key});
+class MainArticleButton extends StatefulWidget {
+  
+  //pass in an article object
+  final Article article;
 
+  const MainArticleButton({Key? key, required this.article}) : super(key: key);
+
+  @override
+  _MainArticleButton createState() => _MainArticleButton();
+}
+
+class _MainArticleButton  extends State<MainArticleButton> {
+
+
+///////////////////////
+  //Main Widget
+///////////////////////
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -41,18 +56,17 @@ class MainArticleButton extends StatelessWidget {
                   ),
                 ),
               ),
-              const Positioned(
+              Positioned(
                 left: 15,
                 top: 181,
                 child: SizedBox(
                   width: 283,
                   height: 51,
                   child: Text(
-                    'Men’s basketball - WAC Champions',
+                    widget.article.title,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
-                      fontFamily: 'Inter',
                       fontWeight: FontWeight.w500,
                       height: 0,
                     ),

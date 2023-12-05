@@ -3,10 +3,40 @@ import 'package:gcu_student_app/src/widgets/home/widgets/loading_bar.dart';
 import 'package:flutter/material.dart';
 import '../../../app_styling.dart';
 import '../../../current_theme.dart';
+import '../../../services/services.dart';
 import 'package:provider/provider.dart';
 
-class StudentId extends StatelessWidget {
-  const StudentId({super.key});
+class StudentId extends StatefulWidget {
+  const StudentId({Key? key}) : super(key: key);
+
+  @override
+  _StudentIdState createState() => _StudentIdState();
+}
+
+class _StudentIdState extends State<StudentId> {
+  late Future<User> userFuture;
+  User user = User(name: "", id: "", counselorId: "", image: "assets/images/Me.png");
+
+  ///////////////////////
+  // Initialize Data
+  ///////////////////////
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  ///////////////////////
+  // Fetch User
+  ///////////////////////
+  Future<void> fetchData() async {
+    userFuture = UserService().getUser("20692303");
+    user = await userFuture;
+
+    setState(() {
+      // Trigger a rebuild with the fetched data
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +66,13 @@ class StudentId extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-
-                //1. Student ID Image
+                // 1. Student ID Image
                 AspectRatio(
                   aspectRatio: 262 / 200,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(6.0),
                     child: Image.asset(
-                      'assets/images/Me.png',
+                      user.image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -51,9 +80,9 @@ class StudentId extends StatelessWidget {
 
                 const SizedBox(height: 8.0),
 
-                //2. Student Name Text Widget
+                // 2. Student Name Text Widget
                 Text(
-                  'Justice Gooch',
+                  user.name,
                   style: TextStyle(
                     color: AppStyles.getTextPrimary(themeNotifier.currentMode),
                     fontSize: 24.0,
@@ -61,7 +90,7 @@ class StudentId extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
 
-                //3. Student Designation
+                // 3. Student Designation
                 Center(
                   child: Container(
                     decoration: BoxDecoration(
@@ -85,7 +114,6 @@ class StudentId extends StatelessWidget {
             ),
           ),
 
-
           const SizedBox(
             height: 80.0, // Specify the desired height for the CustomBarcode
             child: CustomBarcode(),
@@ -93,12 +121,12 @@ class StudentId extends StatelessWidget {
 
           const SizedBox(height: 8.0),
 
-          //5. Custom Loading Bar Widget
+          // 5. Custom Loading Bar Widget
           const LoadingBar(),
 
           const SizedBox(height: 16.0), // Vertical spacing
 
-          // 6. Button
+          // 6. Add to Wallet Button
           Container(
             width: 160.0,
             height: 40.0,
@@ -126,7 +154,6 @@ class StudentId extends StatelessWidget {
               ),
             ),
           ),
-
         ],
       ),
     );
