@@ -18,7 +18,7 @@ Widget build(BuildContext context) {
       child: Row(
         children: [
           //left margin
-          SizedBox(width: 32),
+          const SizedBox(width: 32),
           //The ... (spread) operator is used to insert the contents of the children list into a new list
           ...children
               .map((child) => Container(
@@ -27,7 +27,7 @@ Widget build(BuildContext context) {
                   ))
               .toList(),
           //right margin
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
         ],
       ),
   );

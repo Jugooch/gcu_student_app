@@ -5,6 +5,9 @@ import '../../../app_styling.dart';
 import '../../../current_theme.dart';
 import '../../../services/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
+
+const platform = MethodChannel('wallet_channel');
 
 class StudentId extends StatefulWidget {
   const StudentId({Key? key}) : super(key: key);
@@ -15,7 +18,7 @@ class StudentId extends StatefulWidget {
 
 class _StudentIdState extends State<StudentId> {
   late Future<User> userFuture;
-  User user = User(name: "", id: "", counselorId: "", image: "assets/images/Me.png");
+  User user = User(name: "", id: "", image: "assets/images/Me.png");
 
   ///////////////////////
   // Initialize Data
@@ -56,7 +59,7 @@ class _StudentIdState extends State<StudentId> {
             color: AppStyles.darkBlack.withOpacity(.12),
             spreadRadius: 0,
             blurRadius: 4,
-            offset: Offset(0, 4), // changes position of shadow
+            offset: const Offset(0, 4), // changes position of shadow
           ),
         ],
       ),
@@ -134,6 +137,7 @@ class _StudentIdState extends State<StudentId> {
             child: ElevatedButton(
               onPressed: () {
                 // Handle button press
+                _addToWallet();
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(AppStyles.getPrimaryDark(themeNotifier.currentMode)),
@@ -157,5 +161,10 @@ class _StudentIdState extends State<StudentId> {
         ],
       ),
     );
+  }
+
+//helper method to add student id to phone wallet
+  _addToWallet(){
+
   }
 }

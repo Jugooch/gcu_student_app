@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
@@ -16,28 +15,31 @@ class UserService {
     ];
   }
 
-  Future<List<Counselor>> getUserCounselors (User user) async{
-    try {
-      // Use rootBundle to access files included with the app
-      String jsonString = await rootBundle.loadString('assets/data/counselor-data.json');
-      List<dynamic> jsonList = jsonDecode(jsonString);
+Future<List<Counselor>> getUserCounselors(User user) async {
+  try {
+    // Use rootBundle to access files included with the app
+    String jsonString = await rootBundle.loadString('assets/data/counselor-data.json');
+    List<dynamic> jsonList = jsonDecode(jsonString);
 
-      List<Counselor> counselors = jsonList.map((jsonItem) {
-        return Counselor(
-          name: jsonItem['icon'],
-          id: jsonItem['id'],
-          type: jsonItem['type'],
-          email: jsonItem['email'],
-          phone: jsonItem['phone'],
-        );
-      }).toList();
+    List<Counselor> counselors = jsonList
+        .where((jsonItem) => jsonItem['studentId'] == user.id)
+        .map((jsonItem) {
+      return Counselor(
+        name: jsonItem['name'],
+        id: jsonItem['id'],
+        type: jsonItem['type'],
+        email: jsonItem['email'],
+        phone: jsonItem['phone'],
+      );
+    }).toList();
 
-      return counselors;
-    } catch (e) {
-      print("Error reading JSON file: $e");
-      return [];
-    }
+    return counselors;
+  } catch (e) {
+    print("Error reading JSON file: $e");
+    return [];
   }
+}
+
 
     Future<User> getUser (String id) async{
     try {
@@ -49,7 +51,6 @@ class UserService {
         return User(
           name: jsonItem['name'],
           id: jsonItem['id'],
-          counselorId: jsonItem['counselorId'],
           image: jsonItem['image']
         );
       }).toList();
@@ -59,7 +60,7 @@ class UserService {
       return selectedUser;
     } catch (e) {
       print("Error reading JSON file: $e");
-      return User(name: 'N/A', id: 'N/A', counselorId: 'N/A', image: 'assets/images/Me.png');
+      return User(name: 'N/A', id: 'N/A', image: 'assets/images/Me.png');
     }
   }
 }
@@ -76,10 +77,61 @@ class CardAccount {
 class User {
   final String name;
   final String id;
-  final String counselorId;
   final String image;
 
-  User({required this.name, required this.id, required this.counselorId, required this.image});
+  User({required this.name, required this.id, required this.image});
+
+  
+  Map<String, dynamic> toJson() => {
+    "id": id, 
+    "classId": "ISSUER_ID.GENERIC_CLASS_ID", 
+    "logo": {
+      "sourceUri": {
+        "uri": "assets/images/GCU_Logo.png"
+      },
+      "contentDescription": {
+        "defaultValue": {
+          "language": "en-US",
+          "value": "GCU Logo"
+        }
+     }
+    },
+    "cardTitle": {
+      "defaultValue": {
+        "language": "en-US",
+        "value": "GCU Student ID",
+      },
+    },
+    "subheader": {
+    "defaultValue": {
+      "language": "en-US",
+      "value": "Student",
+    },
+  },
+  "header": {
+    "defaultValue": {
+      "language": "en-US",
+      "value": name,
+    },
+  },
+  "barcode": {
+    "type": "CODE_128",
+    "value": "https://www.gcu.edu",
+    "alternateText": "",
+  },
+  "hexBackgroundColor": "#ffffff",
+  "heroImage": {
+    "sourceUri": {
+      "uri": image,
+    },
+    "contentDescription": {
+      "defaultValue": {
+        "language": "en-US",
+        "value": "Student Image",
+      },
+    },
+  },
+  };
 }
 
 //Counselor Object

@@ -4,7 +4,7 @@
     {"icon": "map_outlined", "label": "Map", "isIncluded": true},
     {"icon": "add_to_home_screen_outlined", "label": "Portal"},
     {"icon": "church_outlined", "label": "Chapel"},
-    {"icon": "account_balance_wallet", "label": "Budget"},
+    {"icon": "account_balance_wallet_outlined", "label": "Budget"},
     {"icon": "qr_code_2_outlined", "label": "Event QR"},
     {"icon": "settings_outlined", "label": "Settings"},
     {"icon": "add", "label": "", "isIncluded": true}

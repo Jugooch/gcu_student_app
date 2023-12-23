@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
@@ -21,6 +20,7 @@ class EventsService {
           title: jsonItem['title'],
           author: jsonItem['author'],
           content: jsonItem['content'],
+          image: jsonItem['image'],
         );
       }).toList();
 
@@ -43,6 +43,7 @@ class EventsService {
           title: jsonItem['title'],
           date: DateTime.parse(jsonItem['date']),
           description: jsonItem['description'],
+          image: jsonItem['image'],
         );
       }).toList();
 
@@ -59,8 +60,9 @@ class Article{
   final String title;
   final String author;
   final String content;
+  final String image;
 
-  Article({required this.title, required this.author, required this.content});
+  Article({required this.title, required this.author, required this.content, required this.image});
 }
 
 //Event Object
@@ -68,6 +70,7 @@ class Event{
   final String title;
   final DateTime date;
   final String description;
+  final String image;
 
-  Event({required this.title, required this.date, required this.description});
+  Event({required this.title, required this.date, required this.description, required this.image});
 }
