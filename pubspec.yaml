@@ -34,3 +34,14 @@ flutter:
     # Add assets from the images directory to the application.
     - assets/images/Me.png
     - assets/images/GCU_Logo.png
+    - assets/images/Basketball.jpg
+    - assets/images/LipSync.jpg
+    - assets/images/Baseball.jpg
+    - assets/images/LipSync.jpg
+    - assets/images/CanyonCooldown.jpg
+    - assets/images/GotTalent.jpg
+    - assets/images/Lopes.jpg
+    - assets/images/SilentDisco.jpg
+    - assets/images/Intramural.png
+    - assets/images/Clubs.png
+    - assets/images/Market.png

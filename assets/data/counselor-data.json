@@ -1,3 +1,4 @@
 [
-    {"id": "1", "name": "Susan Bridges", "type": "Student Services", "email": "susanb@gcu.edu", "phone": "2343432323"}
+    {"id": "1", "studentId": "20692303", "name": "Susan Bridges", "type": "Student Services", "email": "susanb@gcu.edu", "phone": "2343432323"},
+    {"id": "2", "studentId": "20692303", "name": "John Tibell", "type": "Recruiting", "email": "johnt@gcu.edu", "phone": "4231234123"}
 ]

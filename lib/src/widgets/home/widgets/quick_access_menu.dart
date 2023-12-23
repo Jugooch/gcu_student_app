@@ -33,7 +33,7 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
 
     fetchData();
     _shakeController = AnimationController(
-      duration: Duration(milliseconds: 50),
+      duration: const Duration(milliseconds: 50),
       vsync: this,
     );
 
@@ -78,23 +78,23 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
     //Main Container
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.all(32.0),
+      margin: const EdgeInsets.only(right: 32.0, left: 32.0, bottom: 32.0),
       decoration: BoxDecoration(
         color: AppStyles.getCardBackground(themeNotifier.currentMode),
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
         boxShadow: [
           BoxShadow(
             color: AppStyles.darkBlack.withOpacity(.12),
             spreadRadius: 0,
             blurRadius: 4,
-            offset: Offset(0, 4), // changes position of shadow
+            offset: const Offset(0, 4), // changes position of shadow
           ),
         ],
       ),
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -120,7 +120,7 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
                     }
                   },
                   icon: isEditButtonPressed
-                      ? Icon(
+                      ? const Icon(
                           Icons.check,
                           color: Colors.green,
                         )
@@ -139,7 +139,7 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
 
           //Build out the quick access items
           Padding(
-            padding: EdgeInsets.only(bottom: 16.0),
+            padding: const EdgeInsets.only(bottom: 16.0),
             child: Align(
               alignment: Alignment.topLeft,
               child: Wrap(
@@ -263,14 +263,14 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
       // Start the animation
       _shakeController.reset();
       _shakeController.forward();
-      quickAccessItems.forEach((element) {
+      for (var element in quickAccessItems) {
         if(element.icon == Icons.add){
           element.isIncluded = false;
         }
         else{
           element.isSelected = true;
         }
-      });
+      }
       isEditButtonPressed = true;
     });
   }
@@ -278,14 +278,14 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
   //saves the current state of the menu
   void _saveQuickAccessItems(QuickAccessItem item) {
     setState(() {
-      quickAccessItems.forEach((element) {
+      for (var element in quickAccessItems) {
         if(element.icon == Icons.add){
           element.isIncluded = true;
         }
         else{
           element.isSelected = false;
         }
-      });
+      }
       isEditButtonPressed = false;
     });
   }
@@ -306,14 +306,14 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
         child: Container(
           width: 24,
           height: 24,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
             color: Colors.red,
           ),
           child: Center(
             child: IconButton(
               padding: EdgeInsets.zero,
-              icon: Icon(Icons.close, color: Colors.white, size: 24.0),
+              icon: const Icon(Icons.close, color: Colors.white, size: 24.0),
               onPressed: () {
                 _removeQuickAccessItem(item);
               },
@@ -330,10 +330,8 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
       var totalItems = quickAccessItems.map((e) => e.isIncluded == true);
       var selectedItem =
           quickAccessItems.firstWhere((element) => element == item);
-      if (selectedItem != null) {
-        selectedItem.isIncluded = false;
-      }
-      if(totalItems.length != quickAccessItems.length){
+      selectedItem.isIncluded = false;
+          if(totalItems.length != quickAccessItems.length){
         var addButton = quickAccessItems.firstWhere((element) => element.label == '');
         addButton.isIncluded = true;
       }
@@ -346,10 +344,8 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
       var totalItems = quickAccessItems.where((e) => e.isIncluded == true);
       var selectedItem =
           quickAccessItems.firstWhere((element) => element == item);
-      if (selectedItem != null) {
-        selectedItem.isIncluded = true;
-      }
-      if(totalItems.length == quickAccessItems.length){
+      selectedItem.isIncluded = true;
+          if(totalItems.length == quickAccessItems.length){
         var addButton = quickAccessItems.firstWhere((element) => element.label == '');
         addButton.isIncluded = false;
       }
@@ -361,7 +357,7 @@ void _showAddMenu(BuildContext context, ThemeNotifier themeNotifier) {
   showModalBottomSheet<void>(
     context: context,
     backgroundColor: AppStyles.getCardBackground(themeNotifier.currentMode),
-    shape: RoundedRectangleBorder(
+    shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
     ),
     builder: (BuildContext context) {
@@ -373,10 +369,10 @@ void _showAddMenu(BuildContext context, ThemeNotifier themeNotifier) {
           Container(
             width: double.infinity,
             alignment: Alignment.center,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
             ),
-            child: Container(
+            child: SizedBox(
               height: 55.0, // Set the desired height
               width: double.infinity,
               child: ElevatedButton(
@@ -385,16 +381,16 @@ void _showAddMenu(BuildContext context, ThemeNotifier themeNotifier) {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppStyles.getInactiveIcon(themeNotifier.currentMode),
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
                   ),
                 ),
-                child: Icon(Icons.keyboard_arrow_down),
+                child: const Icon(Icons.keyboard_arrow_down),
               ),
             ),
           ),
           Expanded(
-            child: Container(
+            child: SizedBox(
               height: includedItems.length * 65.0, // Adjust the height based on your item size (assuming 65.0 is the item height)
               child: ListView.builder(
                 itemCount: includedItems.length * 2 - 1, // Double the itemCount to include separators
@@ -433,7 +429,7 @@ Widget _buildQuickAccessMenuItem(
         Row(
           children: [
             Icon(item.icon, color: AppStyles.getTextPrimary(themeNotifier.currentMode)),
-            SizedBox(width: 12.0),
+            const SizedBox(width: 12.0),
             Text(item.label, style: TextStyle(color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
           ],
         ),
