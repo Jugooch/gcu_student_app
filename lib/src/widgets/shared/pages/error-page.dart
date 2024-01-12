@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ClubsPage extends StatelessWidget {
-  const ClubsPage({Key? key}) : super(key: key);
+class ErrorPage extends StatelessWidget {
+  const ErrorPage({Key? key}) : super(key: key);
 
 @override
   Widget build(BuildContext context) {
@@ -12,6 +12,7 @@ class ClubsPage extends StatelessWidget {
             color: const Color(0xFF522498),
           )),
       body: Center(
+        child: Text("There was an error, please try again...")
       ),
     );
   }

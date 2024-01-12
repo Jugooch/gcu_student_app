@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:gcu_student_app/src/app_styling.dart';
+import 'package:gcu_student_app/src/current_theme.dart';
 
-class BackButton extends StatelessWidget {
-  const BackButton({Key? key}) : super(key: key);
+class CustomBackButton extends StatelessWidget {
+  const CustomBackButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: IconButton(
-        icon: const Icon(Icons.arrow_back, size: 24), // Back arrow icon
-        onPressed: () {
-          Navigator.pop(context); // Pop the current screen off the navigation stack
-        },
-      ),
+    return IconButton(
+      padding: EdgeInsets.all(8),
+      icon: Icon(
+        Icons.arrow_circle_left,
+        size: 40,
+        color: AppStyles.getInactiveIcon(ThemeNotifier().currentMode),
+      ), // Back arrow icon
+      onPressed: () {
+        Navigator.pop(
+            context); // Pop the current screen off the navigation stack
+      },
     );
   }
 }

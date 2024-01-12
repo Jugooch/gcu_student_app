@@ -3,15 +3,16 @@ import './pages/main.dart';
 import '../shared/pages/pages.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   _HomeViewState createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
+  String currentPage = 'main';
 
-  String currentPage = 'main'; // Default page identifier
   final Map<String, Widget> pages = {
     'main': const MainPage(),
     'hours': const HoursPage(),
@@ -19,7 +20,7 @@ class _HomeViewState extends State<HomeView> {
     'chapel': const ChapelPage(),
     'map': const MapPage(),
     'schedule': const SchedulePage(),
-    'settings': const SettingsPage()
+    'settings': const SettingsPage(),
   };
 
   @override
@@ -27,7 +28,7 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: null,
       body: Center(
-        child: pages[currentPage] ?? Container(), // Display the current page
+        child: pages[currentPage] ?? Container(),
       ),
     );
   }

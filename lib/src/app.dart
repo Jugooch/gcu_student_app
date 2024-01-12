@@ -1,95 +1,151 @@
-import 'package:gcu_student_app/src/current_theme.dart';
-import 'package:gcu_student_app/src/widgets/shared/header/header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:gcu_student_app/src/app_styling.dart';
+import 'package:gcu_student_app/src/current_theme.dart';
+import 'package:provider/provider.dart';
 
-import 'sample_feature/sample_item_details_view.dart';
-import 'sample_feature/sample_item_list_view.dart';
 import 'settings/settings_controller.dart';
-import 'settings/settings_view.dart';
-
-import 'widgets/shared/navbar/navbar.dart';
 import 'widgets/home/home_view.dart';
 import 'widgets/events/events_view.dart';
 import 'widgets/community/community_view.dart';
 import 'widgets/profile/profile_view.dart';
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key, 
-    required this.settingsController, required this.themeNotifier,
+  const MyApp({
+    Key? key,
+    required this.settingsController,
+    required this.themeNotifier,
+    required this.navigationNotifier,
   });
 
   final SettingsController settingsController;
   final ThemeNotifier themeNotifier;
+  final NavigationNotifier navigationNotifier;
 
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  int _selectedIndex = 0;
-  final List<Widget> screens = [
-    const HomeView(),
-    const EventsView(),
-    const CommunityView(),
-    const ProfileView(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
       listenable: widget.settingsController,
       builder: (BuildContext context, Widget? child) {
-        return MaterialApp(
-          restorationScopeId: 'app',
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const [
-            Locale('en', ''),
-          ],
-          onGenerateTitle: (BuildContext context) =>
-              AppLocalizations.of(context)!.appTitle,
-          theme: ThemeData(),
-          darkTheme: ThemeData.dark(),
-          themeMode: widget.settingsController.themeMode,
-          onGenerateRoute: (RouteSettings routeSettings) {
-            return MaterialPageRoute<void>(
-              settings: routeSettings,
-              builder: (BuildContext context) {
-                switch (routeSettings.name) {
-                  case SettingsView.routeName:
-                    return SettingsView(controller: widget.settingsController);
-                  case SampleItemDetailsView.routeName:
-                    return const SampleItemDetailsView();
-                  case SampleItemListView.routeName:
-                    return const SampleItemListView();
-                  default:
-                    return const SampleItemListView();
-                }
+        return ChangeNotifierProvider.value(
+          value: widget.navigationNotifier,
+          child: MaterialApp(
+            restorationScopeId: 'app',
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en', ''),
+            ],
+            onGenerateTitle: (BuildContext context) =>
+                AppLocalizations.of(context)!.appTitle,
+            theme: ThemeData(),
+            darkTheme: ThemeData.dark(),
+            themeMode: widget.settingsController.themeMode,
+            home: CupertinoTabScaffold(
+              tabBuilder: (BuildContext context, int index) {
+                return CupertinoTabView(
+                  builder: (BuildContext context) {
+                    // Set the context when building the widget
+                    widget.navigationNotifier.setSubpagesContext(context);
+
+                    return CupertinoPageScaffold(
+                      navigationBar: CupertinoNavigationBar(
+                        border: null,
+                        backgroundColor:
+                            AppStyles.getPrimary(widget.themeNotifier.currentMode),
+                        middle: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(width: 24),
+                            Image.asset(
+                              'assets/images/GCU_Logo.png',
+                              height: 32.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                      child: _getPage(index),
+                    );
+                  },
+                );
               },
-            );
-          },
-          home: Scaffold(
-            appBar: const PreferredSize(
-              preferredSize: Size.fromHeight(64),
-              child: Header(),
+              tabBar: CupertinoTabBar(
+                currentIndex: widget.navigationNotifier.selectedIndex,
+                backgroundColor:
+                    AppStyles.getPrimary(widget.themeNotifier.currentMode),
+                activeColor: AppStyles.getNavIconActive(
+                    widget.themeNotifier.currentMode),
+                inactiveColor: AppStyles.getNavIconInactive(
+                    widget.themeNotifier.currentMode),
+                onTap: (index) {
+                  widget.navigationNotifier.updateIndex(index);
+                },
+                items: List.generate(4, (index) {
+                  return BottomNavigationBarItem(
+                    icon: Icon(_icons[index]),
+                    label: _labels[index],
+                  );
+                }),
+              ),
             ),
-            body: screens[_selectedIndex],
-            bottomNavigationBar: NavBar(onItemTapped: _onItemTapped),
           ),
         );
       },
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+    // Listen to changes in selectedIndex and popUntilRoot if needed
+    widget.navigationNotifier.addListener(_onNavigationChange);
+  }
+
+  @override
+  void dispose() {
+    // Remove the listener to avoid memory leaks
+    widget.navigationNotifier.removeListener(_onNavigationChange);
+    super.dispose();
+  }
+
+void _onNavigationChange() {
+  widget.navigationNotifier.popUntilRoot();
+}
+
+
+  Widget _getPage(int index) {
+    switch (index) {
+      case 0:
+        return HomeView();
+      case 1:
+        return EventsView();
+      case 2:
+        return CommunityView();
+      case 3:
+        return ProfileView();
+      default:
+        return Container();
+    }
+  }
+
+  // Define your icons and labels for the tabs.
+  final List<IconData> _icons = [
+    Icons.home,
+    Icons.event,
+    Icons.group,
+    Icons.person
+  ];
+  final List<String> _labels = ['Home', 'Events', 'Community', 'Profile'];
 }

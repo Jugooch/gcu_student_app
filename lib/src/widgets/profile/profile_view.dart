@@ -5,7 +5,8 @@ import 'widgets/counselor_dropdown.dart';
 import 'widgets/links_menu.dart';
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({super.key});
+
+  const ProfileView({Key? key}) : super(key: key);
 
   @override
   _ProfileViewState createState() => _ProfileViewState();

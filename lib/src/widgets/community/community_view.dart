@@ -4,6 +4,10 @@ import './pages/pages.dart';
 class CommunityView extends StatefulWidget {
   const CommunityView({super.key});
 
+    static CommunityView newInstance() {
+      return const CommunityView();
+    }
+
   @override
   _CommunityState createState() => _CommunityState();
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class NavBar extends StatefulWidget {
   // Callback function to notify the parent about the selected item
@@ -20,12 +21,11 @@ class NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
+    return CupertinoTabBar(
       currentIndex: _selectedIndex,
       backgroundColor: const Color.fromRGBO(82, 36, 152, 1), // Background color
-      selectedItemColor: const Color.fromRGBO(255, 255, 255, 1), // Selected item color
-      unselectedItemColor: const Color.fromRGBO(213, 189, 239, 1), // Unselected item color
+      activeColor: const Color.fromRGBO(255, 255, 255, 1), // Selected item color
+      inactiveColor: const Color.fromRGBO(213, 189, 239, 1), // Unselected item color
       onTap: (index) {
         widget.onItemTapped(index); // Notify the parent about the selection
         setState(() {

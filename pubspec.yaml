@@ -11,6 +11,8 @@ environment:
 
 dependencies:
   barcode_widget: ^2.0.4
+  cached_network_image: ^3.1.0
+  url_launcher: ^6.1.11
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -45,3 +47,6 @@ flutter:
     - assets/images/Intramural.png
     - assets/images/Clubs.png
     - assets/images/Market.png
+    - assets/images/GreenCard.png
+    - assets/images/BlueCard.png
+    - assets/images/PurpleCard.png

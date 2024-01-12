@@ -11,6 +11,8 @@ void main() async {
 
   
   final ThemeNotifier themeNotifier = ThemeNotifier();
+  final NavigationNotifier navigationNotifier = NavigationNotifier();
+  
   WidgetsFlutterBinding.ensureInitialized();
   
   // Set up the SettingsController, which will glue user settings to multiple
@@ -27,9 +29,12 @@ void main() async {
   // Run the app and pass in the SettingsController. The app listens to the
   // themeNotifier for changes
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => themeNotifier,
-      child: MyApp(settingsController: settingsController, themeNotifier: themeNotifier),
+        MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => themeNotifier),
+        ChangeNotifierProvider(create: (context) => NavigationNotifier()),
+      ],
+      child: MyApp(settingsController: settingsController, themeNotifier: themeNotifier, navigationNotifier: navigationNotifier),
     ),
   );
 }

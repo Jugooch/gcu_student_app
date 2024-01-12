@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
+import 'package:gcu_student_app/src/widgets/shared/pages/pages.dart';
 import '../../../app_styling.dart';
 import 'package:provider/provider.dart';
 import '../../../services/home-services/home-service.dart';
@@ -60,8 +61,24 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
   //Fetch Quick Access Items
 ///////////////////////
   Future<void> fetchData() async {
-    quickAccessItemsFuture = HomeService().getAllQuickAccessItems();
-    quickAccessItems = await quickAccessItemsFuture;
+    
+    // Capture the context before entering the asynchronous part
+    final currentContext = context;
+
+    try {
+      quickAccessItemsFuture = HomeService().getAllQuickAccessItems();
+      quickAccessItems = await quickAccessItemsFuture;
+      setState(() {
+        // Trigger a rebuild with the fetched data
+      });
+    } catch (error) {
+      print('Error fetching data: $error');
+      // Navigate to ErrorPage in case of an error
+      Navigator.pushReplacement(
+        currentContext,
+        MaterialPageRoute(builder: (context) => const ErrorPage()),
+      );
+    }
     setState(() {
       // Trigger a rebuild with the fetched data
     });

@@ -5,8 +5,12 @@ class CalendarPage extends StatelessWidget {
 
 @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: null,
+    return Scaffold(
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(11),
+          child: Container(
+            color: const Color(0xFF522498),
+          )),
       body: Center(
       ),
     );

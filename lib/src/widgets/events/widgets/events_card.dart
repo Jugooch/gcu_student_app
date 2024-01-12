@@ -70,7 +70,7 @@ class _EventCard extends State<EventCard> {
                   child: Image.asset(
                     widget.event.image,
                     fit: BoxFit.cover,
-                  ),
+                    ),
                 ),
               ),
             ),

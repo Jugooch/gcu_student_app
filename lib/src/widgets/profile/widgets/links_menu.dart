@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gcu_student_app/src/widgets/shared/pages/pages.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../app_styling.dart';
 import '../../../current_theme.dart';
 import '../../../services/services.dart';
@@ -49,52 +51,114 @@ class _LinksMenuState extends State<LinksMenu> {
         children: quickAccessItems
             .where((element) => element.icon != Icons.add)
             .map((e) {
-              final index = quickAccessItems.indexOf(e);
-              final isLastItem = index == quickAccessItems.length - 2;
+          final index = quickAccessItems.indexOf(e);
+          final isLastItem = index == quickAccessItems.length - 2;
 
-              return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              e.icon,
-                              color: AppStyles.getTextPrimary(themeNotifier.currentMode),
-                              size: 24,
+          return Column(
+            children: [
+              InkWell(
+                onTap: () {
+                  _linkToPage(e);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            e.icon,
+                            color: AppStyles.getTextPrimary(
+                                themeNotifier.currentMode),
+                            size: 24,
+                          ),
+                          const SizedBox(
+                              width: 32.0), // Spacing between icon and label
+                          Text(
+                            e.label,
+                            style: TextStyle(
+                              color: AppStyles.getTextPrimary(
+                                  themeNotifier.currentMode),
                             ),
-                            const SizedBox(width: 32.0), // Spacing between icon and label
-                            Text(
-                              e.label,
-                              style: TextStyle(
-                                color: AppStyles.getTextPrimary(themeNotifier.currentMode),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: AppStyles.getInactiveIcon(themeNotifier.currentMode),
-                          size: 16,
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppStyles.getInactiveIcon(
+                            themeNotifier.currentMode),
+                        size: 16,
+                      ),
+                    ],
                   ),
-                  if (!isLastItem)
-                    Container(
-                      height: 1,
-                      color: AppStyles.getInactiveIcon(themeNotifier.currentMode),
-                      width: double.infinity,
-                    ),
-                ],
-              );
-            })
-            .toList(),
+                ),
+              ),
+              if (!isLastItem)
+                Container(
+                  height: 1,
+                  color: AppStyles.getInactiveIcon(themeNotifier.currentMode),
+                  width: double.infinity,
+                ),
+            ],
+          );
+        }).toList(),
       ),
     );
   }
+
+  _linkToPage(QuickAccessItem quickAccessItem) {
+    switch (quickAccessItem.label) {
+      case "Schedule":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SchedulePage()),
+        );
+        break;
+      case "Hours":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HoursPage()),
+        );
+        break;
+      case "Map":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MapPage()),
+        );
+        break;
+      case "Portal":
+        _launchURL();
+        break;
+      case "Chapel":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ChapelPage()),
+        );
+        break;
+      case "Budget":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CardAccountsPage()),
+        );
+        break;
+      case "Event QR":
+        break;
+      case "Settings":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SettingsPage()),
+        );
+        break;
+      default:
+    }
+  }
+
+  _launchURL() async {
+   final Uri url = Uri.parse('https://gcuportal.gcu.edu/');
+   if (!await launchUrl(url)) {
+        throw Exception('Could not launch $url');
+    }
+}
 }
