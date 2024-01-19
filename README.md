@@ -12,6 +12,18 @@ This Application is a redesign of Grand Canyon University's (GCU's) mobile stude
 
 <a>https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FZX7LZ0xPp1psXrG9TccpJt%2FCapstone-Design%3Ftype%3Ddesign%26node-id%3D611%253A7212%26mode%3Ddesign%26t%3DkjKhB2gBMqDKY7rw-1</a>
 
+## SITEMAP
+
+![image](https://github.com/Jugooch/gcu_student_app/assets/97257742/04be9dac-7bf1-412b-9641-77da1245849c)
+
+## LOGICAL SOLUTION DIAGRAM
+
+![image](https://github.com/Jugooch/gcu_student_app/assets/97257742/11305c49-720b-4340-b786-f2b7f1d8861d)
+
+## PHYSICAL SOLUTION DIAGRAM
+
+![image](https://github.com/Jugooch/gcu_student_app/assets/97257742/edfcf0c5-3f21-425b-a88b-18eaa5493f3c)
+
 ## Localization
 
 This project generates localized messages based on arb files found in
