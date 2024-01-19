@@ -5,6 +5,7 @@ import 'package:gcu_student_app/src/widgets/shared/pages/card-accounts-page/widg
 import 'package:intl/intl.dart';
 
 class CardAccountCard extends StatelessWidget {
+  final User user;
   final CardAccount account;
   final String name;
   final double dailyBudget;
@@ -15,6 +16,7 @@ class CardAccountCard extends StatelessWidget {
   final oCcy = new NumberFormat("#,##0.00", "en_US");
 
   CardAccountCard({
+    required this.user,
     required this.account,
     required this.name,
     required this.dailyBudget,
@@ -30,7 +32,7 @@ class CardAccountCard extends StatelessWidget {
         //logic to open subpage for the card clicked
           Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DetailedPage(account: account,)),
+          MaterialPageRoute(builder: (context) => DetailedPage(user: user, account: account,)),
         );
       },
       child: Padding(

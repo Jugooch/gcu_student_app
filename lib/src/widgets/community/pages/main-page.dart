@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:gcu_student_app/src/app_styling.dart';
+import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/widgets/community/pages/clubs-main.dart';
 import 'package:gcu_student_app/src/widgets/community/pages/intramurals-main.dart';
 import 'package:gcu_student_app/src/widgets/community/pages/market-main.dart';
+import 'package:provider/provider.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    //global styling file
+    var themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       appBar: null,
+        backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
       body: Container(
           margin:
               const EdgeInsets.all(32.0), // Add margin around the entire column

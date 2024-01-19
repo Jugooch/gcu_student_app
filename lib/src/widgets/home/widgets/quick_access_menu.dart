@@ -101,10 +101,10 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
         borderRadius: const BorderRadius.all(Radius.circular(8.0)),
         boxShadow: [
           BoxShadow(
-            color: AppStyles.darkBlack.withOpacity(.12),
+            color: AppStyles.getBlack(themeNotifier.currentMode).withOpacity(0.3),
             spreadRadius: 0,
             blurRadius: 4,
-            offset: const Offset(0, 4), // changes position of shadow
+            offset: const Offset(0, 4),
           ),
         ],
       ),

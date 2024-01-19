@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gcu_student_app/src/app_styling.dart';
+import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/widgets/profile/widgets/profile_info.dart';
+import 'package:provider/provider.dart';
 
 import 'widgets/counselor_dropdown.dart';
 import 'widgets/links_menu.dart';
@@ -15,8 +18,10 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    var themeNotifier = Provider.of<ThemeNotifier>(context);
+    return Scaffold(
         appBar: null,
+        backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(32.0),

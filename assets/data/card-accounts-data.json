@@ -1,6 +1,6 @@
 [
-    {"id": "1", "studentId": "20692303", "name": "Dining Dollars", "totalAmount": 1400.00, "totalSpent": 240.44, "background": "assets/images/GreenCard.png", "fallRollover": 0.00, "springRollover": 0.00, "summerRollover": 0.00},
-    {"id": "2", "studentId": "20692303", "name": "Lopes Cash", "totalAmount": 0.00, "totalSpent": 0.00, "background": "assets/images/PurpleCard.png", "fallRollover": 0.00, "springRollover": 0.00, "summerRollover": 0.00},
-    {"id": "3", "studentId": "20692303", "name": "Student Life", "totalAmount": 100.00, "totalSpent": 0.00, "background": "assets/images/BlueCard.png", "fallRollover": 0.00, "springRollover": 0.00, "summerRollover": 0.00},
-    {"id": "4", "studentId": "20692303", "name": "Other", "totalAmount": 0.00, "totalSpent": 0.00, "background": "assets/images/BlueCard.png", "fallRollover": 0.00, "springRollover": 0.00, "summerRollover": 0.00}
+    {"id": "1", "studentId": "20692303", "name": "Dining Dollars", "totalAmount": 1400.00, "totalSpent": 240.44, "background": "assets/images/GreenCard.png", "fallRollover": 0.00, "springRollover": 0.00, "summerRollover": 0.00, "spentToday": 0.00},
+    {"id": "2", "studentId": "20692303", "name": "Lopes Cash", "totalAmount": 0.00, "totalSpent": 0.00, "background": "assets/images/PurpleCard.png", "fallRollover": 0.00, "springRollover": 0.00, "summerRollover": 0.00, "spentToday": 0.00},
+    {"id": "3", "studentId": "20692303", "name": "Student Life", "totalAmount": 100.00, "totalSpent": 0.00, "background": "assets/images/BlueCard.png", "fallRollover": 0.00, "springRollover": 0.00, "summerRollover": 0.00, "spentToday": 0.00},
+    {"id": "4", "studentId": "20692303", "name": "Other", "totalAmount": 0.00, "totalSpent": 0.00, "background": "assets/images/BlueCard.png", "fallRollover": 0.00, "springRollover": 0.00, "summerRollover": 0.00, "spentToday": 0.00}
 ]

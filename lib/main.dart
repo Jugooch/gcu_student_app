@@ -8,13 +8,11 @@ import './src/current_theme.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-
-  
   final ThemeNotifier themeNotifier = ThemeNotifier();
   final NavigationNotifier navigationNotifier = NavigationNotifier();
-  
+
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Set up the SettingsController, which will glue user settings to multiple
   // Flutter Widgets.
   final settingsController = SettingsController(SettingsService());
@@ -23,18 +21,19 @@ void main() async {
   // This prevents a sudden theme change when the app is first displayed.
   await settingsController.loadSettings();
 
-  // Initialize AppModeManager
-  AppModeManager().initialize();
-
   // Run the app and pass in the SettingsController. The app listens to the
   // themeNotifier for changes
   runApp(
-        MultiProvider(
+    MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => themeNotifier),
         ChangeNotifierProvider(create: (context) => NavigationNotifier()),
       ],
-      child: MyApp(settingsController: settingsController, themeNotifier: themeNotifier, navigationNotifier: navigationNotifier),
+      child: MyApp(
+        settingsController: settingsController,
+        themeNotifier: themeNotifier,
+        navigationNotifier: navigationNotifier,
+      ),
     ),
   );
 }

@@ -1,0 +1,13 @@
+[
+    {"id": "1", "studentId": "20692303", "vendor": "Chick-fil-A", "amount": 12.96, "date": "2024-04-07 18:00:00Z", "image": "assets/images/Chic-Logo.png"},
+    {"id": "1", "studentId": "20692303", "vendor": "Chick-fil-A", "amount": 12.96, "date": "2024-01-17 12:00:00Z", "image": "assets/images/Chic-Logo.png"},
+    {"id": "1", "studentId": "20692303", "vendor": "Chick-fil-A", "amount": 11.78, "date": "2024-01-17 18:00:00Z", "image": "assets/images/Chic-Logo.png"},
+    {"id": "1", "studentId": "20692303", "vendor": "Chick-fil-A", "amount": 9.45, "date": "2024-01-17 08:00:00Z", "image": "assets/images/Chic-Logo.png"},
+    {"id": "1", "studentId": "20692303", "vendor": "Subway", "amount": 10.99, "date": "2024-04-09 11:00:00Z", "image": "assets/images/Subway-Logo.png"},
+    {"id": "1", "studentId": "20692303", "vendor": "Panera Bread", "amount": 16.45, "date": "2024-04-08 19:00:00Z", "image": "assets/images/Panera-Logo.png"},
+    {"id": "1", "studentId": "20692303", "vendor": "Chick-fil-A", "amount": 12.96, "date": "2024-04-08 16:00:00Z", "image": "assets/images/Chic-Logo.png"},
+    {"id": "1", "studentId": "20692303", "vendor": "Q-Doba", "amount": 13.21, "date": "2024-04-08 08:00:00Z", "image": "assets/images/Qdoba-Logo.png"},
+    {"id": "1", "studentId": "20692303", "vendor": "Panera Bread", "amount": 16.45, "date": "2024-04-08 19:00:00Z", "image": "assets/images/Panera-Logo.png"},
+    {"id": "1", "studentId": "20692303", "vendor": "Subway", "amount": 10.99, "date": "2024-04-09 11:00:00Z", "image": "assets/images/Subway-Logo.png"},
+    {"id": "4", "studentId": "20692303", "vendor": "Pita Jungle", "amount": 7.65, "date": "2024-04-05 19:00:00Z", "image": "assets/images/Pita-Logo.png"}
+]

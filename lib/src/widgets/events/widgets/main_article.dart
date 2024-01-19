@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
+import 'package:provider/provider.dart';
 
 import '../../../app_styling.dart';
 
@@ -20,6 +21,8 @@ class _MainArticleButton extends State<MainArticleButton> {
   ///////////////////////
   @override
   Widget build(BuildContext context) {
+    //global styling file
+    var themeNotifier = Provider.of<ThemeNotifier>(context);
     return Column(
       children: [
         SizedBox(
@@ -33,7 +36,7 @@ class _MainArticleButton extends State<MainArticleButton> {
                   borderRadius: BorderRadius.circular(8),
                   child: ColorFiltered(
                     colorFilter: ColorFilter.mode(
-                      AppStyles.getPrimaryDark(ThemeNotifier().currentMode).withOpacity(0.3), // Adjust opacity as needed
+                      AppStyles.getPrimaryDark(themeNotifier.currentMode).withOpacity(0.3), // Adjust opacity as needed
                       BlendMode.srcATop,
                     ),
                     child: Image.asset(
@@ -51,7 +54,7 @@ class _MainArticleButton extends State<MainArticleButton> {
                   width: 320,
                   height: 67,
                   decoration: ShapeDecoration(
-                    color: AppStyles.getPrimary(ThemeNotifier().currentMode),
+                    color: AppStyles.getPrimary(themeNotifier.currentMode),
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(8),

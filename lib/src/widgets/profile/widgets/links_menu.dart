@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/widgets/shared/pages/pages.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -86,10 +87,10 @@ class _LinksMenuState extends State<LinksMenu> {
                         ],
                       ),
                       Icon(
-                        Icons.arrow_forward_ios,
+                        Icons.chevron_right_rounded,
                         color: AppStyles.getInactiveIcon(
                             themeNotifier.currentMode),
-                        size: 16,
+                        size: 24,
                       ),
                     ],
                   ),
@@ -144,6 +145,7 @@ class _LinksMenuState extends State<LinksMenu> {
         );
         break;
       case "Event QR":
+      _launchDeviceCamera();
         break;
       case "Settings":
         Navigator.push(
@@ -161,4 +163,9 @@ class _LinksMenuState extends State<LinksMenu> {
         throw Exception('Could not launch $url');
     }
 }
+
+  _launchDeviceCamera() async {
+    await availableCameras().then((value) => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => CameraPage(cameras: value))));
+  }
 }

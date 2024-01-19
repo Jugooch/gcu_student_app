@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
+import 'package:provider/provider.dart';
 import '../../../navbar_pages.dart';
-import '../../header/header.dart';
-import '../../navbar/navbar.dart';
 import './widgets/card_account.dart';
 import '../../../../services/services.dart';
 
@@ -46,28 +45,16 @@ class _CardAccountsPageState extends State<CardAccountsPage> {
     });
   }
 
-  int _selectedIndex = 0;
-  final List<Widget> screens = [
-    const HomeView(),
-    const EventsView(),
-    const CommunityView(),
-    const ProfileView(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    var themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(11),
           child: Container(
             color: const Color(0xFF522498),
           )),
+      backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
       body: SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -77,6 +64,7 @@ class _CardAccountsPageState extends State<CardAccountsPage> {
           child: Column(
             children: userCardAccounts.map((cardAccount) {
               return CardAccountCard(
+                  user: user,
                   account: cardAccount,
                   name: cardAccount.name,
                   dailyBudget: cardAccount.dailyBudget,

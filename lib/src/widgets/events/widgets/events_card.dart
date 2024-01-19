@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
+import 'package:provider/provider.dart';
 
 class EventCard extends StatefulWidget {
   //pass in an event object
@@ -19,17 +20,19 @@ class _EventCard extends State<EventCard> {
   ///////////////////////
   @override
   Widget build(BuildContext context) {
+    //global styling file
+    var themeNotifier = Provider.of<ThemeNotifier>(context);
     return Container(
       width: 320,
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: AppStyles.getCardBackground(ThemeNotifier().currentMode),
+        color: AppStyles.getCardBackground(themeNotifier.currentMode),
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: AppStyles.getBlack(themeNotifier.currentMode).withOpacity(0.3),
             spreadRadius: 0,
-            blurRadius: 8,
+            blurRadius: 4,
             offset: const Offset(0, 4),
           ),
         ],
@@ -41,14 +44,14 @@ class _EventCard extends State<EventCard> {
           children: [
             Text(
               widget.event.title,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppStyles.getTextPrimary(themeNotifier.currentMode)),
             ),
             const SizedBox(height: 8.0),
             Text(
               formatDate(),
               style: TextStyle(
                 fontSize: 16,
-                color: AppStyles.getTextTertiary(ThemeNotifier().currentMode),
+                color: AppStyles.getTextTertiary(themeNotifier.currentMode),
                 fontWeight: FontWeight.w300,
               ),
             ),
@@ -63,7 +66,7 @@ class _EventCard extends State<EventCard> {
                 borderRadius: BorderRadius.circular(8),
                 child: ColorFiltered(
                   colorFilter: ColorFilter.mode(
-                    AppStyles.getPrimaryDark(ThemeNotifier().currentMode)
+                    AppStyles.getPrimaryDark(themeNotifier.currentMode)
                         .withOpacity(0.3), // Adjust opacity as needed
                     BlendMode.srcATop,
                   ),

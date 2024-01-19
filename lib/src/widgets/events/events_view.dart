@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gcu_student_app/src/app_styling.dart';
+import 'package:gcu_student_app/src/current_theme.dart';
+import 'package:provider/provider.dart';
 import './pages/pages.dart';
 
 class EventsView extends StatefulWidget {
@@ -36,8 +39,10 @@ class _EventsState extends State<EventsView> {
 ///////////////////////
   @override
   Widget build(BuildContext context) {
+    var themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       appBar: null,
+      backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
       body: Center(
         child: pages[currentPage] ?? Container(), // Display the current page
       ),

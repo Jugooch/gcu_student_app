@@ -18,6 +18,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   provider: 6.1.1
+  camera: ^0.10.5+9
+  location: ^5.0.0
+  app_settings: ^5.1.1
 
 dev_dependencies:
   flutter_test:
@@ -34,19 +37,4 @@ flutter:
   assets:
     - assets/data/
     # Add assets from the images directory to the application.
-    - assets/images/Me.png
-    - assets/images/GCU_Logo.png
-    - assets/images/Basketball.jpg
-    - assets/images/LipSync.jpg
-    - assets/images/Baseball.jpg
-    - assets/images/LipSync.jpg
-    - assets/images/CanyonCooldown.jpg
-    - assets/images/GotTalent.jpg
-    - assets/images/Lopes.jpg
-    - assets/images/SilentDisco.jpg
-    - assets/images/Intramural.png
-    - assets/images/Clubs.png
-    - assets/images/Market.png
-    - assets/images/GreenCard.png
-    - assets/images/BlueCard.png
-    - assets/images/PurpleCard.png
+    - assets/images/

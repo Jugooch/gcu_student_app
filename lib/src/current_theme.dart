@@ -4,30 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'app_styling.dart';
 
-class AppModeManager {
-  static final AppModeManager _instance = AppModeManager._internal();
-
-  factory AppModeManager() {
-    return _instance;
-  }
-
-  AppMode _currentMode = AppMode.light;
-
-  AppMode get currentMode => _currentMode;
-
-  set currentMode(AppMode mode) {
-    _currentMode = mode;
-    // Add any logic you need to handle mode changes globally
-  }
-
-  AppModeManager._internal();
-
-  
-  void initialize() {
-    // Add any initialization logic here if needed
-  }
-}
-
 //Keeps track of the current theme of the app
 class ThemeNotifier extends ChangeNotifier {
   AppMode _currentMode = AppMode.light;

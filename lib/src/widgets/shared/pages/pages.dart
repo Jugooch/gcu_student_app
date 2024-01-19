@@ -8,3 +8,4 @@ export 'map-page/map-page.dart';
 export 'settings-page/settings-page.dart';
 export 'schedule-page/schedule-page.dart';
 export './error-page.dart';
+export './camera-page/camera-page.dart';

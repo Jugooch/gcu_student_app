@@ -1,0 +1,38 @@
+[
+    {
+      "id": "UNV-115",
+      "name": "University Chapel Service",
+      "days": ["Tuesday", "Thursday"],
+      "startTime": "11:15:00",
+      "endTime": "12:15:00"
+    },
+    {
+      "id": "UNV-116",
+      "name": "University Chapel Service 2",
+      "days": ["Monday"],
+      "startTime": "11:15:00",
+      "endTime": "12:15:00"
+    },
+    {
+      "id": "UNV-118",
+      "name": "University Chapel Service 4",
+      "days": ["Tuesday", "Thursday"],
+      "startTime": "13:00:00",
+      "endTime": "14:45:00"
+    },
+    {
+        "id": "UNV-119",
+        "name": "University Chapel Service",
+        "days": ["Wednesday", "Friday"],
+        "startTime": "11:15:00",
+        "endTime": "12:15:00"
+    },
+    {
+        "id": "UNV-117",
+        "name": "University Chapel Service",
+        "days": ["Wednesday", "Friday"],
+        "startTime": "17:00:00",
+        "endTime": "18:45:00"
+    }
+  ]
+  

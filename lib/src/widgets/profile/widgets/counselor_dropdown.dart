@@ -87,6 +87,7 @@ class _CounselorDropdownState extends State<CounselorDropdown> {
               Icon(
                     isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
                     size: 24,
+                    color: AppStyles.getTextPrimary(themeNotifier.currentMode)
               ),
             ],
           ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 enum AppMode { light, dark }
 
 class AppStyles {
+  static const Color disabled = Color(0xFFDFDFDF);
+
   //lightMode Colors
   static const Color lightCardBackground = Color(0xFFF2F2F2);
   static const Color lightPrimary = Color(0xFF522498);
@@ -26,7 +28,7 @@ class AppStyles {
   static const Color darkPrimaryLight = Color(0xFF9747FF);
   static const Color darkPrimaryDark = Color(0xFF391A69);
   static const Color darkBlack = Color(0xFF090410);
-  static const Color darkImageOverlay = Color(0x66391A69); // 20% Opacity
+  static const Color darkImageOverlay = Color(0x66391A69);
   static const Color darkTextPrimary = Color(0xFFFFFFFF);
   static const Color darkTextSecondary = Color(0xFF090410);
   static const Color darkTextTertiary = Color(0xFFFFFFFF);

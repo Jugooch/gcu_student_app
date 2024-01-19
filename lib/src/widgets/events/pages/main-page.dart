@@ -57,6 +57,7 @@ class _MainPageState extends State<MainPage> {
 
     return Scaffold(
         appBar: null,
+        backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
         body: SingleChildScrollView(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +71,7 @@ class _MainPageState extends State<MainPage> {
                   'Lopes News',
                   style: TextStyle(
                     color:
-                        AppStyles.getTextPrimary(ThemeNotifier().currentMode),
+                        AppStyles.getTextPrimary(themeNotifier.currentMode),
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -93,7 +94,7 @@ class _MainPageState extends State<MainPage> {
                         'Major Events',
                         style: TextStyle(
                           color: AppStyles.getTextPrimary(
-                              ThemeNotifier().currentMode),
+                              themeNotifier.currentMode),
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
@@ -102,7 +103,7 @@ class _MainPageState extends State<MainPage> {
                         'View Full Calendar',
                         style: TextStyle(
                           color: AppStyles.getPrimaryLight(
-                              ThemeNotifier().currentMode),
+                              themeNotifier.currentMode),
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
                         ),
@@ -111,7 +112,6 @@ class _MainPageState extends State<MainPage> {
                   )),
             ),
             //loop through articles and display them in cards in the side scrolling widget
-
             SideScrollingWidget(
               children: events.map((a) => EventCard(event: a)).toList(),
             ),
@@ -124,7 +124,7 @@ class _MainPageState extends State<MainPage> {
                   'Looking For Student Tickets?',
                   style: TextStyle(
                     color:
-                        AppStyles.getTextPrimary(ThemeNotifier().currentMode),
+                        AppStyles.getTextPrimary(themeNotifier.currentMode),
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
