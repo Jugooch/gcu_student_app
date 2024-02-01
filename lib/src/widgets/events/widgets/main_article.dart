@@ -36,7 +36,7 @@ class _MainArticleButton extends State<MainArticleButton> {
                   borderRadius: BorderRadius.circular(8),
                   child: ColorFiltered(
                     colorFilter: ColorFilter.mode(
-                      AppStyles.getPrimaryDark(themeNotifier.currentMode).withOpacity(0.3), // Adjust opacity as needed
+                      AppStyles.getPrimaryDark(themeNotifier.currentMode).withOpacity(0.3),
                       BlendMode.srcATop,
                     ),
                     child: Image.asset(
@@ -54,7 +54,7 @@ class _MainArticleButton extends State<MainArticleButton> {
                   width: 320,
                   height: 67,
                   decoration: ShapeDecoration(
-                    color: AppStyles.getPrimary(themeNotifier.currentMode),
+                    color: AppStyles.getPrimaryDark(themeNotifier.currentMode),
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(8),

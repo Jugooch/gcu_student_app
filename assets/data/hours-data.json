@@ -1,0 +1,360 @@
+[{
+    "id": "1",
+    "name": "Chick-fil-a",
+    "location": "Lopes Way",
+    "hours": {
+        "days": [{
+            "day": "Monday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Tuesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Wednesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Thursday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Friday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Saturday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Sunday",
+            "openTime": "00:00:01",
+            "closeTime": "00:00:01"
+        }]
+    },
+    "image": "assets/images/Chic-Logo.png",
+    "category": "Food",
+    "description": "A popular fast-food restaurant known for its chicken sandwiches and waffle fries."
+},
+{
+    "id": "2",
+    "name": "Chick-fil-a",
+    "location": "Diamondback",
+    "hours": {
+        "days": [{
+            "day": "Monday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Tuesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Wednesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Thursday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Friday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Saturday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Sunday",
+            "openTime": "00:00:01",
+            "closeTime": "00:00:01"
+        }]
+    },
+    "image": "assets/images/Chic-Logo.png",
+    "category": "Food",
+    "description": "Another branch of the well-known fast-food chain offering chicken-based meals."
+},
+{
+    "id": "3",
+    "name": "Q-doba",
+    "location": "Student Union",
+    "hours": {
+        "days": [{
+            "day": "Monday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Tuesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Wednesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Thursday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Friday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Saturday",
+            "openTime": "10:30:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Sunday",
+            "openTime": "10:30:00",
+            "closeTime": "22:00:00"
+        }]
+    },
+    "image": "assets/images/Qdoba-Logo.png",
+    "category": "Food",
+    "description": "A Mexican-themed fast-casual restaurant offering customizable burritos, tacos, and salads."
+},
+{
+    "id": "4",
+    "name": "Pita Jungle",
+    "location": "Lopes Way",
+    "hours": {
+        "days": [{
+            "day": "Monday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Tuesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Wednesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Thursday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Friday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Saturday",
+            "openTime": "10:30:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Sunday",
+            "openTime": "10:30:00",
+            "closeTime": "22:00:00"
+        }]
+    },
+    "image": "assets/images/Pita-Logo.png",
+    "category": "Food",
+    "description": "A health-focused eatery offering Mediterranean-inspired dishes like pitas, hummus, and salads."
+},
+{
+    "id": "5",
+    "name": "Subway",
+    "location": "Lopes Way",
+    "hours": {
+        "days": [{
+            "day": "Monday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Tuesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Wednesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Thursday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Friday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Saturday",
+            "openTime": "10:30:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Sunday",
+            "openTime": "10:30:00",
+            "closeTime": "22:00:00"
+        }]
+    },
+    "image": "assets/images/Subway-Logo.png",
+    "category": "Food",
+    "description": "A well-known fast-food chain specializing in made-to-order sandwiches, wraps, and salads."
+},
+{
+    "id": "6",
+    "name": "Panera Bread",
+    "location": "Verde River Apartments",
+    "hours": {
+        "days": [{
+            "day": "Monday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Tuesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Wednesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Thursday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Friday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Saturday",
+            "openTime": "10:30:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Sunday",
+            "openTime": "10:30:00",
+            "closeTime": "22:00:00"
+        }]
+    },
+    "image": "assets/images/Panera-Logo.png",
+    "category": "Food",
+    "description": "A bakery-café offering a variety of pastries, breads, sandwiches, soups, and salads."
+},
+{
+    "id": "7",
+    "name": "GCU Mail Center",
+    "location": "GCU Arena",
+    "hours": {
+        "days": [{
+            "day": "Monday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Tuesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Wednesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Thursday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Friday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Saturday",
+            "openTime": "10:30:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Sunday",
+            "openTime": "10:30:00",
+            "closeTime": "22:00:00"
+        }]
+    },
+    "image": "assets/images/MailCenter.png",
+    "category": "Other",
+    "description": "The central mail facility at GCU, offering postal services and package handling."
+},
+{
+    "id": "8",
+    "name": "Gym - LPC",
+    "location": "LPC",
+    "hours": {
+        "days": [{
+            "day": "Monday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Tuesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Wednesday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Thursday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Friday",
+            "openTime": "08:00:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Saturday",
+            "openTime": "10:30:00",
+            "closeTime": "22:00:00"
+        },
+        {
+            "day": "Sunday",
+            "openTime": "10:30:00",
+            "closeTime": "22:00:00"
+        }]
+    },
+    "image": "assets/images/Gym_logo.png",
+    "category": "Gyms",
+    "description": "A fully equipped fitness center providing a range of exercise equipment and fitness classes."
+}]

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
+import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
 import 'package:provider/provider.dart';
 
 class MarketPage extends StatelessWidget {
@@ -10,15 +11,25 @@ class MarketPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //global styling file
     var themeNotifier = Provider.of<ThemeNotifier>(context);
-    return Scaffold(
+return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(11),
           child: Container(
             color: const Color(0xFF522498),
           )),
-        backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
-      body: Center(
-      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomBackButton(),
+            Padding(
+              padding: EdgeInsets.only(bottom: 32.0, right: 32.0, left: 32.0),
+              child: Column(
+              ),
+            )
+          ],
+        ),
+      )
     );
   }
 }

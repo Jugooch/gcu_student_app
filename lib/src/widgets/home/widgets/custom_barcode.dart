@@ -1,8 +1,12 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:gcu_student_app/src/services/services.dart';
 
 class CustomBarcode extends StatelessWidget {
-  const CustomBarcode({super.key});
+
+  final User user;
+
+  const CustomBarcode({Key? key, required this.user}) : super(key: key);
 
 ///////////////////////
   //Main Widget
@@ -24,8 +28,8 @@ class CustomBarcode extends StatelessWidget {
       child: Center(
         child: BarcodeWidget(
           margin: const EdgeInsets.all(8.0),
-          barcode: Barcode.code128(),
-          data: 'https://pub.dev/packages/barcode_widget', // Barcode data
+          barcode: Barcode.code39(),
+          data: user.id, // Barcode data
           drawText: false,
           width: double.infinity,
           height: 64.0, // Height of the barcode

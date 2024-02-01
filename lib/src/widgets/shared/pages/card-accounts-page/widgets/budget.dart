@@ -90,8 +90,8 @@ class _BudgetState extends State<Budget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                height: 40,
-                                width: 40,
+                                height: 44,
+                                width: 44,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
@@ -221,8 +221,8 @@ class _BudgetState extends State<Budget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                height: 40,
-                                width: 40,
+                                height: 44,
+                                width: 44,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(

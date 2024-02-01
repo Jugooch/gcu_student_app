@@ -46,7 +46,6 @@ class _StudentIdState extends State<StudentId> {
     var themeNotifier = Provider.of<ThemeNotifier>(context);
     return Container(
       margin: const EdgeInsets.all(32.0),
-      height: 508.0,
       decoration: BoxDecoration(
         color: AppStyles.getStudentIdBackground(themeNotifier.currentMode),
         border: Border.all(
@@ -119,9 +118,9 @@ class _StudentIdState extends State<StudentId> {
             ),
           ),
 
-          const SizedBox(
+          SizedBox(
             height: 80.0, // Specify the desired height for the CustomBarcode
-            child: CustomBarcode(),
+            child: CustomBarcode(user: user),
           ),
 
           const SizedBox(height: 8.0),
@@ -160,6 +159,7 @@ class _StudentIdState extends State<StudentId> {
               ),
             ),
           ),
+          const SizedBox(height: 16.0), // Vertical spacing
         ],
       ),
     );

@@ -76,8 +76,8 @@ class CardAccountCard extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          height: 40,
-                          width: 40,
+                          height: 44,
+                          width: 44,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(color: Colors.green, width: 4.0),
