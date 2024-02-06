@@ -19,6 +19,41 @@ class HoursCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var themeNotifier = Provider.of<ThemeNotifier>(context);
 
+        String _findNextOpen(List<DailyHours> days) {
+      // Assuming 'days' is sorted from Monday to Sunday
+      // and each day is represented as {'day': 'Monday', 'openTime': '08:00:00', 'closeTime': '22:00:00'}
+
+      // Map weekdays to their index to easily find the current day in the list
+      var weekdays = {
+        'Monday': 0,
+        'Tuesday': 1,
+        'Wednesday': 2,
+        'Thursday': 3,
+        'Friday': 4,
+        'Saturday': 5,
+        'Sunday': 6,
+      };
+
+      // Find today's index
+      DateTime now = DateTime.now();
+      String todayName = DateFormat('EEEE').format(now);
+      int todayIndex = weekdays[todayName] ?? 0;
+
+      // Check from today onwards, then loop back to the start of the list if necessary
+      for (var i = 0; i < days.length; i++) {
+        // Calculate the index to check, wrapping around the list if necessary
+        int checkIndex = (todayIndex + i) % days.length;
+
+        if (days[checkIndex].openTime != "00:00:01") {
+          // Found a day that is not closed all day
+          return days[checkIndex].day;
+        }
+      }
+
+      // If all days are "00:00:01", vendor is closed until further notice
+      return "Closed until further notice";
+    }
+
     //this method formats the daily hours into a more User-friendly way
     //it returns a rich text widget which allows more control over the text inside
     RichText _formatHours(DailyHours dailyHours) {
@@ -27,6 +62,8 @@ class HoursCard extends StatelessWidget {
       if (dailyHours.day == dayOfWeek) {
         DateTime openTime = DateFormat('HH:mm:ss').parse(dailyHours.openTime);
         DateTime closeTime = DateFormat('HH:mm:ss').parse(dailyHours.closeTime);
+        DateTime nextOpen = DateTime(
+            now.year, now.month, now.day, openTime.hour, openTime.minute);
         DateTime openDateTime = DateTime(
             now.year, now.month, now.day, openTime.hour, openTime.minute);
         DateTime closeDateTime = DateTime(
@@ -68,7 +105,7 @@ class HoursCard extends StatelessWidget {
                         color: AppStyles.getTextPrimary(
                             themeNotifier.currentMode))),
                 TextSpan(
-                    text: 'until ' + DateFormat('h:mm a').format(openDateTime),
+                    text: ' until ' + _findNextOpen(vendor.hours.days),
                     style: TextStyle(
                         fontWeight: FontWeight.w300,
                         fontSize: 14,
@@ -96,9 +133,8 @@ class HoursCard extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => VendorDetailsPage(
-                    vendor: vendor,
-                    status: status),
+                builder: (context) =>
+                    VendorDetailsPage(vendor: vendor, status: status),
               ));
         },
         child: Container(
