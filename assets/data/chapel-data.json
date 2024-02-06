@@ -1,0 +1,33 @@
+[
+    {
+      "id": "0",
+      "speaker": "Brian Mueller",
+      "church": "Grand Canyon University",
+      "date": "2024-01-08"
+    },
+    {
+        "id": "1",
+        "speaker": "No Chapel",
+        "church": "Martin Luther King Jr. Day",
+        "date": "2024-01-15"
+      },            
+      {
+        "id": "2",
+        "speaker": "Brian Kruckenberg",
+        "church": "New City Church",
+        "date": "2024-01-22"
+      },
+      {
+        "id": "3",
+        "speaker": "Tim Griffin",
+        "church": "Grand Canyon University",
+        "date": "2024-01-29"
+      },
+      {
+        "id": "4",
+        "speaker": "Des Wadsworth",
+        "church": "Grace Community Church",
+        "date": "2024-02-05"
+      }
+  ]
+  

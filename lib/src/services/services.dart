@@ -7,3 +7,4 @@ export './community-services/intramurals-service.dart';
 export './community-services/market-service.dart';
 export './shared-services/classes-service.dart';
 export './shared-services//hours-service.dart';
+export './shared-services/chapel-service.dart';
