@@ -18,8 +18,6 @@ class _CalendarState extends State<Calendar> {
   DateTime _selectedDate = DateTime.now();
   DateTime _calendarDate = DateTime.now();
   List<Event> _eventsForSelectedDay = [];
-  final List<DateTime> _eventDays =
-      []; // Example: [DateTime(2024, 1, 5), DateTime(2024, 1, 20)]
 
   @override
   void initState() {
@@ -96,15 +94,12 @@ class _CalendarState extends State<Calendar> {
                     // Calculate the date for the current cell
                     final date = _dateForCell(index);
                     final isSelected = _isSameDay(_selectedDate, date);
-                    final isEventDay = _eventDays
-                        .any((eventDate) => _isSameDay(eventDate, date));
 
                     return GestureDetector(
                       onTap: () {
                         setState(() {
                           _selectedDate = date;
-                          // Here will trigger the update to show the events for the selected day in the draggable sheet
-                          print(_selectedDate);
+                          // This will trigger the update to show the events for the selected day in the bottom of the page
                           _updateEventsForSelectedDay();
                         });
                       },
@@ -117,10 +112,10 @@ class _CalendarState extends State<Calendar> {
                         child: Text(
                           '${date.day}',
                           style: TextStyle(
-                            color: isEventDay
-                                ? Colors.white
-                                : AppStyles.getNavIconInactive(
-                                    themeNotifier.currentMode),
+                            color: isSelected
+                                ? AppStyles.getPrimary(
+                                    themeNotifier.currentMode)
+                                : Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -146,10 +141,10 @@ class _CalendarState extends State<Calendar> {
               ? Text(
                   'No events on this day..',
                   style: TextStyle(
-                    color: AppStyles.getTextPrimary(themeNotifier.currentMode),
-                    fontSize: 16,
-                    fontWeight:FontWeight.w300
-                  ),
+                      color:
+                          AppStyles.getTextPrimary(themeNotifier.currentMode),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300),
                 )
               : Column(
                   children: _eventsForSelectedDay
