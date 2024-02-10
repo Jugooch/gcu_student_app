@@ -19,7 +19,7 @@ class AppStyles {
   static const Color lightStudentIdBackground = Color(0xFFFFFFFF);
   static const Color lightNavIconInactive = Color(0xFFD5BDEF);
   static const Color lightNavIconActive = Color(0xFFFFFFFF);
-  static const Color lightInactiveIcon = Color(0xFF8D8D8D);
+  static const Color lightInactiveIcon = Color.fromARGB(255, 161, 161, 161);
   static const Color lightBackground = Colors.white;
 
   //darkMode Colors
@@ -36,7 +36,7 @@ class AppStyles {
   static const Color darkStudentIdBackground = Color(0xFF373F47);
   static const Color darkNavIconInactive = Color(0xFFD5BDEF);
   static const Color darkNavIconActive = Color(0xFFFFFFFF);
-  static const Color darkInactiveIcon = Color(0xFF8D8D8D);
+  static const Color darkInactiveIcon = Color.fromARGB(255, 161, 161, 161);
   static const Color darkBackground = Color(0xFF23292E);
 
 ///////////////////////

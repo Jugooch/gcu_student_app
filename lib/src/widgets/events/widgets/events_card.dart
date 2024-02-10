@@ -4,11 +4,14 @@ import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
 import 'package:provider/provider.dart';
 
+import '../pages/pages.dart';
+
 class EventCard extends StatefulWidget {
   //pass in an event object
   final Event event;
+  final List<Event> otherEvents;
 
-  const EventCard({Key? key, required this.event}) : super(key: key);
+  const EventCard({Key? key, required this.event, required this.otherEvents}) : super(key: key);
 
   @override
   _EventCard createState() => _EventCard();
@@ -22,7 +25,15 @@ class _EventCard extends State<EventCard> {
   Widget build(BuildContext context) {
     //global styling file
     var themeNotifier = Provider.of<ThemeNotifier>(context);
-    return Container(
+    return InkWell(
+    onTap: () => {
+          //logic to open subpage for the Article
+          Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EventPage(event: widget.event, otherEvents: widget.otherEvents,)),
+          )
+    },
+    child: Container(
       width: 320,
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -80,7 +91,7 @@ class _EventCard extends State<EventCard> {
           ],
         ),
       ),
-    );
+    ));
   }
 
   ///////////////////////

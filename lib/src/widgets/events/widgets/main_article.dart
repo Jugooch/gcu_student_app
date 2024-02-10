@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
+import 'package:gcu_student_app/src/widgets/events/pages/news-article-page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app_styling.dart';
@@ -23,7 +24,15 @@ class _MainArticleButton extends State<MainArticleButton> {
   Widget build(BuildContext context) {
     //global styling file
     var themeNotifier = Provider.of<ThemeNotifier>(context);
-    return Column(
+    return InkWell(
+      onTap: () => {
+          //logic to open subpage for the Article
+          Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => NewsArticlePage(article: widget.article)),
+          )
+      },
+      child: Column(
       children: [
         SizedBox(
           width: 320,
@@ -40,7 +49,7 @@ class _MainArticleButton extends State<MainArticleButton> {
                       BlendMode.srcATop,
                     ),
                     child: Image.asset(
-                      widget.article.image, // Replace with the AssetImage
+                      widget.article.image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -86,6 +95,6 @@ class _MainArticleButton extends State<MainArticleButton> {
           ),
         ),
       ],
-    );
+    ));
   }
 }
