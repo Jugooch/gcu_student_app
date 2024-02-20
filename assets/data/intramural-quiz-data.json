@@ -1,0 +1,85 @@
+[{
+        "sport": "generic",
+        "question": "I understand that I am responsible for understanding all rules, policies, and procedures that can be found in the intramural sports handbook and sport-specific rules. I am responsible for ensuring that all player on my team are aware of these rules as well.",
+        "choices": ["I Understand"],
+        "answer": "I Understand"
+    },
+    {
+        "sport": "generic",
+        "question": "When a participant is ejected from one sport, they are suspended indefinitely from __________ until the participant meets with the intramural sports staff.",
+        "choices": [
+            "Nothing",
+            "All intramural sports competitions and campus recreation facilities",
+            "The team on which the person participated.",
+            "The sport in which the person participated."
+        ],
+        "answer": "All intramural sports competitions and campus recreation facilities"
+    },
+    {
+        "sport": "generic",
+        "question": "Every intramural sports participant must present a valid ________ before every intramural sports contest.",
+        "choices": [
+            "Drivers license",
+            "Passport",
+            "Social Media Page",
+            "GCU ID"
+        ],
+        "answer": "GCU ID"
+    },
+    {
+        "sport": "generic",
+        "question": "I understand that my team must maintain a 2.0 (out of 3.0) sportsmanship rating in order to qualify for playoffs. I acknowledge that forfeiting a match results in 0.0 sportsmanship rating for that match.",
+        "choices": [
+            "I Understand"
+        ],
+        "answer": "I Understand"
+    },
+    {
+        "sport": "generic",
+        "question": "A max of ______ SPORT club athletes are allowed on the same intramural team.",
+        "choices": [
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        "answer": "2"
+    },
+    {
+        "sport": "generic",
+        "question": "I understand that all recreational facilities, including the CAC, are tobacco-free and alcohol-free zones. I understand that I am not to participate in any intramural sports while under the influence of any substance and that failure to comply could result in: removal from the contest and facility and being reported to the Student Conduct Services in the office of the Dean of Student life",
+        "choices": [
+            "I Understand"
+        ],
+        "answer": "I Understand"
+    },
+    {
+        "sport": "Volleyball",
+        "question": "Matches will consist of a best-of-three game series. Games will be rally scoring. The first two games are played to 25 points (cap 27) and the third, if necessary, will be played to 15 points (cap 17). All matches will use a win by two format.",
+        "choices": [
+            "True",
+            "False"
+        ],
+        "answer": "True"
+    },
+    {
+        "sport": "Volleyball",
+        "question": "Indoor Volleyball is played 6v6. What is the minimum number of players needed for a team to start a game?",
+        "choices": [
+            "3",
+            "4",
+            "5",
+            "6"
+        ],
+        "answer": "4"
+    },
+    {
+        "sport": "Pickleball",
+        "question": "Pickleball is played 2v2. What is the minimum number of players needed for a team to start a game?",
+        "choices": [
+            "1",
+            "2"
+        ],
+        "answer": "2"
+    }
+]

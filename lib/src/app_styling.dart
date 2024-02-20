@@ -11,10 +11,11 @@ class AppStyles {
   static const Color lightPrimaryLight = Color(0xFF9747FF);
   static const Color lightPrimaryDark = Color(0xFF391A69);
   static const Color lightBlack = Color(0xFF090410);
-  static const Color lightImageOverlay = Color(0x20391A69); // 20% opacity
+  static const Color lightImageOverlay = Color(0x20391A69);
   static const Color lightTextPrimary = Color(0xFF090410);
   static const Color lightTextSecondary = Color(0xFFFFFFFF);
   static const Color lightTextTertiary = Color(0xFF391A69);
+  static const Color lightTextDisabled = Color.fromARGB(255, 85, 85, 85);
   static const Color lightButtonTertiary = Color(0xFFC6C6C6);
   static const Color lightStudentIdBackground = Color(0xFFFFFFFF);
   static const Color lightNavIconInactive = Color(0xFFD5BDEF);
@@ -32,6 +33,7 @@ class AppStyles {
   static const Color darkTextPrimary = Color(0xFFFFFFFF);
   static const Color darkTextSecondary = Color(0xFF090410);
   static const Color darkTextTertiary = Color(0xFFFFFFFF);
+  static const Color darkTextDisabled = Color.fromARGB(255, 206, 206, 206);
   static const Color darkButtonTertiary = Color(0xFF23292E);
   static const Color darkStudentIdBackground = Color(0xFF373F47);
   static const Color darkNavIconInactive = Color(0xFFD5BDEF);
@@ -81,6 +83,10 @@ class AppStyles {
 
   static Color getTextTertiary(AppMode mode) {
     return mode == AppMode.light ? lightTextTertiary : darkTextTertiary;
+  }
+
+  static Color getDisabledText(AppMode mode) {
+    return mode == AppMode.light ? lightTextDisabled : darkTextDisabled;
   }
 
   static Color getButtonTertiary(AppMode mode) {

@@ -1,4 +1,3 @@
-export 'clubs-main.dart';
-export 'intramurals-main.dart';
-export 'main-page.dart';
-export 'market-main.dart';
+export 'clubs/clubs-main.dart';
+export 'intramurals/intramurals-main.dart';
+export 'market/market-main.dart';

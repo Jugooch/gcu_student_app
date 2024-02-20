@@ -19,20 +19,6 @@ class _CommunityState extends State<CommunityView> {
 
 
 ///////////////////////
-  //Properties
-/////////////////////// 
-
-// Default page identifier
-  String currentPage = 'main';
-  final Map<String, Widget> pages = {
-    'main': const MainPage(),
-    'calendar': const ClubsPage(),
-    'event': const IntramuralsPage(),
-    'article': const MarketPage(),
-  };
-
-
-///////////////////////
   //Main Widget
 ///////////////////////
   @override

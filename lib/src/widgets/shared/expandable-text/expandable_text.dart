@@ -25,7 +25,8 @@ class _ExpandableTextState extends State<ExpandableText> {
           widget.text,
           style: TextStyle(
             fontSize: 16,
-            height: 1.4, // Line height
+            height: 1.4,
+            color: AppStyles.getTextPrimary(themeNotifier.currentMode)
           ),
           overflow: _isExpanded ? null : TextOverflow.ellipsis,
           maxLines: _isExpanded ? null : 2,

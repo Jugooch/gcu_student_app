@@ -1,0 +1,695 @@
+[
+  {
+    "league": "Pickleball - Men's",
+    "team-name": "Pro Picklers",
+    "image": "assets/images/Me.png",
+    "members": [
+      {
+        "name": "Justice Gooch",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "John Smith",
+        "join-date": "2024-03-04"
+      }
+    ],
+    "captain": "Justice Gooch",
+    "sportsmanship": 3,
+    "auto-accept-members": true,
+    "invite-only": true,
+    "games": [
+      {
+        "date": "2024-04-07 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-14 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "Loss",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-21 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-28 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Tie",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-05 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "-",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-12 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "-",
+        "location": "Court 4"
+      }
+    ]
+  },
+  {
+    "league": "Pickleball - Men's",
+    "team-name": "Pickleball Masters",
+    "image": "assets/images/Basketball.jpg",
+    "members": [
+      {
+        "name": "Jake Dolittle",
+        "join-date": "2024-03-05"
+      },
+      {
+        "name": "Patrick Mahomes",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Travis Kelce",
+        "join-date": "2024-03-04"
+      }
+    ],
+    "captain": "Patrick Mahomes",
+    "sportsmanship": 3,
+    "auto-accept-members": false,
+    "invite-only": true,
+    "games": [
+      {
+        "date": "2024-04-07 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-14 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "Loss",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-21 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-28 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Tie",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-05 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "-",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-12 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "-",
+        "location": "Court 4"
+      }
+    ]
+  },
+  {
+    "league": "Pickleball - Men's",
+    "team-name": "Friendly Pickles",
+    "image": "assets/images/Baseball.jpg",
+    "members": [
+      {
+        "name": "Jimothy Jonny",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Steve Herth",
+        "join-date": "2024-03-04"
+      }
+    ],
+    "captain": "Steve Herth",
+    "sportsmanship": 2,
+    "auto-accept-members": true,
+    "invite-only": true,
+    "games": [
+      {
+        "date": "2024-04-07 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-14 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "Loss",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-21 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-28 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Tie",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-05 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "-",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-12 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "-",
+        "location": "Court 4"
+      }
+    ]
+  },
+  {
+    "league": "Pickleball - Men's",
+    "team-name": "Un-friendly Pickles",
+    "image": "assets/images/SilentDisco.png",
+    "members": [
+      {
+        "name": "Heith Bar",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Hershey Bar",
+        "join-date": "2024-03-04"
+      }
+    ],
+    "captain": "Hershey bar",
+    "sportsmanship": 2,
+    "auto-accept-members": false,
+    "invite-only": false,
+    "games": [
+      {
+        "date": "2024-04-07 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-14 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "Loss",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-21 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-28 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Tie",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-05 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "-",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-12 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "-",
+        "location": "Court 4"
+      }
+    ]
+  },
+  {
+    "league": "Volleyball - Mixed B",
+    "team-name": "Volley Ballers",
+    "image": "assets/images/Me.png",
+    "members": [
+      {
+        "name": "Justice Gooch",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "John Smith",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Olivia Rodrigo",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Michelle Obama",
+        "join-date": "2024-03-04"
+      }
+    ],
+    "captain": "Justice Gooch",
+    "sportsmanship": 3,
+    "auto-accept-members": true,
+    "invite-only": false,
+    "games": [
+      {
+        "date": "2024-02-22 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-07 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-14 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "Loss",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-21 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-28 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Tie",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-05 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "-",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-12 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "-",
+        "location": "Court 4"
+      }
+    ]
+  },
+  {
+    "league": "Volleyball - Mixed B",
+    "team-name": "Bump Set Spike",
+    "image": "assets/images/Baseball.jpg",
+    "members": [
+      {
+        "name": "Jake Dolittle",
+        "join-date": "2024-03-05"
+      },
+      {
+        "name": "Patrick Mahomes",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Travis Kelce",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Taylor Swift",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Selena Gomez",
+        "join-date": "2024-03-04"
+      }
+    ],
+    "captain": "Patrick Mahomes",
+    "sportsmanship": 2,
+    "auto-accept-members": true,
+    "invite-only": true,
+    "games": [
+      {
+        "date": "2024-04-07 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-14 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "Loss",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-21 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-28 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Tie",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-05 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "-",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-12 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "-",
+        "location": "Court 4"
+      }
+    ]
+  },
+  {
+    "league": "Volleyball - Mixed B",
+    "team-name": "The Bumpers",
+    "image": "assets/images/Clubs.png",
+    "members": [
+      {
+        "name": "Jimothy Jonny",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Steve Herth",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Savannah Dicostanzo",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Brynn Logger",
+        "join-date": "2024-03-04"
+      }
+    ],
+    "captain": "Steve Herth",
+    "sportsmanship": 1,
+    "auto-accept-members": true,
+    "invite-only": false,
+    "games": [
+      {
+        "date": "2024-04-07 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-14 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "Loss",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-21 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-28 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Tie",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-05 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "-",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-12 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "-",
+        "location": "Court 4"
+      }
+    ]
+  },
+  {
+    "league": "Volleyball - Mixed B",
+    "team-name": "Volleyball Pros",
+    "image": "assets/images/LipSync.jpg",
+    "members": [
+      {
+        "name": "Heith Bar",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Hershey Bar",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Jennifer Lopez",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Shakira Shakira",
+        "join-date": "2024-03-04"
+      }
+    ],
+    "captain": "Hershey bar",
+    "sportsmanship": 2,
+    "auto-accept-members": true,
+    "invite-only": false,
+    "games": [
+      {
+        "date": "2024-04-07 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-14 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "Loss",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-21 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-28 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Tie",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-05 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "-",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-12 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "-",
+        "location": "Court 4"
+      }
+    ]
+  },
+  {
+    "league": "Soccer - Men's A",
+    "team-name": "Soccer Legends",
+    "image": "assets/images/LipSync.jpg",
+    "members": [
+      {
+        "name": "Heith Bar",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Hershey Bar",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Jennifer Lopez",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Shakira Shakira",
+        "join-date": "2024-03-04"
+      }
+    ],
+    "captain": "Hershey bar",
+    "sportsmanship": 2,
+    "auto-accept-members": true,
+    "invite-only": false,
+    "games": [
+      {
+        "date": "2024-04-07 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-14 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "Loss",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-21 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-28 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Tie",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-05 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "-",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-12 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "-",
+        "location": "Court 4"
+      }
+    ]
+  },
+  {
+    "league": "Soccer - Men's A",
+    "team-name": "Messi Lovers",
+    "image": "assets/images/Basketball.jpg",
+    "members": [
+      {
+        "name": "John Smith",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Tee Rex",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Olivia Rodrigo",
+        "join-date": "2024-03-04"
+      },
+      {
+        "name": "Pillow Fort",
+        "join-date": "2024-03-04"
+      }
+    ],
+    "captain": "Tee Rex",
+    "sportsmanship": 2,
+    "auto-accept-members": true,
+    "invite-only": false,
+    "games": [
+      {
+        "date": "2024-04-07 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-14 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "Loss",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-21 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "Win",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-04-28 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Pickleball Masters",
+        "result": "Tie",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-05 18:00:00Z",
+        "home": "Friendly Pickles",
+        "away": "Pro Picklers",
+        "result": "-",
+        "location": "Court 4"
+      },
+      {
+        "date": "2024-05-12 18:00:00Z",
+        "home": "Pro Picklers",
+        "away": "Un-friendly Pickles",
+        "result": "-",
+        "location": "Court 4"
+      }
+    ]
+  }
+]

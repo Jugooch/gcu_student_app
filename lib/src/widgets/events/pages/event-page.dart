@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
+import 'package:gcu_student_app/src/widgets/shared/expandable-text/expandable_text.dart';
 import 'package:gcu_student_app/src/widgets/shared/side_scrolling/side_scrolling.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 import '../../../services/services.dart';
 import '../widgets/events_card.dart';
-import '../widgets/expandable_text.dart';
 
 class EventPage extends StatelessWidget {
   final Event event;
