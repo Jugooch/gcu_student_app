@@ -235,7 +235,7 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
                                     color: AppStyles.getTextPrimary(
                                         themeNotifier.currentMode),
                                     fontSize: 16,
-                                    fontWeight: FontWeight.w200))
+                                    fontWeight: FontWeight.w300))
                           ],
                         )),
                     SizedBox(height: 32),

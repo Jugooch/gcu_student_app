@@ -1,5 +1,5 @@
 name: gcu_student_app
-description: A new Flutter project.
+description: A GCU application for everday student life. This is a hub for all things a student may need on the daily.
 
 # Prevent accidental publishing to pub.dev.
 publish_to: 'none'
@@ -23,6 +23,15 @@ dependencies:
   app_settings: ^5.1.1
   image_picker: ^1.0.7
   image_cropper: ^5.0.1
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  ios: true
+  android: true
+  image_path_ios: "assets/launcher/icon.png"
+  image_path_android: "assets/launcher/icon.png"
+  adaptive_icon_background: "assets/launcher/background.png"
+  adaptive_icon_foreground: "assets/launcher/foreground.png"
 
 dev_dependencies:
   flutter_test:

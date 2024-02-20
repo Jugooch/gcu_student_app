@@ -82,7 +82,7 @@ class _AddLeagueCard extends State<AddLeagueCard> {
                               color: widget.available ? AppStyles.getTextPrimary(
                                   themeNotifier.currentMode) : AppStyles.getDisabledText(themeNotifier.currentMode),
                               fontSize: 16,
-                              fontWeight: FontWeight.w200))
+                              fontWeight: FontWeight.w300))
                     ],
                   ),
                   Icon(Icons.chevron_right_rounded,

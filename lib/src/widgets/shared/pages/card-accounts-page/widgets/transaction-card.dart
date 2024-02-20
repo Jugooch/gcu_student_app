@@ -70,7 +70,7 @@ class TransactionCard extends StatelessWidget {
                       color:
                           AppStyles.getTextPrimary(themeNotifier.currentMode),
                       fontSize: 16,
-                      fontWeight: FontWeight.w200))
+                      fontWeight: FontWeight.w300))
             ]),
             Text("\$${oCcy.format(transaction.amount)}",
                 style: TextStyle(

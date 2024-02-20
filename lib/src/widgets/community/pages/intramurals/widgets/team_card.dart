@@ -68,7 +68,7 @@ class _TeamCard extends State<TeamCard> {
                         color:
                             AppStyles.getTextPrimary(themeNotifier.currentMode),
                         fontSize: 16,
-                        fontWeight: FontWeight.w200))
+                        fontWeight: FontWeight.w300))
               ],
             ),
             Icon(Icons.chevron_right_rounded,

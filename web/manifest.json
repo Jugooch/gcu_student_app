@@ -1,10 +1,10 @@
 {
     "name": "gcu_student_app",
-    "short_name": "gcu_student_app",
+    "short_name": "GCU",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
+    "background_color": "#FF522498",
+    "theme_color": "#ffffff",
     "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
