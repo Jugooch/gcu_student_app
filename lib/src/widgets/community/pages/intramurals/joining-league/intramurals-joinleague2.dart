@@ -41,7 +41,7 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
       captain: "",
       sportsmanship: 3,
       games: [],
-      image: "",
+      image: "assets/images/Lopes.jpg",
       autoAcceptMembers: false,
       inviteOnly: false);
 
@@ -58,6 +58,9 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
   void initState() {
     super.initState();
     fetchData();
+    newTeam.league = widget.league.league;
+    newTeam.captain = user.name;
+    newTeam.members.add(Member(joinDate: DateTime.now(), name: user.name));
   }
 
   ///////////////////////
@@ -399,7 +402,7 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
                                               ? teams
                                               : filteredTeams)
                                           .expand((e) => [
-                                                TeamCard(team: e),
+                                                TeamCard(team: e, isJoin: true),
                                                 SizedBox(height: 16),
                                               ])
                                           .toList(),
@@ -697,7 +700,7 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
                                 //logic to open subpage for the card clicked
                           Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => QuizPage(league: widget.league)),
+                          MaterialPageRoute(builder: (context) => QuizPage(league: widget.league, team: newTeam, createTeam: true,)),
                         );
                       },
                       style: ButtonStyle(

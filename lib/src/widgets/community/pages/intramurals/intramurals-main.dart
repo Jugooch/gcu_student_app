@@ -71,8 +71,6 @@ class _IntramuralsPageState extends State<IntramuralsPage> {
     throw Exception('No upcoming games found.');
   }
 
-  print(nextGame);
-
   return nextGame;
 }
 
@@ -150,7 +148,7 @@ class _IntramuralsPageState extends State<IntramuralsPage> {
                     ...teams.expand((team) {
                       int index = teams.indexOf(team);
                       return [
-                        TeamCard(team: team),
+                        TeamCard(team: team, isJoin: false),
                         if (index != teams.length - 1) SizedBox(height: 16.0),
                       ];
                     }).toList()

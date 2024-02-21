@@ -5,18 +5,20 @@ import 'package:gcu_student_app/src/services/services.dart';
 import 'package:gcu_student_app/src/widgets/community/pages/intramurals/intramural-team.dart';
 import 'package:provider/provider.dart';
 
-class TeamCard extends StatefulWidget {
-  //pass in an event object
-  final Team team;
-  final bool isJoin;
+import '../../pages.dart';
 
-  const TeamCard({Key? key, required this.team, required this.isJoin}) : super(key: key);
+class MemberCard extends StatefulWidget {
+  //pass in an event object
+  final Member member;
+  final bool isCaptain;
+
+  const MemberCard({Key? key, required this.member, required this.isCaptain}) : super(key: key);
 
   @override
-  _TeamCard createState() => _TeamCard();
+  _MemberCard createState() => _MemberCard();
 }
 
-class _TeamCard extends State<TeamCard> {
+class _MemberCard extends State<MemberCard> {
   ///////////////////////
   //Main Widget
   ///////////////////////
@@ -24,15 +26,7 @@ class _TeamCard extends State<TeamCard> {
   Widget build(BuildContext context) {
     //global styling file
     var themeNotifier = Provider.of<ThemeNotifier>(context);
-    return InkWell(
-        onTap: () => {
-              //logic to open subpage for the Team
-              Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => IntramuralsTeam(team: widget.team, isJoin: widget.isJoin)),
-              )
-            },
-        child: Container(
+    return Container(
           width: double.infinity,
           decoration: BoxDecoration(
             color: AppStyles.getCardBackground(themeNotifier.currentMode),
@@ -50,27 +44,27 @@ class _TeamCard extends State<TeamCard> {
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [         
             // Add CircleAvatar to display the image
             CircleAvatar(
               radius: 24,
               backgroundImage: AssetImage(
-                widget.team.image
+                "assets/images/Avatar.png"
               )
             ),
+            SizedBox(width: 16),
               Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.team.teamName,
+                Text(widget.member.name,
                     style: TextStyle(
                         color:
                             AppStyles.getTextPrimary(themeNotifier.currentMode),
                         fontSize: 20,
                         fontWeight: FontWeight.w600)),
                 SizedBox(height: 8.0),
-                Text(widget.team.league,
+                Text(widget.isCaptain ? "Captain" : "Member",
                     style: TextStyle(
                         color:
                             AppStyles.getTextPrimary(themeNotifier.currentMode),
@@ -78,11 +72,8 @@ class _TeamCard extends State<TeamCard> {
                         fontWeight: FontWeight.w300))
               ],
             ),
-            Icon(Icons.chevron_right_rounded,
-                color: AppStyles.getInactiveIcon(themeNotifier.currentMode),
-                size: 24)
             ],) 
           ),
-        ));
+        );
   }
 }

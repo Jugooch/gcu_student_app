@@ -25,6 +25,16 @@ Future<List<League>> getLeagues(user) async {
   return unjoinedLeagues;
 }
 
+Future<League> getLeague(leagueName) async {
+  final String response =
+      await rootBundle.loadString('assets/data/intramural-leagues-data.json');
+  final data = await json.decode(response);
+  League league =
+      (data as List).map((i) => League.fromJson(i)).singleWhere((element) => element.league == leagueName);
+
+  return league;
+}
+
   Future<List<Team>> getTeams(User user) async {
     final String response =
         await rootBundle.loadString('assets/data/intramural-data.json');
@@ -65,6 +75,11 @@ Future<Team> getTeam(String teamName) async {
       .firstWhere((team) => team.teamName == teamName);
 
   return team;
+}
+
+ Future<void> createTeam(Team newTeam) async {
+  //here is where the team would be added if the app wasnt using mock data
+
 }
 
  Future<List<QuizQuestion>> getQuizQuestions(String sport) async {
@@ -126,10 +141,10 @@ class League {
 }
 
 class Team {
-  final String league;
+  String league;
   String teamName;
   List<Member> members;
-  final String captain;
+  String captain;
   int sportsmanship;
   List<Game> games;
   String image;

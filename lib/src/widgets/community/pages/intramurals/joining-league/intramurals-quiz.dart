@@ -7,7 +7,9 @@ import 'package:provider/provider.dart';
 
 class QuizPage extends StatefulWidget {
   final League league;
-  const QuizPage({required this.league, Key? key}) : super(key: key);
+  final Team team;
+  final bool createTeam;
+  const QuizPage({required this.createTeam, required this.league, required this.team, Key? key}) : super(key: key);
 
   @override
   _QuizPageState createState() => _QuizPageState();
@@ -47,6 +49,20 @@ class _QuizPageState extends State<QuizPage> {
     }
     return true; // All answered questions are correct
   }
+
+  ///////////////////////////////////////////////////////////////////////////
+  ///Update these methods to actually create and join a team when using real data
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+  createTeam(){
+    print("user creating team with name:" + widget.team.teamName);
+  }
+
+  joinTeam(){
+    print("user joining team with name:" + widget.team.teamName);
+  }
+  
+  ///////////////////////////////////////////////////////////////////////////
 
   @override
   Widget build(BuildContext context) {
@@ -217,7 +233,12 @@ class _QuizPageState extends State<QuizPage> {
               child: ElevatedButton(
                 onPressed: areAllAnswersCorrect()
                     ? () {
-                        // Logic to proceed after correct answers are submitted\
+                        // Logic to proceed after correct answers are correct\
+
+                        //user is creating team, do this:
+                        //user is joining a team, do this:
+                        widget.createTeam ? createTeam() : joinTeam();
+
                       }
                     : null, // Button is disabled if not all answers are correct
                 style: ButtonStyle(

@@ -284,7 +284,7 @@
     "games": [
       {
         "date": "2024-02-22 18:00:00Z",
-        "home": "Pro Picklers",
+        "home": "Volley Ballers",
         "away": "Pickleball Masters",
         "result": "Win",
         "location": "Court 4"
@@ -292,13 +292,13 @@
       {
         "date": "2024-04-07 18:00:00Z",
         "home": "Pro Picklers",
-        "away": "Pickleball Masters",
+        "away": "Volley Ballers",
         "result": "Win",
         "location": "Court 4"
       },
       {
         "date": "2024-04-14 18:00:00Z",
-        "home": "Friendly Pickles",
+        "home": "Volley Ballers",
         "away": "Pro Picklers",
         "result": "Loss",
         "location": "Court 4"
@@ -306,13 +306,13 @@
       {
         "date": "2024-04-21 18:00:00Z",
         "home": "Pro Picklers",
-        "away": "Un-friendly Pickles",
+        "away": "Volley Ballers",
         "result": "Win",
         "location": "Court 4"
       },
       {
         "date": "2024-04-28 18:00:00Z",
-        "home": "Pro Picklers",
+        "home": "Volley Ballers",
         "away": "Pickleball Masters",
         "result": "Tie",
         "location": "Court 4"
@@ -320,13 +320,13 @@
       {
         "date": "2024-05-05 18:00:00Z",
         "home": "Friendly Pickles",
-        "away": "Pro Picklers",
+        "away": "Volley Ballers",
         "result": "-",
         "location": "Court 4"
       },
       {
         "date": "2024-05-12 18:00:00Z",
-        "home": "Pro Picklers",
+        "home": "Volley Ballers",
         "away": "Un-friendly Pickles",
         "result": "-",
         "location": "Court 4"
@@ -572,7 +572,7 @@
         "join-date": "2024-03-04"
       }
     ],
-    "captain": "Hershey bar",
+    "captain": "Hershey Bar",
     "sportsmanship": 2,
     "auto-accept-members": true,
     "invite-only": false,

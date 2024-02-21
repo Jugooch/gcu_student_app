@@ -12,12 +12,6 @@ import 'widgets/main_article.dart';
 class EventsView extends StatefulWidget {
   const EventsView({super.key});
 
-  // Factory method to create a new instance with the initial state
-  static EventsView newInstance() {
-    print("Hello there...");
-    return const EventsView();
-  }
-
   @override
   _EventsState createState() => _EventsState();
 }

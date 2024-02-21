@@ -60,9 +60,7 @@ class _UpcomingGameCard extends State<UpcomingGameCard> {
 
   fetchTeams() async {
     homeTeam = await IntramuralService().getTeam(widget.game.home);
-    print(homeTeam.teamName);
     awayTeam = await IntramuralService().getTeam(widget.game.away);
-    print(awayTeam.teamName);
 
     setState(() {
       // Trigger a rebuild with the fetched data

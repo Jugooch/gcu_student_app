@@ -48,7 +48,6 @@ class _SchedulePageState extends State<SchedulePage> {
 //sorts the classes by their next class date and picks the first one
 Classes findNextUpcomingClass(List<Classes> classes) {
   classes.sort((a, b) => a.nextOccurrence.compareTo(b.nextOccurrence));
-  print(classes[0].nextOccurrence);
   return classes[0];
 }
 
