@@ -60,7 +60,7 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
     fetchData();
     newTeam.league = widget.league.league;
     newTeam.captain = user.name;
-    newTeam.members.add(Member(joinDate: DateTime.now(), name: user.name));
+    newTeam.members.add(Member(id: user.id, joinDate: DateTime.now(), name: user.name));
   }
 
   ///////////////////////

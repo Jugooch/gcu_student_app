@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 import '../../pages.dart';
+import '../intramural-team.dart';
 
 class UpcomingGameCard extends StatefulWidget {
   //pass in an event object
@@ -146,52 +147,72 @@ class _UpcomingGameCard extends State<UpcomingGameCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    children: [
-                      Text("Home",
-                          style: TextStyle(
-                              color: AppStyles.getTextPrimary(
-                                  themeNotifier.currentMode),
-                              fontSize: 12)),
-                      SizedBox(height: 16),
-                      CircleAvatar(
-                        radius: 24,
-                        backgroundImage: AssetImage(homeTeam.image),
-                      ),
-                      SizedBox(height: 8),
-                      Text(homeTeam.teamName,
-                          style: TextStyle(
-                            color: AppStyles.getTextPrimary(
-                                themeNotifier.currentMode),
-                            fontWeight: FontWeight.bold,
-                          )),
-                    ],
-                  ),
+                  InkWell(
+                      onTap: () => {
+                            //logic to open subpage for the Team
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => IntramuralsTeam(
+                                      team: homeTeam, isJoin: false)),
+                            )
+                          },
+                      child: Column(
+                        children: [
+                          Text("Home",
+                              style: TextStyle(
+                                  color: AppStyles.getTextPrimary(
+                                      themeNotifier.currentMode),
+                                  fontSize: 12)),
+                          SizedBox(height: 16),
+                          CircleAvatar(
+                            radius: 24,
+                            backgroundImage: AssetImage(homeTeam.image),
+                          ),
+                          SizedBox(height: 8),
+                          Text(homeTeam.teamName,
+                              style: TextStyle(
+                                color: AppStyles.getTextPrimary(
+                                    themeNotifier.currentMode),
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ],
+                      )),
                   Text("VS",
                       style: TextStyle(
                           color: AppStyles.getTextPrimary(
                               themeNotifier.currentMode))),
-                  Column(
-                    children: [
-                      Text("Away",
-                          style: TextStyle(
-                              color: AppStyles.getTextPrimary(
-                                  themeNotifier.currentMode),
-                              fontSize: 12)),
-                      SizedBox(height: 16),
-                      CircleAvatar(
-                        radius: 24,
-                        backgroundImage: AssetImage(awayTeam.image),
-                      ),
-                      SizedBox(height: 8),
-                      Text(awayTeam.teamName,
-                          style: TextStyle(
-                            color: AppStyles.getTextPrimary(
-                                themeNotifier.currentMode),
-                            fontWeight: FontWeight.bold,
-                          )),
-                    ],
-                  ),
+                  InkWell(
+                      onTap: () => {
+                            //logic to open subpage for the Team
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => IntramuralsTeam(
+                                      team: awayTeam, isJoin: false)),
+                            )
+                          },
+                      child: Column(
+                        children: [
+                          Text("Away",
+                              style: TextStyle(
+                                  color: AppStyles.getTextPrimary(
+                                      themeNotifier.currentMode),
+                                  fontSize: 12)),
+                          SizedBox(height: 16),
+                          CircleAvatar(
+                            radius: 24,
+                            backgroundImage: AssetImage(awayTeam.image),
+                          ),
+                          SizedBox(height: 8),
+                          Text(awayTeam.teamName,
+                              style: TextStyle(
+                                color: AppStyles.getTextPrimary(
+                                    themeNotifier.currentMode),
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ],
+                      )),
                 ],
               ),
             ),

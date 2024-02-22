@@ -35,7 +35,29 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
       seasonEnd: DateTime.now(),
       maxRoster: 0,
       minRoster: 0);
+
   int selectedTabIndex = 0;
+
+  Team homeTeam = Team(
+      league: "",
+      teamName: "",
+      members: [],
+      captain: "",
+      sportsmanship: -1,
+      games: [],
+      image: "assets/images/Lopes.jpg",
+      autoAcceptMembers: false,
+      inviteOnly: true);
+  Team awayTeam = Team(
+      league: "",
+      teamName: "",
+      members: [],
+      captain: "",
+      sportsmanship: -1,
+      games: [],
+      image: "assets/images/Lopes.jpg",
+      autoAcceptMembers: false,
+      inviteOnly: true);
 
   ///////////////////////
   //Initialize State and Data
@@ -48,18 +70,35 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
   }
 
   fetchLeague() async {
+    userFuture = UserService().getUser("20692303");
+    user = await userFuture;
+
     futureLeague = IntramuralService().getLeague(widget.team.league);
     league = await futureLeague;
 
     setState(() {});
   }
 
-  setTab(){
-    if(widget.isJoin){
+  setHomeTeam(home) async {
+    homeTeam = await IntramuralService().getTeam(home);
+  }
+
+  setAwayTeam(away) async {
+    awayTeam = await IntramuralService().getTeam(away);
+  }
+
+  setTab() {
+    if (widget.isJoin) {
       selectedTabIndex = 2;
-      setState(() {
-        
-      });
+      setState(() {});
+    }
+  }
+
+  isUserMember() {
+    if (widget.team.members.any((element) => element.id == user.id)) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -84,7 +123,7 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
         nextGame = game;
       }
     }
-    
+
     setState(() {});
 
     if (nextGame == null) {
@@ -272,7 +311,6 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
                   padding: EdgeInsets.only(
                       left: 32.0, right: 32.0, bottom: 16.0, top: 16.0),
                   child: Column(children: [
-
                     // Team info
                     Visibility(
                         visible: selectedTabIndex == 0,
@@ -296,7 +334,8 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
                                         themeNotifier.currentMode))),
                             SizedBox(height: 16),
                             if (upcomingGame != null)
-                              UpcomingGameCard(key: ValueKey(2), game: upcomingGame)
+                              UpcomingGameCard(
+                                  key: ValueKey(2), game: upcomingGame)
                             else
                               Text("No upcoming games..."),
                           ],
@@ -350,29 +389,64 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
                                 children: [
                                   Expanded(
                                     flex: 1,
-                                    child: Text(e.home,
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            color: AppStyles.getTextPrimary(
-                                                themeNotifier.currentMode))),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        await setHomeTeam(e
+                                            .home); // Await the asynchronous call
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  IntramuralsTeam(
+                                                      team: homeTeam,
+                                                      isJoin: false)),
+                                        );
+                                      },
+                                      child: Container(
+                                        alignment: Alignment
+                                            .centerLeft, // Align text to the left
+                                        child: Text(
+                                          e.home,
+                                          style: TextStyle(
+                                              color: AppStyles.getTextPrimary(
+                                                  themeNotifier.currentMode)),
+                                        ),
+                                      ),
+                                    ),
                                   ),
+                                  Text("VS",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: AppStyles.getTextPrimary(
+                                              themeNotifier.currentMode),
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16)),
                                   Expanded(
                                     flex: 1,
-                                    child: Text("VS",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: AppStyles.getTextPrimary(
-                                                themeNotifier.currentMode),
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 16)),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(e.away,
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(
-                                            color: AppStyles.getTextPrimary(
-                                                themeNotifier.currentMode))),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        await setAwayTeam(e
+                                            .away); // Corrected to setAwayTeam and awaited
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => IntramuralsTeam(
+                                                  team: awayTeam,
+                                                  isJoin:
+                                                      false)), // Corrected to navigate with awayTeam
+                                        );
+                                      },
+                                      child: Container(
+                                        alignment: Alignment
+                                            .centerRight, // Align text to the right
+                                        child: Text(
+                                          e.away,
+                                          style: TextStyle(
+                                              color: AppStyles.getTextPrimary(
+                                                  themeNotifier.currentMode)),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -398,47 +472,86 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text("Captain",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppStyles.getTextPrimary(
-                                            themeNotifier.currentMode))),
-                                            SizedBox(height: 16),
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppStyles.getTextPrimary(
+                                        themeNotifier.currentMode))),
+                            SizedBox(height: 16),
                             MemberCard(member: teamCaptain, isCaptain: true),
-                            if(widget.isJoin)
+                            if (widget.isJoin)
                               Container(
-                    height: 80.0,
-                    margin: EdgeInsets.only(top: 32),
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                    child: ElevatedButton(
-                      onPressed: () {
-                          //logic to open subpage for the card clicked
-                          Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => QuizPage(createTeam: false, league: league, team: widget.team)),
-                        );
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                          AppStyles.getPrimaryDark(themeNotifier.currentMode),
-                        ),
-                        minimumSize: MaterialStateProperty.all(
-                          const Size(0.5, 0), // 50% width
-                        ),
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Join Team',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20.0),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                                height: 80.0,
+                                margin: EdgeInsets.only(top: 32),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    //logic to open subpage for the card clicked
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => QuizPage(
+                                              createTeam: false,
+                                              league: league,
+                                              team: widget.team)),
+                                    );
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                      AppStyles.getPrimaryDark(
+                                          themeNotifier.currentMode),
+                                    ),
+                                    minimumSize: MaterialStateProperty.all(
+                                      const Size(0.5, 0), // 50% width
+                                    ),
+                                  ),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Join Team',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.0),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            else if (isUserMember())
+                              Container(
+                                height: 80.0,
+                                margin: EdgeInsets.only(top: 32),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    //logic to open subpage for the card clicked
+                                    print("User tried leaving! Ha!");
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                      AppStyles.getPrimaryDark(
+                                          themeNotifier.currentMode),
+                                    ),
+                                    minimumSize: MaterialStateProperty.all(
+                                      const Size(0.5, 0), // 50% width
+                                    ),
+                                  ),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Leave Team',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.0),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             SizedBox(height: 32),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

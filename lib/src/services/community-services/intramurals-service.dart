@@ -187,16 +187,19 @@ class Team {
 }
 
 class Member {
+  final String id;
   final String name;
   final DateTime joinDate;
 
   Member({
+    required this.id,
     required this.name,
     required this.joinDate,
   });
 
   factory Member.fromJson(Map<String, dynamic> json) {
     return Member(
+      id: json['id'],
       name: json['name'],
       joinDate: DateTime.parse(json['join-date']),
     );
