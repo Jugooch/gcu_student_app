@@ -126,7 +126,7 @@ class _LinksMenuState extends State<LinksMenu> {
       case "Map":
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const MapPage()),
+          MaterialPageRoute(builder: (context) => MapPage()),
         );
         break;
       case "Portal":

@@ -18,7 +18,7 @@ class _HomeViewState extends State<HomeView> {
     'hours': const HoursPage(),
     'card-accounts': const CardAccountsPage(),
     'chapel': const ChapelPage(),
-    'map': const MapPage(),
+    'map': MapPage(),
     'schedule': const SchedulePage(),
     'settings': const SettingsPage(),
   };

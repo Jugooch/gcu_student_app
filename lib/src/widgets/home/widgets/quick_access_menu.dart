@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/widgets/shared/pages/pages.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../app_styling.dart';
 import 'package:provider/provider.dart';
 import '../../../services/home-services/home-service.dart';
+import 'package:camera/camera.dart';
 
 class QuickAccessMenu extends StatefulWidget {
   const QuickAccessMenu({Key? key}) : super(key: key);
@@ -196,6 +198,7 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
       return InkWell(
         onTap: () {
           // Handle regular tap (e.g., navigate to a screen)
+          _linkToPage(item);
         },
         onLongPress: () {
           // Show X icon and handle removal
@@ -480,5 +483,66 @@ Widget _buildQuickAccessMenuItem(
         ],
       ),
     );
+  }
+
+  
+  _linkToPage(QuickAccessItem quickAccessItem) {
+    switch (quickAccessItem.label) {
+      case "Schedule":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SchedulePage()),
+        );
+        break;
+      case "Hours":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HoursPage()),
+        );
+        break;
+      case "Map":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MapPage()),
+        );
+        break;
+      case "Portal":
+        _launchURL();
+        break;
+      case "Chapel":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ChapelPage()),
+        );
+        break;
+      case "Budget":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CardAccountsPage()),
+        );
+        break;
+      case "Event QR":
+      _launchDeviceCamera();
+        break;
+      case "Settings":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SettingsPage()),
+        );
+        break;
+      default:
+    }
+  }
+
+  _launchURL() async {
+   final Uri url = Uri.parse('https://gcuportal.gcu.edu/');
+   if (!await launchUrl(url)) {
+        throw Exception('Could not launch $url');
+    }
+}
+
+  _launchDeviceCamera() async {
+    await availableCameras().then((value) => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => CameraPage(cameras: value))));
   }
 }

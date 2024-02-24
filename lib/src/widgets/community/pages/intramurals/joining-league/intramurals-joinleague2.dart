@@ -54,29 +54,7 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
   ///////////////////////
   //Initialize State and Data
   ///////////////////////
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-    newTeam.league = widget.league.league;
-    newTeam.captain = user.name;
-    newTeam.members.add(Member(id: user.id, joinDate: DateTime.now(), name: user.name));
-  }
-
-  ///////////////////////
-  //Fetch All Data on Events and Articles
-  ///////////////////////
-  Future<void> fetchData() async {
-    userFuture = UserService().getUser("20692303");
-    user = await userFuture;
-
-    futureTeams = IntramuralService().getLeagueTeams(widget.league);
-    teams = await futureTeams;
-
-    setState(() {
-      //reload widget with new data
-    });
-  }
+  
 
   ////////////////////////////////
   ///Format the date in a readable way
@@ -425,6 +403,7 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
                                                 themeNotifier.currentMode))),
                                     SizedBox(height: 16),
                                     TextField(
+                                      maxLength: 25,
                                       style: TextStyle(
                                         color: AppStyles.getTextPrimary(
                                             themeNotifier
@@ -501,7 +480,7 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
                                                             child: Icon(
                                                                 Icons.edit,
                                                                 color:
-                                                                    AppStyles.getPrimary(themeNotifier.currentMode)))
+                                                                    AppStyles.getPrimaryLight(themeNotifier.currentMode)))
                                                         : Icon(
                                                             Icons.add,
                                                             color: AppStyles
@@ -594,7 +573,7 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
                                             spreadRadius: 0,
                                             blurRadius: 4,
                                             offset: const Offset(0,
-                                                4), // changes position of shadow
+                                                4),
                                           ),
                                         ],
                                       ),
@@ -691,21 +670,22 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
                                       ),
                                     ),
             SizedBox(height: 32),
-                                    Container(
+                    Container(
                     height: 80.0,
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(8)),
                     child: ElevatedButton(
                       onPressed: () {
                                 //logic to open subpage for the card clicked
+                          newTeam.teamName != "" || newTeam.image == "" ?
                           Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => QuizPage(league: widget.league, team: newTeam, createTeam: true,)),
-                        );
+                        ) : null;
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                          AppStyles.getPrimaryDark(themeNotifier.currentMode),
+                          newTeam.teamName != "" ? AppStyles.getPrimaryDark(themeNotifier.currentMode) : AppStyles.getPrimaryDark(themeNotifier.currentMode).withOpacity(.3)
                         ),
                         minimumSize: MaterialStateProperty.all(
                           const Size(0.5, 0), // 50% width

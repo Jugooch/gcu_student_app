@@ -1,0 +1,92 @@
+[
+    {
+      "latitude": "33.512724167946786",
+      "name": "Antelope Gymnasium and West Lecture Halls",
+      "description": "Antelope Gym is a 2,000-seat venue where the GCU acapella club refines its talents and prepares for competitive performances. This gym also hosts other athletic events and concerts. In the spirited purple and black facility space, banners are proudly displayed to remember national and league championship seasons.",
+      "id": "22",
+      "includes": [],
+      "longitude": "-112.13233371926187",
+      "type": ["classrooms", "athletics"]
+    },
+    {
+      "latitude": "33.51171815456493",
+      "name": "Arts and Media",
+      "description": "In the College of Arts and Media, students can explore their artistic talents and pursue their dreams. The college is recognized for its vibrant learning environment, thrilling on-stage experiences and creative production opportunities. Ethington Theatre is home to student performances, plays, choral, dance and music concerts, digital film screenings and art events. Offerings feature the advertising and graphic design program, as well as digital design and film programs in various emphases.",
+      "id": "35",
+      "includes": [],
+      "longitude": "-112.1272926990027",
+      "type": ["classrooms"]
+    },
+    {
+      "latitude": "33.51208905165202",
+      "name": "Baseball Stadium",
+      "description": "Brazell Stadium has served as the facility for the GCU baseball and softball teams. Located on the west side of campus, Brazell Stadium's remodel will increase its capacity of seating to 3,000. The first level will feature chair-back seats, grass berm seating, a team store and concession space.",
+      "id": "14",
+      "includes": [],
+      "longitude": "-112.13278393121242",
+      "type": ["classrooms", "athletics", "food service"]
+    },
+    {
+      "latitude": "33.516141221112555",
+      "name": "Canyon Activity Center",
+      "description": "The 135,000-square-foot Canyon Activity Center offers 10 multipurpose courts, a rock climbing wall, and a new strength and conditioning facility, available to all club athletes. It also has a separate room dedicated to the Thundering Heard Pep Band.",
+      "id": "58",
+      "includes": [],
+      "longitude": "-112.12347639454244",
+      "type": ["classrooms", "athletics"]
+    },
+    {
+      "latitude": "33.51211590097971",
+      "name": "Canyon Ventures",
+      "description": "",
+      "id": "66",
+      "includes": [],
+      "longitude": "-112.11408665133355",
+      "type": ["other", "classrooms"]
+    },
+    {
+      "latitude": "33.5104817134173",
+      "name": "Catalina",
+      "description": "",
+      "id": "5",
+      "includes": [],
+      "longitude": "-112.12602226187639",
+      "type": ["classrooms"]
+    },
+    {
+      "latitude": "33.5104817134173",
+      "name": "Cathedral Rock",
+      "description": "",
+      "id": "3",
+      "includes": [],
+      "longitude": "-112.12675281546248",
+      "type": ["classrooms"]
+    },
+    {
+      "latitude": "33.51470077866214",
+      "name": "Chaparral Hall",
+      "description": "Chaparral Hall is a residence hall with fully furnished suites that include two bedrooms, two bathrooms and a large living room area. Double occupancy, shared by four students, and triple occupancy, shared by six students, are available. Features include a lobby, breakout rooms for studying, laundry facilities on every floor and an outdoor courtyard.",
+      "id": "45",
+      "includes": [],
+      "longitude": "-112.12630433425896",
+      "type": ["student housing", "classrooms", "food service"]
+    },
+    {
+      "latitude": "33.51411965447517",
+      "name": "Colangelo College of Business",
+      "description": "This newly built 150-348-square-foot academic building consists of four floors with four lecture halls, 53 classrooms and 81 offices. The business building, located at Colter Street and 30th Drive, is the campus epicenter for entrepreneurialism and learning business as a force for good.",
+      "id": "42",
+      "includes": [],
+      "longitude": "-112.12504749847291",
+      "type": ["classrooms"]
+    },
+    {
+      "latitude": "33.5106198688961",
+      "name": "Echo",
+      "description": "Building Includes International Students Office and Veterans Office and Community recreation and Quiet space.",
+      "id": "4",
+      "includes": [],
+      "longitude": "-112.12639696816538",
+      "type": ["other", "classrooms"]
+    }
+  ]

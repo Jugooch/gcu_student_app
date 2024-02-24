@@ -6,6 +6,8 @@
 	<string>Allow this app to access your photos?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when accessing the map</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to location when accessing the map</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs access to camera to scan QR codes</string>
 	<key>NSMicrophoneUsageDescription</key>
