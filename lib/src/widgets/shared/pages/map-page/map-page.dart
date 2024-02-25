@@ -7,6 +7,7 @@ import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/shared-services/map-service.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
 import 'package:gcu_student_app/src/widgets/shared/expandable-text/expandable_text.dart';
+import 'package:gcu_student_app/src/widgets/shared/side_scrolling/side_scrolling.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,21 @@ class _MapPageState extends State<MapPage> {
   late StreamSubscription<LocationData> locationSubscription;
   Marker? userLocationMarker;
   bool isExpanded = false;
-  bool menuExpanded = false;
+  bool filtersExpanded = false;
+  String searchQuery = '';
+  var types = [
+    "All",
+    "ACE Centers",
+    "Athletics",
+    "Classrooms",
+    "Food Service",
+    "Parking",
+    "Public Safety",
+    "Student Housing",
+    "Student Services",
+    "Other"
+  ];
+  String selectedType = "All";
 
   @override
   void initState() {
@@ -54,26 +69,73 @@ class _MapPageState extends State<MapPage> {
   }
 
   void updateBuildingMarkers() {
-    // Assuming 'buildings' is now populated:
     var themeNotifier = Provider.of<ThemeNotifier>(context, listen: false);
-    var buildingMarkers = buildings
-        .map<Marker>((e) => Marker(
-              point: LatLng(e.latitude, e.longitude),
-              child: InkWell(
-                  onTap: () => _showBuildingInfo(e),
-                  child: CustomMarkerWidget(
-                    label: e.id
-                        .toString(), // Assuming 'id' is an integer or similar
-                    color: AppStyles.getPrimaryLight(themeNotifier.currentMode),
-                  )),
-              width: 32,
-              height: 32,
-            ))
-        .toList();
+    List<Marker> tempMarkers = [];
+
+    for (var building in buildings) {
+      bool matchesSearchQuery = searchQuery.isEmpty ||
+          building.id.toString().toLowerCase().contains(searchQuery) ||
+          building.name.toLowerCase().contains(searchQuery);
+
+      if ((selectedType == "All" ||
+              building.type.contains(selectedType.toLowerCase())) &&
+          matchesSearchQuery) {
+        var marker = Marker(
+          point: LatLng(building.latitude, building.longitude),
+          child: InkWell(
+              onTap: () => _showBuildingInfo(building),
+              child: CustomMarkerWidget(
+                label: building.id.toString(),
+                color: AppStyles.getPrimaryLight(themeNotifier.currentMode),
+              )),
+          width: 32,
+          height: 32,
+        );
+        tempMarkers.add(marker);
+      }
+    }
 
     setState(() {
-      mapMarkers.addAll(buildingMarkers);
+      mapMarkers = tempMarkers;
     });
+  }
+
+//Builds out the filter buttons widget for the page
+  Widget buildFilterButtons(ThemeNotifier themeNotifier) {
+    List<Widget> categoryButtons = types.map((type) {
+      return ElevatedButton(
+        onPressed: () => setState(() {
+          selectedType = type;
+          updateBuildingMarkers();
+        }),
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: selectedType == type
+                  ? Colors.transparent
+                  : AppStyles.getTextTertiary(themeNotifier.currentMode),
+              width: 1.0, // Specify the border width
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          ),
+          backgroundColor: selectedType == type
+              ? AppStyles.getPrimaryLight(themeNotifier.currentMode)
+              : AppStyles.getBackground(themeNotifier.currentMode),
+          foregroundColor: selectedType == type
+              ? Colors.white
+              : AppStyles.getTextTertiary(themeNotifier.currentMode),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+          child: Text(type),
+        ),
+      );
+    }).toList();
+
+    // Use SideScrollingWidget to display category buttons
+    return SideScrollingWidget(
+      children: categoryButtons,
+    );
   }
 
   void updateUserLocationMarker(LocationData currentLocation) {
@@ -148,7 +210,7 @@ class _MapPageState extends State<MapPage> {
                               onTap: () {
                                 setState(() {
                                   isExpanded = !isExpanded;
-                                  menuExpanded = false;
+                                  filtersExpanded = false;
                                 });
                               },
                               child: Container(
@@ -169,68 +231,106 @@ class _MapPageState extends State<MapPage> {
                               children: [
                                 Expanded(
                                     child: TextField(
-                                        style: TextStyle(
-                                          color: AppStyles.getTextPrimary(
-                                              themeNotifier
-                                                  .currentMode), // Set text color
-                                        ),
-                                        decoration: InputDecoration(
-                                          hintText: 'Search for a building...',
-                                          hintStyle: TextStyle(
-                                            color: AppStyles.getInactiveIcon(
-                                                themeNotifier
-                                                    .currentMode), // Set hint text color
-                                          ),
-                                          prefixIcon: Icon(
-                                            Icons.search,
-                                            color: AppStyles.getTextPrimary(
-                                                themeNotifier
-                                                    .currentMode), // Set icon color
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: AppStyles.getTextPrimary(
-                                                  themeNotifier
-                                                      .currentMode), // Set border color
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: AppStyles.getTextPrimary(
-                                                  themeNotifier
-                                                      .currentMode), // Set border color when the TextField is focused
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                        ),
-                                        onChanged: (value) =>
-                                            {} //updateSearchQuery,
-                                        )),
+                                  style: TextStyle(
+                                    color: AppStyles.getTextPrimary(
+                                        themeNotifier
+                                            .currentMode), // Set text color
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: 'Search for a building...',
+                                    hintStyle: TextStyle(
+                                      color: AppStyles.getInactiveIcon(
+                                          themeNotifier
+                                              .currentMode), // Set hint text color
+                                    ),
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      color: AppStyles.getTextPrimary(
+                                          themeNotifier
+                                              .currentMode), // Set icon color
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppStyles.getTextPrimary(
+                                            themeNotifier
+                                                .currentMode), // Set border color
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppStyles.getTextPrimary(
+                                            themeNotifier
+                                                .currentMode), // Set border color when the TextField is focused
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                  ),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      searchQuery = value.toLowerCase();
+                                      updateBuildingMarkers();
+                                    });
+                                  },
+                                )),
                                 SizedBox(width: 16),
                                 InkWell(
                                     onTap: () {
                                       setState(() {
-                                        menuExpanded = !menuExpanded;
+                                        filtersExpanded = !filtersExpanded;
                                       });
                                     },
                                     child: Container(
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(8),
-                                            color: AppStyles.getPrimaryLight(
-                                                themeNotifier.currentMode)),
+                                            color: filtersExpanded
+                                                ? AppStyles.getPrimaryLight(
+                                                    themeNotifier.currentMode)
+                                                : AppStyles.getBackground(
+                                                    themeNotifier.currentMode),
+                                            border: Border(
+                                                left: BorderSide(
+                                                    width: 2,
+                                                    color: filtersExpanded
+                                                        ? Colors.transparent
+                                                        : AppStyles.getPrimaryLight(
+                                                            themeNotifier
+                                                                .currentMode)),
+                                                right: BorderSide(
+                                                    width: 2,
+                                                    color: filtersExpanded
+                                                        ? Colors.transparent
+                                                        : AppStyles.getPrimaryLight(
+                                                            themeNotifier.currentMode)),
+                                                bottom: BorderSide(width: 2, color: filtersExpanded ? Colors.transparent : AppStyles.getPrimaryLight(themeNotifier.currentMode)),
+                                                top: BorderSide(width: 2, color: filtersExpanded ? Colors.transparent : AppStyles.getPrimaryLight(themeNotifier.currentMode)))),
                                         padding: EdgeInsets.all(12),
                                         child: Icon(
-                                          Icons.menu_rounded,
-                                          color: Colors.white,
+                                          Icons.filter_alt,
+                                          color: filtersExpanded
+                                              ? Colors.white
+                                              : AppStyles.getPrimaryLight(
+                                                  themeNotifier.currentMode),
                                           size: 32,
-                                        )))
+                                        ))),
                               ],
-                            )
+                            ),
                           ])
+                        : Container(),
+                    filtersExpanded
+                        ? Container(
+                            decoration: BoxDecoration(
+                                color: AppStyles.getBackground(
+                                    themeNotifier.currentMode)),
+                            child: Column(
+                              children: [
+                                SizedBox(height: 16),
+                                Container(
+                                  child: buildFilterButtons(themeNotifier),
+                                ),
+                              ],
+                            ))
                         : Container()
                   ],
                 )),

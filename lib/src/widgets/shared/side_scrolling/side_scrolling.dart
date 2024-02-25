@@ -11,10 +11,10 @@ class SideScrollingWidget extends StatelessWidget {
 ///////////////////////
   //Main Widget
 ///////////////////////
-@override
-Widget build(BuildContext context) {
-  return SingleChildScrollView(
-    scrollDirection: Axis.horizontal,
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
       child: Row(
         children: [
           //left margin
@@ -22,15 +22,15 @@ Widget build(BuildContext context) {
           //The ... (spread) operator is used to insert the contents of the children list into a new list
           ...children
               .map((child) => Container(
-                    margin: EdgeInsets.only(right: itemSpacing), // Add right margin for spacing
-                    child: child,
-                  ))
+            margin: EdgeInsets.only(right: itemSpacing), // Add right margin for spacing
+            child: child,
+          ))
               .toList(),
-          //right margin
+//right margin
           const SizedBox(width: 16),
         ],
       ),
-  );
-}
+    );
+  }
 
 }
