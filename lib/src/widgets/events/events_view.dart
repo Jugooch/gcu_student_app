@@ -129,7 +129,7 @@ class _EventsState extends State<EventsView> {
                       ))
                   .toList(),
             ),
-            const SizedBox(height: 24.0),
+            const SizedBox(height: 16.0),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 32),
               child: Padding(
