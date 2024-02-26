@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
-import 'package:gcu_student_app/src/widgets/community/pages/intramurals/joining-league/intramurals-joinleague.dart';
-import 'package:gcu_student_app/src/widgets/community/pages/intramurals/widgets/team_card.dart';
-import 'package:gcu_student_app/src/widgets/community/pages/intramurals/widgets/upcomingGame_card.dart';
+import 'package:gcu_student_app/src/widgets/community/pages/intramurals/intramurals-joinleague.dart';
+import 'package:gcu_student_app/src/widgets/community/widgets/intramurals/team_card.dart';
+import 'package:gcu_student_app/src/widgets/community/widgets/intramurals/upcomingGame_card.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
 import 'package:provider/provider.dart';
 

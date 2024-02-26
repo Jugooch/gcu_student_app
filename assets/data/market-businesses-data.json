@@ -1,0 +1,146 @@
+[
+    {
+        "id": 1,
+        "name": "Trendy Tech",
+        "description": "Latest gadgets and tech accessories for students.",
+        "image": "assets/images/Lopes.jpg",
+        "ownerId": "20692303",
+        "categories": ["Technology"]
+      },
+      {
+        "id": 2,
+        "name": "Campus Crafts",
+        "description": "Handmade crafts perfect for dorm decorating.",
+        "image": "assets/images/Market.png",
+        "ownerId": "20692303",
+        "categories": ["Crafts"]
+      },
+      {
+        "id": 3,
+        "name": "Study Snacks",
+        "description": "Healthy and delicious snacks to fuel your study sessions.",
+        "image": "assets/images/LipSync.jpg",
+        "ownerId": "20692400",
+        "categories": ["Food"]
+      },
+      {
+        "id": 4,
+        "name": "Fashion Forward",
+        "description": "Chic and affordable fashion for the college lifestyle.",
+        "image": "assets/images/Lopes.jpg",
+        "ownerId": "20692400",
+        "categories": ["Clothes"]
+      },
+      {
+        "id": 5,
+        "name": "Dorm Decor",
+        "description": "Make your dorm feel like home with our unique decor items.",
+        "image": "assets/images/Market.png",
+        "ownerId": "20692500",
+        "categories": ["Home Supplies"]
+      },
+      {
+        "id": 6,
+        "name": "Beauty Basics",
+        "description": "Cosmetic and skincare products tailored for students.",
+        "image": "assets/images/Market.png",
+        "ownerId": "20692500",
+        "categories": ["Cosmetics"]
+      },
+      {
+        "id": 7,
+        "name": "Fitness Finds",
+        "description": "Affordable fitness gear and equipment for students.",
+        "image": "assets/images/Lopes.jpg",
+        "ownerId": "20692500",
+        "categories": ["Athletics"]
+      },
+      {
+        "id": 8,
+        "name": "Artistic Avenue",
+        "description": "Supplies and workshops for the artistically inclined.",
+        "image": "assets/images/Market.png",
+        "ownerId": "20692500",
+        "categories": ["Art"]
+      },
+      {
+        "id": 9,
+        "name": "Sustainable Styles",
+        "description": "Eco-friendly clothing and accessories.",
+        "image": "assets/images/LipSync.jpg",
+        "ownerId": "20692303",
+        "categories": ["Clothes"]
+      },
+      {
+        "id": 10,
+        "name": "Global Gourmet",
+        "description": "International food items to expand your culinary horizons.",
+        "image": "assets/images/Market.png",
+        "ownerId": "20692303",
+        "categories": ["Food"]
+      },
+      {
+        "id": 11,
+        "name": "Study Supplies",
+        "description": "All the essentials for a successful academic year.",
+        "image": "assets/images/Lopes.jpg",
+        "ownerId": "20692303",
+        "categories": ["Crafts"]
+      },
+      {
+        "id": 12,
+        "name": "Cozy Comforts",
+        "description": "Everything you need to make your living space cozy and inviting.",
+        "image": "assets/images/LipSync.jpg",
+        "ownerId": "20692303",
+        "categories": ["Home Supplies"]
+      },
+      {
+        "id": 13,
+        "name": "Tech Trends",
+        "description": "Stay up-to-date with the latest in technology and gadgets.",
+        "image": "assets/images/LipSync.jpg",
+        "ownerId": "20692303",
+        "categories": ["Technology"]
+      },
+      {
+        "id": 14,
+        "name": "Creative Corner",
+        "description": "Your one-stop shop for all things creative and crafty.",
+        "image": "assets/images/LipSync.jpg",
+        "ownerId": "20692400",
+        "categories": ["Crafts"]
+      },
+      {
+        "id": 15,
+        "name": "Campus Couture",
+        "description": "Fashionable finds for every college occasion.",
+        "image": "assets/images/Lopes.jpg",
+        "ownerId": "20692400",
+        "categories": ["Clothes"]
+      },
+      {
+        "id": 16,
+        "name": "Wellness Wonders",
+        "description": "Products and services to keep you healthy and balanced.",
+        "image": "assets/images/LipSync.jpg",
+        "ownerId": "20692500",
+        "categories": ["Cosmetics"]
+      },
+      {
+        "id": 17,
+        "name": "Athlete's Alley",
+        "description": "Gear and apparel for all your athletic endeavors.",
+        "image": "assets/images/LipSync.jpg",
+        "ownerId": "20692500",
+        "categories": ["Athletics"]
+      },
+      {
+        "id": 18,
+        "name": "Gourmet Galore",
+        "description": "Gourmet food items to make every meal special.",
+        "image": "assets/images/Lopes.jpg",
+        "ownerId": "20692500",
+        "categories": ["Food"]
+      }
+]

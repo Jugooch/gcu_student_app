@@ -5,8 +5,7 @@ import 'package:gcu_student_app/src/services/services.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-import '../../pages.dart';
-import '../joining-league/intramurals-joinleague2.dart';
+import '../../pages/intramurals/intramurals-joinleague2.dart';
 
 class AddLeagueCard extends StatefulWidget {
   //pass in an event object

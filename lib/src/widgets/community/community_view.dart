@@ -80,7 +80,7 @@ body: Container(
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const IntramuralsPage()),
+                          builder: (context) => const MarketPage()),
                     );
                   },
                   style: ButtonStyle(

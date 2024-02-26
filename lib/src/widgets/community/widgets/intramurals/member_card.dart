@@ -5,8 +5,6 @@ import 'package:gcu_student_app/src/services/services.dart';
 import 'package:gcu_student_app/src/widgets/community/pages/intramurals/intramural-team.dart';
 import 'package:provider/provider.dart';
 
-import '../../pages.dart';
-
 class MemberCard extends StatefulWidget {
   //pass in an event object
   final Member member;

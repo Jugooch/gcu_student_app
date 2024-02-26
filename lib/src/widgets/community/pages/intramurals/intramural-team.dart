@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
-import 'package:gcu_student_app/src/widgets/community/pages/intramurals/joining-league/intramurals-quiz.dart';
-import 'package:gcu_student_app/src/widgets/community/pages/intramurals/widgets/leagueInfo_dropdown.dart';
-import 'package:gcu_student_app/src/widgets/community/pages/intramurals/widgets/member_card.dart';
-import 'package:gcu_student_app/src/widgets/community/pages/intramurals/widgets/upcomingGame_card.dart';
+import 'package:gcu_student_app/src/widgets/community/pages/intramurals/intramurals-quiz.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-import 'widgets/team_info.dart';
+import '../../widgets/intramurals/leagueInfo_dropdown.dart';
+import '../../widgets/intramurals/member_card.dart';
+import '../../widgets/intramurals/team_info.dart';
+import '../../widgets/intramurals/upcomingGame_card.dart';
 
 class IntramuralsTeam extends StatefulWidget {
   final Team team;

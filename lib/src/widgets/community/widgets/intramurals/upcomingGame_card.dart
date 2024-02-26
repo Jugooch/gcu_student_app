@@ -5,8 +5,7 @@ import 'package:gcu_student_app/src/services/services.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-import '../../pages.dart';
-import '../intramural-team.dart';
+import '../../pages/intramurals/intramural-team.dart';
 
 class UpcomingGameCard extends StatefulWidget {
   //pass in an event object

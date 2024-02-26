@@ -1,3 +1,5 @@
 [
-    {"name": "Justice Gooch", "id": "20692303", "image": "assets/images/Me.png"}
+    {"name": "Justice Gooch", "id": "20692303", "image": "assets/images/Me.png"},
+    {"name": "John Smith", "id": "20692400", "image": "assets/images/Avatar.png"},
+    {"name": "Jake Dolittle", "id": "20692500", "image": "assets/images/Lopes.jpg"}
 ]

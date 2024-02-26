@@ -1,0 +1,93 @@
+[
+    {
+      "name": "Eco-friendly Notebook",
+      "price": 12.99,
+      "description": "A notebook made from recycled materials, perfect for all your note-taking needs.",
+      "businessId": 1,
+      "category": "Crafts"
+    },
+    {
+      "name": "Wireless Bluetooth Headphones",
+      "price": 59.99,
+      "description": "Experience high-quality sound without the wires. Comfortable design, built for long listening sessions.",
+      "businessId": 5,
+      "category": "Technology"
+    },
+    {
+      "name": "Organic Green Tea",
+      "price": 5.49,
+      "description": "A soothing, antioxidant-rich green tea, sourced from sustainable farms.",
+      "businessId": 2,
+      "category": "Food"
+    },
+    {
+      "name": "Handcrafted Leather Wallet",
+      "price": 45.00,
+      "description": "A durable, stylish wallet made from premium leather by skilled artisans.",
+      "businessId": 3,
+      "category": "Crafts"
+    },
+    {
+      "name": "Reusable Water Bottle",
+      "price": 20.00,
+      "description": "Stay hydrated and eco-friendly with our durable, BPA-free water bottle.",
+      "businessId": 4,
+      "category": "Home Supplies"
+    },
+    {
+        "name": "Eco-friendly Notebook 2",
+        "price": 12.99,
+        "description": "A notebook made from recycled materials, perfect for all your note-taking needs.",
+        "businessId": 1,
+        "category": "Crafts"
+      },
+      {
+        "name": "Eco-friendly Notebook 3",
+        "price": 12.99,
+        "description": "A notebook made from recycled materials, perfect for all your note-taking needs.",
+        "businessId": 1,
+        "category": "Crafts"
+      },
+      {
+        "name": "Eco-friendly Notebook 4",
+        "price": 12.99,
+        "description": "A notebook made from recycled materials, perfect for all your note-taking needs.",
+        "businessId": 1,
+        "category": "Crafts"
+      },
+      {
+        "name": "Eco-friendly Notebook 5",
+        "price": 12.99,
+        "description": "A notebook made from recycled materials, perfect for all your note-taking needs.",
+        "businessId": 1,
+        "category": "Crafts"
+      },
+      {
+        "name": "Wireless Bluetooth Headphones 2",
+        "price": 59.99,
+        "description": "Experience high-quality sound without the wires. Comfortable design, built for long listening sessions.",
+        "businessId": 5,
+        "category": "Technology"
+      },
+      {
+        "name": "Organic Green Tea 2",
+        "price": 5.49,
+        "description": "A soothing, antioxidant-rich green tea, sourced from sustainable farms.",
+        "businessId": 2,
+        "category": "Food"
+      },
+      {
+        "name": "Handcrafted Leather Wallet 2",
+        "price": 45.00,
+        "description": "A durable, stylish wallet made from premium leather by skilled artisans.",
+        "businessId": 3,
+        "category": "Crafts"
+      },
+      {
+        "name": "Reusable Water Bottle 2",
+        "price": 20.00,
+        "description": "Stay hydrated and eco-friendly with our durable, BPA-free water bottle.",
+        "businessId": 4,
+        "category": "Home Supplies"
+      }
+  ]

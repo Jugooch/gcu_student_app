@@ -3,6 +3,32 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'app_styling.dart';
+import 'services/services.dart';
+
+class UserNotifier extends ChangeNotifier {
+  User _currentUser = User(name: "Justice Gooch", id: "20692303", image: "assets/images/Me.png");
+
+  getTestUser() async {
+    User user = await UserService().getUser("20692303");
+    setUser(user);
+  }
+
+  User get currentuser => _currentUser;
+
+  set currentUser(User user) {
+    if(_currentUser != user){
+      _currentUser = user;
+      notifyListeners();
+    }
+  }
+
+  setUser(User user) {
+    if(_currentUser != user){
+      _currentUser = user;
+      notifyListeners();
+    }
+  }
+}
 
 //Keeps track of the current theme of the app
 class ThemeNotifier extends ChangeNotifier {
