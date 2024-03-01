@@ -7,6 +7,7 @@ import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/shared-services/map-service.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
 import 'package:gcu_student_app/src/widgets/shared/expandable-text/expandable_text.dart';
+import 'package:gcu_student_app/src/widgets/shared/loading/loading.dart';
 import 'package:gcu_student_app/src/widgets/shared/side_scrolling/side_scrolling.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
@@ -51,6 +52,7 @@ class _MapPageState extends State<MapPage> {
   void initState() {
     super.initState();
     initializeLocationService();
+    futureBuildings = MapService().getBuildings();
     fetchData();
   }
 
@@ -62,10 +64,11 @@ class _MapPageState extends State<MapPage> {
         location.onLocationChanged.listen(updateUserLocationMarker);
   }
 
-  Future<void> fetchData() async {
-    futureBuildings = MapService().getBuildings();
+  fetchData() async {
     buildings = await futureBuildings;
     updateBuildingMarkers();
+
+    return futureBuildings;
   }
 
   void updateBuildingMarkers() {
@@ -165,177 +168,202 @@ class _MapPageState extends State<MapPage> {
             child: Container(
               color: const Color(0xFF522498),
             )),
-        body: Stack(children: [
-          FlutterMap(
-            mapController: mapController,
-            options: MapOptions(
-                initialCenter: LatLng(33.5127901870539, -112.12739983255989),
-                initialZoom: 17,
-                cameraConstraint: CameraConstraint.containCenter(
-                    bounds: LatLngBounds(
-                        LatLng(33.51753154279918, -112.13456797800325),
-                        LatLng(33.50968308297375, -112.11300907234751)))),
-            children: [
-              TileLayer(
-                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.gcu.gcu_student_app',
-              ),
-              MarkerLayer(markers: mapMarkers),
-              RichAttributionWidget(
-                attributions: [
-                  TextSourceAttribution(
-                    'OpenStreetMap contributors',
-                    onTap: () => launchUrl(
-                        Uri.parse('https://openstreetmap.org/copyright')),
+        body: FutureBuilder<List<MapBuilding>>(
+            future: futureBuildings,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Loading();
+              } else if (snapshot.hasError) {
+                return Text("Error: ${snapshot.error}");
+              } else {
+                // Data is loaded
+                return Stack(children: [
+                  FlutterMap(
+                    mapController: mapController,
+                    options: MapOptions(
+                        initialCenter:
+                            LatLng(33.5127901870539, -112.12739983255989),
+                        initialZoom: 17,
+                        cameraConstraint: CameraConstraint.containCenter(
+                            bounds: LatLngBounds(
+                                LatLng(33.51753154279918, -112.13456797800325),
+                                LatLng(
+                                    33.50968308297375, -112.11300907234751)))),
+                    children: [
+                      TileLayer(
+                        urlTemplate:
+                            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        userAgentPackageName: 'com.gcu.gcu_student_app',
+                      ),
+                      MarkerLayer(markers: mapMarkers),
+                      RichAttributionWidget(
+                        attributions: [
+                          TextSourceAttribution(
+                            'OpenStreetMap contributors',
+                            onTap: () => launchUrl(Uri.parse(
+                                'https://openstreetmap.org/copyright')),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ],
-          ),
-          Wrap(children: [
-            Container(
-                decoration: BoxDecoration(
-                    color: AppStyles.getBackground(themeNotifier.currentMode)),
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CustomBackButton(),
-                          Image.asset('assets/images/ErrorImage.png',
-                              width: 64),
-                          InkWell(
-                              onTap: () {
-                                setState(() {
-                                  isExpanded = !isExpanded;
-                                  filtersExpanded = false;
-                                });
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(8),
-                                child: Icon(
-                                    isExpanded
-                                        ? Icons.keyboard_arrow_up
-                                        : Icons.keyboard_arrow_down,
-                                    size: 32,
-                                    color: AppStyles.getTextPrimary(
-                                        themeNotifier.currentMode)),
-                              ))
-                        ]),
-                    isExpanded
-                        ? Column(children: [
-                            SizedBox(height: 16),
+                  Wrap(children: [
+                    Container(
+                        decoration: BoxDecoration(
+                            color: AppStyles.getBackground(
+                                themeNotifier.currentMode)),
+                        padding: EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Row(
-                              children: [
-                                Expanded(
-                                    child: TextField(
-                                  style: TextStyle(
-                                    color: AppStyles.getTextPrimary(
-                                        themeNotifier
-                                            .currentMode), // Set text color
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'Search for a building...',
-                                    hintStyle: TextStyle(
-                                      color: AppStyles.getInactiveIcon(
-                                          themeNotifier
-                                              .currentMode), // Set hint text color
-                                    ),
-                                    prefixIcon: Icon(
-                                      Icons.search,
-                                      color: AppStyles.getTextPrimary(
-                                          themeNotifier
-                                              .currentMode), // Set icon color
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppStyles.getTextPrimary(
-                                            themeNotifier
-                                                .currentMode), // Set border color
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppStyles.getTextPrimary(
-                                            themeNotifier
-                                                .currentMode), // Set border color when the TextField is focused
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                  ),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      searchQuery = value.toLowerCase();
-                                      updateBuildingMarkers();
-                                    });
-                                  },
-                                )),
-                                SizedBox(width: 16),
-                                InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        filtersExpanded = !filtersExpanded;
-                                      });
-                                    },
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            color: filtersExpanded
-                                                ? AppStyles.getPrimaryLight(
-                                                    themeNotifier.currentMode)
-                                                : AppStyles.getBackground(
-                                                    themeNotifier.currentMode),
-                                            border: Border(
-                                                left: BorderSide(
-                                                    width: 2,
-                                                    color: filtersExpanded
-                                                        ? Colors.transparent
-                                                        : AppStyles.getPrimaryLight(
-                                                            themeNotifier
-                                                                .currentMode)),
-                                                right: BorderSide(
-                                                    width: 2,
-                                                    color: filtersExpanded
-                                                        ? Colors.transparent
-                                                        : AppStyles.getPrimaryLight(
-                                                            themeNotifier.currentMode)),
-                                                bottom: BorderSide(width: 2, color: filtersExpanded ? Colors.transparent : AppStyles.getPrimaryLight(themeNotifier.currentMode)),
-                                                top: BorderSide(width: 2, color: filtersExpanded ? Colors.transparent : AppStyles.getPrimaryLight(themeNotifier.currentMode)))),
-                                        padding: EdgeInsets.all(12),
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CustomBackButton(),
+                                  Image.asset('assets/images/ErrorImage.png',
+                                      width: 64),
+                                  InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          isExpanded = !isExpanded;
+                                          filtersExpanded = false;
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(8),
                                         child: Icon(
-                                          Icons.filter_alt,
-                                          color: filtersExpanded
-                                              ? Colors.white
-                                              : AppStyles.getPrimaryLight(
-                                                  themeNotifier.currentMode),
-                                          size: 32,
-                                        ))),
-                              ],
-                            ),
-                          ])
-                        : Container(),
-                    filtersExpanded
-                        ? Container(
-                            decoration: BoxDecoration(
-                                color: AppStyles.getBackground(
-                                    themeNotifier.currentMode)),
-                            child: Column(
-                              children: [
-                                SizedBox(height: 16),
-                                Container(
-                                  child: buildFilterButtons(themeNotifier),
-                                ),
-                              ],
-                            ))
-                        : Container()
-                  ],
-                )),
-          ]),
-        ]));
+                                            isExpanded
+                                                ? Icons.keyboard_arrow_up
+                                                : Icons.keyboard_arrow_down,
+                                            size: 32,
+                                            color: AppStyles.getTextPrimary(
+                                                themeNotifier.currentMode)),
+                                      ))
+                                ]),
+                            isExpanded
+                                ? Column(children: [
+                                    SizedBox(height: 16),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                            child: TextField(
+                                          style: TextStyle(
+                                            color: AppStyles.getTextPrimary(
+                                                themeNotifier
+                                                    .currentMode), // Set text color
+                                          ),
+                                          decoration: InputDecoration(
+                                            hintText:
+                                                'Search for a building...',
+                                            hintStyle: TextStyle(
+                                              color: AppStyles.getInactiveIcon(
+                                                  themeNotifier
+                                                      .currentMode), // Set hint text color
+                                            ),
+                                            prefixIcon: Icon(
+                                              Icons.search,
+                                              color: AppStyles.getTextPrimary(
+                                                  themeNotifier
+                                                      .currentMode), // Set icon color
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppStyles.getTextPrimary(
+                                                    themeNotifier
+                                                        .currentMode), // Set border color
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppStyles.getTextPrimary(
+                                                    themeNotifier
+                                                        .currentMode), // Set border color when the TextField is focused
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                          ),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              searchQuery = value.toLowerCase();
+                                              updateBuildingMarkers();
+                                            });
+                                          },
+                                        )),
+                                        SizedBox(width: 16),
+                                        InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                filtersExpanded =
+                                                    !filtersExpanded;
+                                              });
+                                            },
+                                            child: Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    color: filtersExpanded
+                                                        ? AppStyles.getPrimaryLight(
+                                                            themeNotifier
+                                                                .currentMode)
+                                                        : AppStyles.getBackground(
+                                                            themeNotifier
+                                                                .currentMode),
+                                                    border: Border(
+                                                        left: BorderSide(
+                                                            width: 2,
+                                                            color: filtersExpanded
+                                                                ? Colors
+                                                                    .transparent
+                                                                : AppStyles.getPrimaryLight(
+                                                                    themeNotifier
+                                                                        .currentMode)),
+                                                        right: BorderSide(width: 2, color: filtersExpanded ? Colors.transparent : AppStyles.getPrimaryLight(themeNotifier.currentMode)),
+                                                        bottom: BorderSide(width: 2, color: filtersExpanded ? Colors.transparent : AppStyles.getPrimaryLight(themeNotifier.currentMode)),
+                                                        top: BorderSide(width: 2, color: filtersExpanded ? Colors.transparent : AppStyles.getPrimaryLight(themeNotifier.currentMode)))),
+                                                padding: EdgeInsets.all(12),
+                                                child: Icon(
+                                                  Icons.filter_alt,
+                                                  color: filtersExpanded
+                                                      ? Colors.white
+                                                      : AppStyles
+                                                          .getPrimaryLight(
+                                                              themeNotifier
+                                                                  .currentMode),
+                                                  size: 32,
+                                                ))),
+                                      ],
+                                    ),
+                                  ])
+                                : Container(),
+                            filtersExpanded
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                        color: AppStyles.getBackground(
+                                            themeNotifier.currentMode)),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(height: 16),
+                                        Container(
+                                          child:
+                                              buildFilterButtons(themeNotifier),
+                                        ),
+                                      ],
+                                    ))
+                                : Container()
+                          ],
+                        )),
+                  ]),
+                ]
+              );
+            }
+          }
+        )
+      );
   }
 
   void _showBuildingInfo(MapBuilding building) {

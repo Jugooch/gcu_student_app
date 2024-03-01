@@ -6,31 +6,88 @@ import '../services.dart';
 class MarketService {
   // Fetches the list of businesses from a JSON file or database
   Future<List<Business>> getBusinesses() async {
-    final String response = await rootBundle.loadString('assets/data/market-businesses-data.json');
+    final String response =
+        await rootBundle.loadString('assets/data/market-businesses-data.json');
     final data = await json.decode(response);
     return (data as List).map((i) => Business.fromJson(i)).toList();
   }
 
     // Fetches the list of businesses from a JSON file or database
-  Future<List<Business>> getUserBusinesses(User user) async {
-    final String response = await rootBundle.loadString('assets/data/market-businesses-data.json');
+  Future<List<Business>> getFeaturedBusinesses() async {
+    final String response =
+        await rootBundle.loadString('assets/data/market-featured-businesses-data.json');
     final data = await json.decode(response);
-    return (data as List).map((i) => Business.fromJson(i)).where((element) => element.ownerId == user.id).toList();
+    return (data as List).map((i) => Business.fromJson(i)).toList();
   }
 
-  // Fetches the products for a specific business
-  Future<List<Product>> getProducts(int businessId) async {
-    final String response = await rootBundle.loadString('assets/data/market-products-data.json');
+  // Fetches the list of businesses from a JSON file or database
+  Future<List<Business>> getUserBusinesses(User user) async {
+    final String response =
+        await rootBundle.loadString('assets/data/market-businesses-data.json');
     final data = await json.decode(response);
+    return (data as List)
+        .map((i) => Business.fromJson(i))
+        .where((element) => element.ownerId == user.id)
+        .toList();
+  }
+
+// Fetches the products for a specific business
+  Future<List<Product>> getProducts(int businessId) async {
+    final String response =
+        await rootBundle.loadString('assets/data/market-products-data.json');
+    final data = await json.decode(response);
+
+    // Fetch the business first
+    Business business = await MarketService().getProductBusiness(businessId);
+
+    // Create product instances with the business object
     List<Product> products = (data as List)
-        .map((i) => Product.fromJson(i))
+        .map((i) =>
+            Product.fromJson(i, business: business)) // Pass the business object
         .where((product) => product.businessId == businessId)
         .toList();
+
     return products;
+  }
+
+  // Fetches the business for a product
+  Future<Business> getProductBusiness(int businessId) async {
+    final String response =
+        await rootBundle.loadString('assets/data/market-businesses-data.json');
+    final data = await json.decode(response);
+    Business products = (data as List)
+        .map((i) => Business.fromJson(i))
+        .firstWhere((business) => business.id == businessId);
+    return products;
+  }
+
+  Future<List<Product>> getLikedProducts(User user) async {
+    // Load user likes
+    final String userLikesString = await rootBundle.loadString('assets/data/market-user-likes-data.json');
+    final List userLikesData = json.decode(userLikesString);
+    final likedProductIds = userLikesData
+        .firstWhere((like) => like['userId'] == user.id, orElse: () => {"likedProductIds": []})['likedProductIds'] as List;
+
+    // Load all products and filter by liked IDs
+    final String productsString =
+        await rootBundle.loadString('assets/data/market-products-data.json');
+    final List productsData = json.decode(productsString);
+    List<Product> likedProducts = [];
+
+    for (var productId in likedProductIds) {
+      var productJson =
+          productsData.firstWhere((product) => product['id'] == productId);
+      Business business = await getProductBusiness(productJson['businessId']);
+      Product product = Product.fromJson(productJson, business: business);
+      likedProducts.add(product);
+    }
+
+    return likedProducts;
   }
 }
 
 class Business {
+  final int id;
   final String name;
   final String description;
   final String image;
@@ -38,6 +95,7 @@ class Business {
   final List<String> categories;
 
   Business({
+    required this.id,
     required this.name,
     required this.description,
     required this.image,
@@ -47,6 +105,7 @@ class Business {
 
   factory Business.fromJson(Map<String, dynamic> json) {
     return Business(
+      id: json['id'],
       name: json['name'],
       description: json['description'],
       image: json['image'],
@@ -57,27 +116,40 @@ class Business {
 }
 
 class Product {
+  final int id;
   final String name;
   final double price;
   final String description;
   final int businessId;
   final String category;
+  final String image;
+  final Business business;
+  final bool featured;
 
   Product({
+    required this.id,
     required this.name,
     required this.price,
     required this.description,
     required this.businessId,
-    required this.category
+    required this.category,
+    required this.image,
+    required this.business,
+    required this.featured
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) {
+  factory Product.fromJson(Map<String, dynamic> json,
+      {required Business business}) {
     return Product(
+      id: json['id'],
       name: json['name'],
       price: json['price'],
       description: json['description'],
       businessId: json['businessId'],
-      category: json['category']
+      category: json['category'],
+      image: json['image'],
+      business: business, // Use the passed business object
+      featured: json['featured']
     );
   }
 }

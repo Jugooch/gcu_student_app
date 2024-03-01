@@ -8,6 +8,7 @@ import 'package:gcu_student_app/src/widgets/shared/side_scrolling/side_scrolling
 import 'package:provider/provider.dart';
 
 import '../../../../services/services.dart';
+import '../../widgets/market/product-card.dart';
 
 class MarketUser extends StatefulWidget {
   const MarketUser({Key? key}) : super(key: key);
@@ -24,6 +25,8 @@ class _MarketUser extends State<MarketUser> {
   User user = User(name: "", id: "", image: "assets/images/Me.png");
   late Future<List<Business>> userBusinessesFuture;
   List<Business> userBusinesses = [];
+  late Future<List<Product>> likedProductsFuture;
+  List<Product> likedProducts = [];
 
   ///////////////////////
   //Initialize State and Data
@@ -43,6 +46,10 @@ class _MarketUser extends State<MarketUser> {
 
     userBusinessesFuture = MarketService().getUserBusinesses(user);
     userBusinesses = await userBusinessesFuture;
+    userBusinesses.add(Business(id: -1, name: "Add", description: "", image: "", ownerId: "", categories: []));
+
+    likedProductsFuture = MarketService().getLikedProducts(user);
+    likedProducts = await likedProductsFuture;
 
     setState(() {
       // Trigger a rebuild with the fetched data
@@ -81,7 +88,20 @@ class _MarketUser extends State<MarketUser> {
                     ),
                   )),
                   SizedBox(height: 16),
-                  SideScrollingWidget(children: userBusinesses.map((e) => UserBusinessCard(business: e)).toList())
+                  SideScrollingWidget(children: userBusinesses.map((e) => UserBusinessCard(business: e)).toList()),
+                  SizedBox(height: 32),
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 32), child: Text(
+                    'Liked Products',
+                    style: TextStyle(
+                      color:
+                          AppStyles.getTextPrimary(themeNotifier.currentMode),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+                  SizedBox(height: 16),
+                  SideScrollingWidget(children: likedProducts.map((e) => ProductCard(product: e)).toList()),
+                  SizedBox(height: 16)
                 ]),
         ));
   }

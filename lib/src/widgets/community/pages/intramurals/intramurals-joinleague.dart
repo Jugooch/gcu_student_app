@@ -6,6 +6,7 @@ import 'package:gcu_student_app/src/widgets/community/widgets/intramurals/addLea
 import 'package:gcu_student_app/src/widgets/community/widgets/intramurals/im_info.dart';
 import 'package:gcu_student_app/src/widgets/profile/widgets/profile_info.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
+import 'package:gcu_student_app/src/widgets/shared/loading/loading.dart';
 import 'package:provider/provider.dart';
 
 class IntramuralsJoinLeague extends StatefulWidget {
@@ -19,7 +20,7 @@ class _IntramuralsJoinLeagueState extends State<IntramuralsJoinLeague> {
   ///////////////////////
   //Properties
   ///////////////////////
-  late Future<List<League>> leaguesFuture;
+  Future<List<League>>? leaguesFuture;
   List<League> leagues = [];
   List<League> leaguesScheduled = [];
   List<League> leaguesCurrent = [];
@@ -38,14 +39,14 @@ class _IntramuralsJoinLeagueState extends State<IntramuralsJoinLeague> {
   }
 
   ///////////////////////
-  //Fetch All Data on Events and Articles
+  //Fetch All Data
   ///////////////////////
+
   Future<void> fetchData() async {
     userFuture = UserService().getUser("20692303");
     user = await userFuture;
-
     leaguesFuture = IntramuralService().getLeagues(user);
-    leagues = await leaguesFuture;
+    leagues = (await leaguesFuture)!;
 
     DateTime now = DateTime.now();
     leaguesCurrent = leagues
@@ -98,12 +99,11 @@ class _IntramuralsJoinLeagueState extends State<IntramuralsJoinLeague> {
   Widget buildLeagueCards(List<League> leagues, bool isAvailable) {
     return Column(
       children: leagues.map((league) {
-
         //check if the start date is within 2 weeks, if so, open up league for teams to join
         if (league.seasonStart.difference(DateTime.now()).inDays <= 14) {
           isAvailable = true;
         }
-        if(league.seasonEnd.isBefore(DateTime.now())){
+        if (league.seasonEnd.isBefore(DateTime.now())) {
           isAvailable = false;
         }
 
@@ -137,179 +137,194 @@ class _IntramuralsJoinLeagueState extends State<IntramuralsJoinLeague> {
           ),
         ),
         backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomBackButton(),
+        body: FutureBuilder<List<League>>(
+            future: leaguesFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Data is still loading
+                return Loading();
+              } else if (snapshot.hasError) {
+                // Handle error state
+                return Center(child: Text("Error loading data"));
+              } else {
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomBackButton(),
 
-              // IM Information
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 32),
-                child: Center(
-                  child: IMInfo(),
-                ),
-              ),
-
-              SizedBox(height: 16.0),
-
-              Container(
-                decoration: BoxDecoration(
-                  color: AppStyles.getCardBackground(themeNotifier.currentMode),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          // Set the selected tab index to 0 (Current Leagues)
-                          setState(() {
-                            selectedTabIndex = 0;
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 24),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: selectedTabIndex == 0
-                                    ? AppStyles.getPrimaryLight(
-                                        themeNotifier.currentMode)
-                                    : Colors.transparent,
-                                width: 2,
-                              ),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Current",
-                              style: TextStyle(
-                                color: selectedTabIndex == 0
-                                    ? AppStyles.getPrimaryLight(
-                                        themeNotifier.currentMode)
-                                    : AppStyles.getTextPrimary(
-                                        themeNotifier.currentMode),
-                                fontSize: 16,
-                                fontWeight: selectedTabIndex == 0
-                                    ? FontWeight.w600
-                                    : FontWeight.normal,
-                              ),
-                            ),
-                          ),
+                      // IM Information
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 32),
+                        child: Center(
+                          child: IMInfo(),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          // Set the selected tab index to 1 (Scheduled Leagues)
-                          setState(() {
-                            selectedTabIndex = 1;
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 24),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: selectedTabIndex == 1
-                                    ? AppStyles.getPrimaryLight(
-                                        themeNotifier.currentMode)
-                                    : Colors.transparent,
-                                width: 2,
+
+                      SizedBox(height: 16.0),
+
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppStyles.getCardBackground(
+                              themeNotifier.currentMode),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  // Set the selected tab index to 0 (Current Leagues)
+                                  setState(() {
+                                    selectedTabIndex = 0;
+                                  });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 24),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: selectedTabIndex == 0
+                                            ? AppStyles.getPrimaryLight(
+                                                themeNotifier.currentMode)
+                                            : Colors.transparent,
+                                        width: 2,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Current",
+                                      style: TextStyle(
+                                        color: selectedTabIndex == 0
+                                            ? AppStyles.getPrimaryLight(
+                                                themeNotifier.currentMode)
+                                            : AppStyles.getTextPrimary(
+                                                themeNotifier.currentMode),
+                                        fontSize: 16,
+                                        fontWeight: selectedTabIndex == 0
+                                            ? FontWeight.w600
+                                            : FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Scheduled",
-                              style: TextStyle(
-                                color: selectedTabIndex == 1
-                                    ? AppStyles.getPrimaryLight(
-                                        themeNotifier.currentMode)
-                                    : AppStyles.getTextPrimary(
-                                        themeNotifier.currentMode),
-                                fontSize: 16,
-                                fontWeight: selectedTabIndex == 1
-                                    ? FontWeight.w600
-                                    : FontWeight.normal,
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  // Set the selected tab index to 1 (Scheduled Leagues)
+                                  setState(() {
+                                    selectedTabIndex = 1;
+                                  });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 24),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: selectedTabIndex == 1
+                                            ? AppStyles.getPrimaryLight(
+                                                themeNotifier.currentMode)
+                                            : Colors.transparent,
+                                        width: 2,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Scheduled",
+                                      style: TextStyle(
+                                        color: selectedTabIndex == 1
+                                            ? AppStyles.getPrimaryLight(
+                                                themeNotifier.currentMode)
+                                            : AppStyles.getTextPrimary(
+                                                themeNotifier.currentMode),
+                                        fontSize: 16,
+                                        fontWeight: selectedTabIndex == 1
+                                            ? FontWeight.w600
+                                            : FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  // Set the selected tab index to 1 (Past Leagues)
+                                  setState(() {
+                                    selectedTabIndex = 2;
+                                  });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 24),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: selectedTabIndex == 2
+                                            ? AppStyles.getPrimaryLight(
+                                                themeNotifier.currentMode)
+                                            : Colors.transparent,
+                                        width: 2,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Past",
+                                      style: TextStyle(
+                                        color: selectedTabIndex == 2
+                                            ? AppStyles.getPrimaryLight(
+                                                themeNotifier.currentMode)
+                                            : AppStyles.getTextPrimary(
+                                                themeNotifier.currentMode),
+                                        fontSize: 16,
+                                        fontWeight: selectedTabIndex == 2
+                                            ? FontWeight.w600
+                                            : FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          // Set the selected tab index to 1 (Past Leagues)
-                          setState(() {
-                            selectedTabIndex = 2;
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 24),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: selectedTabIndex == 2
-                                    ? AppStyles.getPrimaryLight(
-                                        themeNotifier.currentMode)
-                                    : Colors.transparent,
-                                width: 2,
-                              ),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              left: 32.0, right: 32.0, bottom: 16.0, top: 16.0),
+                          child: Column(children: [
+                            // Current Leagues
+                            Visibility(
+                              visible: selectedTabIndex == 0,
+                              child: buildLeaguesForSport(
+                                  leaguesCurrentBySport, true),
                             ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Past",
-                              style: TextStyle(
-                                color: selectedTabIndex == 2
-                                    ? AppStyles.getPrimaryLight(
-                                        themeNotifier.currentMode)
-                                    : AppStyles.getTextPrimary(
-                                        themeNotifier.currentMode),
-                                fontSize: 16,
-                                fontWeight: selectedTabIndex == 2
-                                    ? FontWeight.w600
-                                    : FontWeight.normal,
-                              ),
+
+                            // Scheduled Leagues
+                            Visibility(
+                              visible: selectedTabIndex == 1,
+                              child: buildLeaguesForSport(
+                                  leaguesScheduledBySport, false),
                             ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.only(
-                      left: 32.0, right: 32.0, bottom: 16.0, top: 16.0),
-                  child: Column(children: [
-                    // Current Leagues
-                    Visibility(
-                      visible: selectedTabIndex == 0,
-                      child: buildLeaguesForSport(leaguesCurrentBySport, true),
-                    ),
 
-                    // Scheduled Leagues
-                    Visibility(
-                      visible: selectedTabIndex == 1,
-                      child:
-                          buildLeaguesForSport(leaguesScheduledBySport, false),
-                    ),
-
-                    // Past Leagues
-                    Visibility(
-                      visible: selectedTabIndex == 2,
-                      child: buildLeaguesForSport(leaguesPastBySport, false),
-                    ),
-                  ])),
-            ],
-          ),
-        ));
+                            // Past Leagues
+                            Visibility(
+                              visible: selectedTabIndex == 2,
+                              child: buildLeaguesForSport(
+                                  leaguesPastBySport, false),
+                            ),
+                          ])),
+                    ],
+                  ),
+                );
+              }
+            }));
   }
 }

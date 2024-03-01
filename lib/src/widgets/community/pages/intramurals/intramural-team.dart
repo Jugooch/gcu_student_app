@@ -4,6 +4,7 @@ import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
 import 'package:gcu_student_app/src/widgets/community/pages/intramurals/intramurals-quiz.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
+import 'package:gcu_student_app/src/widgets/shared/loading/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -65,6 +66,7 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
   @override
   void initState() {
     super.initState();
+    futureLeague = IntramuralService().getLeague(widget.team.league);
     fetchLeague();
     setTab();
   }
@@ -72,8 +74,6 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
   fetchLeague() async {
     userFuture = UserService().getUser("20692303");
     user = await userFuture;
-
-    futureLeague = IntramuralService().getLeague(widget.team.league);
     league = await futureLeague;
 
     setState(() {});
@@ -159,7 +159,17 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
           ),
         ),
         backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
-        body: SingleChildScrollView(
+        body: FutureBuilder<League>(
+        future: futureLeague,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Data is still loading
+            return Loading();
+          } else if (snapshot.hasError) {
+            // Handle error state
+            return Center(child: Text("Error loading data"));
+          } else {
+            return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -585,6 +595,6 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
                   ])),
             ],
           ),
-        ));
+        );}}));
   }
 }

@@ -54,7 +54,23 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
   ///////////////////////
   //Initialize State and Data
   ///////////////////////
-  
+    @override
+  void initState() {
+    super.initState();
+    futureTeams = IntramuralService().getLeagueTeams(widget.league);
+    fetchData();
+  }
+
+  fetchData() async{
+    userFuture = UserService().getUser("20692303");
+    user = await userFuture;
+
+    teams = await futureTeams;
+
+    setState(() {
+      
+    });
+  }
 
   ////////////////////////////////
   ///Format the date in a readable way

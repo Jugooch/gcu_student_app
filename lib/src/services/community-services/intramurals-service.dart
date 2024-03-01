@@ -5,35 +5,50 @@ import 'package:flutter/services.dart';
 import '../services.dart';
 
 class IntramuralService {
-Future<List<League>> getLeagues(user) async {
-  final String response =
-      await rootBundle.loadString('assets/data/intramural-leagues-data.json');
-  final data = await json.decode(response);
-  List<League> leagues =
-      (data as List).map((i) => League.fromJson(i)).toList();
+  Future<List<League>> getLeagues(user) async {
+    final String response =
+        await rootBundle.loadString('assets/data/intramural-leagues-data.json');
+    final data = await json.decode(response);
+    List<League> leagues =
+        (data as List).map((i) => League.fromJson(i)).toList();
 
-  List<Team> teams = await getTeams(user);
+    List<Team> teams = await getTeams(user);
 
-  // This will collect all the league names or IDs the user is already part of.
-  Set<String> joinedLeagueNames = teams.map((team) => team.league).toSet();
+    print(teams.length);
 
-  // Filter the leagues to return only those that the user has not joined
-  List<League> unjoinedLeagues = leagues
-      .where((league) => !joinedLeagueNames.contains(league.league))
-      .toList();
+// Filter the leagues to return only those that the user has not joined
+    List<League> unjoinedLeagues = leagues.where((league) {
+      // Check if the user is in a league of the same sport and division
+      for (var team in teams) {
+        bool isSameSport = league.sport ==
+            team.league.split(
+                " - ")[0]; // Assuming league name format is "Sport - Division"
+        bool isGenderDivision = (league.league.contains("Men") ||
+                league.league.contains("Women")) &&
+            (team.league.contains("Men") || team.league.contains("Women"));
+        bool isMixedDivision =
+            league.league.contains("Mixed") && team.league.contains("Mixed");
 
-  return unjoinedLeagues;
-}
+        if (isSameSport && (isGenderDivision || isMixedDivision)) {
+          return false; // Exclude league
+        }
+      }
+      return true; // Include league if none of the conditions above are met
+    }).toList();
 
-Future<League> getLeague(leagueName) async {
-  final String response =
-      await rootBundle.loadString('assets/data/intramural-leagues-data.json');
-  final data = await json.decode(response);
-  League league =
-      (data as List).map((i) => League.fromJson(i)).singleWhere((element) => element.league == leagueName);
+    return unjoinedLeagues;
+  }
 
-  return league;
-}
+  Future<League> getLeague(leagueName) async {
+    final String response =
+        await rootBundle.loadString('assets/data/intramural-leagues-data.json');
+    final data = await json.decode(response);
+    League league = (data as List)
+        .map((i) => League.fromJson(i))
+        .singleWhere((element) => element.league == leagueName);
+
+    return league;
+  }
 
   Future<List<Team>> getTeams(User user) async {
     final String response =
@@ -43,14 +58,13 @@ Future<League> getLeague(leagueName) async {
     // Assuming `data` represents a list of teams
     List<Team> teams = (data as List)
         .map((i) => Team.fromJson(i))
-        .where((team) =>
-            team.members.any((member) => member.name.contains(user.name)))
+        .where((team) => team.members.any((member) => member.id == user.id))
         .toList();
 
     return teams;
   }
 
-    Future<List<Team>> getLeagueTeams(League league) async {
+  Future<List<Team>> getLeagueTeams(League league) async {
     final String response =
         await rootBundle.loadString('assets/data/intramural-data.json');
     final data = json.decode(response);
@@ -64,37 +78,37 @@ Future<League> getLeague(leagueName) async {
     return teams;
   }
 
-Future<Team> getTeam(String teamName) async {
-  final String response =
-      await rootBundle.loadString('assets/data/intramural-data.json');
-  final data = json.decode(response);
+  Future<Team> getTeam(String teamName) async {
+    final String response =
+        await rootBundle.loadString('assets/data/intramural-data.json');
+    final data = json.decode(response);
 
-  // Assuming `data` represents a list of teams
-  Team? team = (data as List)
-      .map<Team>((i) => Team.fromJson(i))
-      .firstWhere((team) => team.teamName == teamName);
+    // Assuming `data` represents a list of teams
+    Team? team = (data as List)
+        .map<Team>((i) => Team.fromJson(i))
+        .firstWhere((team) => team.teamName == teamName);
 
-  return team;
-}
+    return team;
+  }
 
- Future<void> createTeam(Team newTeam) async {
-  //here is where the team would be added if the app wasnt using mock data
+  Future<void> createTeam(Team newTeam) async {
+    //here is where the team would be added if the app wasnt using mock data
+  }
 
-}
-
- Future<List<QuizQuestion>> getQuizQuestions(String sport) async {
+  Future<List<QuizQuestion>> getQuizQuestions(String sport) async {
     // Load the string from assets
-    final String response = await rootBundle.loadString('assets/data/intramural-quiz-data.json');
+    final String response =
+        await rootBundle.loadString('assets/data/intramural-quiz-data.json');
     final data = await json.decode(response);
-    
+
     // Convert the JSON data to a list of QuizQuestion objects
-    List<QuizQuestion> questions = (data as List)
-        .map((i) => QuizQuestion.fromJson(i))
-        .toList();
-    
+    List<QuizQuestion> questions =
+        (data as List).map((i) => QuizQuestion.fromJson(i)).toList();
+
     // Filter for generic questions and questions for the specified sport
     List<QuizQuestion> filteredQuestions = questions.where((question) {
-      return question.sport == 'generic' || question.sport.toLowerCase() == sport.toLowerCase();
+      return question.sport == 'generic' ||
+          question.sport.toLowerCase() == sport.toLowerCase();
     }).toList();
 
     // Replace "SPORT" in question text with the specified sport for generic questions
@@ -151,17 +165,16 @@ class Team {
   bool autoAcceptMembers;
   bool inviteOnly;
 
-  Team({
-    required this.league,
-    required this.teamName,
-    required this.members,
-    required this.captain,
-    required this.sportsmanship,
-    required this.games,
-    required this.image,
-    required this.autoAcceptMembers,
-    required this.inviteOnly
-  });
+  Team(
+      {required this.league,
+      required this.teamName,
+      required this.members,
+      required this.captain,
+      required this.sportsmanship,
+      required this.games,
+      required this.image,
+      required this.autoAcceptMembers,
+      required this.inviteOnly});
 
   factory Team.fromJson(Map<String, dynamic> json) {
     //take in list of members from json
@@ -173,16 +186,15 @@ class Team {
     List<Game> games = gamesList.map((i) => Game.fromJson(i)).toList();
 
     return Team(
-      league: json['league'],
-      teamName: json['team-name'],
-      members: members,
-      captain: json['captain'],
-      sportsmanship: json['sportsmanship'],
-      games: games,
-      image: json["image"],
-      autoAcceptMembers: json['auto-accept-members'],
-      inviteOnly: json['invite-only']
-    );
+        league: json['league'],
+        teamName: json['team-name'],
+        members: members,
+        captain: json['captain'],
+        sportsmanship: json['sportsmanship'],
+        games: games,
+        image: json["image"],
+        autoAcceptMembers: json['auto-accept-members'],
+        inviteOnly: json['invite-only']);
   }
 }
 
@@ -213,22 +225,20 @@ class Game {
   final String result;
   final String location;
 
-  Game({
-    required this.date,
-    required this.home,
-    required this.away,
-    required this.result,
-    required this.location
-  });
+  Game(
+      {required this.date,
+      required this.home,
+      required this.away,
+      required this.result,
+      required this.location});
 
   factory Game.fromJson(Map<String, dynamic> json) {
     return Game(
-      date: DateTime.parse(json['date']),
-      home: json['home'],
-      away: json['away'],
-      result: json['result'],
-      location: json['location']
-    );
+        date: DateTime.parse(json['date']),
+        home: json['home'],
+        away: json['away'],
+        result: json['result'],
+        location: json['location']);
   }
 }
 

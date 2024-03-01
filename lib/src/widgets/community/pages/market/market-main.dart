@@ -48,7 +48,7 @@ class _MarketPage extends State<MarketPage> {
     businessesFuture = MarketService().getBusinesses();
     businesses = await businessesFuture;
 
-    featuredLopes = await businessesFuture;
+    featuredLopes = await MarketService().getFeaturedBusinesses();
 
     setState(() {
       // Trigger a rebuild with the fetched data
@@ -57,7 +57,9 @@ class _MarketPage extends State<MarketPage> {
 
   List<Widget> buildFeaturedCards() {
     List<Widget> featured =
-        featuredLopes.map((e) => FeaturedBusinessCard(business: e)).toList();
+        featuredLopes.map((e) => InkWell(onTap: () {
+          
+        }, child: FeaturedBusinessCard(business: e))).toList();
     return featured;
   }
 

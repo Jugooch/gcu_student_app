@@ -1,0 +1,11 @@
+[
+    {
+      "userId": "20692303",
+      "likedProductIds": [1, 3, 5]
+    },
+    {
+      "userId": "20692400",
+      "likedProductIds": [2, 4]
+    }
+  ]
+  

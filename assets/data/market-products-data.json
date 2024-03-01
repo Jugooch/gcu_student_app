@@ -1,93 +1,132 @@
 [
     {
+      "id": 1,
+      "image": "assets/images/ErrorImage.png",
       "name": "Eco-friendly Notebook",
       "price": 12.99,
       "description": "A notebook made from recycled materials, perfect for all your note-taking needs.",
       "businessId": 1,
+      "featured": true,
       "category": "Crafts"
     },
     {
+      "id": 2,
+      "image": "assets/images/Lopes.jpg",
       "name": "Wireless Bluetooth Headphones",
       "price": 59.99,
       "description": "Experience high-quality sound without the wires. Comfortable design, built for long listening sessions.",
       "businessId": 5,
+      "featured": false,
       "category": "Technology"
     },
     {
+      "id": 3,
+      "image": "assets/images/Lopes.jpg",
       "name": "Organic Green Tea",
       "price": 5.49,
       "description": "A soothing, antioxidant-rich green tea, sourced from sustainable farms.",
       "businessId": 2,
+      "featured": false,
       "category": "Food"
     },
     {
+      "id": 4,
+      "image": "assets/images/Lopes.jpg",
       "name": "Handcrafted Leather Wallet",
       "price": 45.00,
       "description": "A durable, stylish wallet made from premium leather by skilled artisans.",
       "businessId": 3,
+      "featured": false,
       "category": "Crafts"
     },
     {
+      "id": 5,
+      "image": "assets/images/Lopes.jpg",
       "name": "Reusable Water Bottle",
       "price": 20.00,
       "description": "Stay hydrated and eco-friendly with our durable, BPA-free water bottle.",
       "businessId": 4,
+      "featured": false,
       "category": "Home Supplies"
     },
     {
+      "id": 6,
+      "image": "assets/images/Lopes.jpg",
         "name": "Eco-friendly Notebook 2",
         "price": 12.99,
         "description": "A notebook made from recycled materials, perfect for all your note-taking needs.",
         "businessId": 1,
+        "featured": false,
         "category": "Crafts"
       },
       {
+        "id": 7,
+        "image": "assets/images/Lopes.jpg",
         "name": "Eco-friendly Notebook 3",
         "price": 12.99,
         "description": "A notebook made from recycled materials, perfect for all your note-taking needs.",
         "businessId": 1,
+        "featured": false,
         "category": "Crafts"
       },
       {
+        "id": 8,
+        "image": "assets/images/Lopes.jpg",
         "name": "Eco-friendly Notebook 4",
         "price": 12.99,
         "description": "A notebook made from recycled materials, perfect for all your note-taking needs.",
         "businessId": 1,
+        "featured": true,
         "category": "Crafts"
       },
       {
+        "id": 9,
+        "image": "assets/images/Lopes.jpg",
         "name": "Eco-friendly Notebook 5",
         "price": 12.99,
         "description": "A notebook made from recycled materials, perfect for all your note-taking needs.",
         "businessId": 1,
+        "featured": false,
         "category": "Crafts"
       },
       {
+        "id": 10,
+        "image": "assets/images/Lopes.jpg",
         "name": "Wireless Bluetooth Headphones 2",
         "price": 59.99,
         "description": "Experience high-quality sound without the wires. Comfortable design, built for long listening sessions.",
         "businessId": 5,
+        "featured": false,
         "category": "Technology"
       },
       {
+        "id": 11,
+        "image": "assets/images/Lopes.jpg",
         "name": "Organic Green Tea 2",
         "price": 5.49,
         "description": "A soothing, antioxidant-rich green tea, sourced from sustainable farms.",
         "businessId": 2,
+        "featured": false,
         "category": "Food"
       },
       {
+        "id": 12,
+        "image": "assets/images/Lopes.jpg",
         "name": "Handcrafted Leather Wallet 2",
         "price": 45.00,
         "description": "A durable, stylish wallet made from premium leather by skilled artisans.",
         "businessId": 3,
+        "featured": false,
         "category": "Crafts"
       },
       {
+        "id": 13,
+        "image": "assets/images/Lopes.jpg",
         "name": "Reusable Water Bottle 2",
         "price": 20.00,
         "description": "Stay hydrated and eco-friendly with our durable, BPA-free water bottle.",
         "businessId": 4,
+        "featured": false,
         "category": "Home Supplies"
       }
   ]
