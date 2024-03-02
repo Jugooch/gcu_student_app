@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/services/services.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
+import 'package:gcu_student_app/src/widgets/shared/loading/loading.dart';
 import 'package:gcu_student_app/src/widgets/shared/pages/schedule-page/widgets/class-card.dart';
 
 class SchedulePage extends StatefulWidget {
@@ -25,6 +26,7 @@ class _SchedulePageState extends State<SchedulePage> {
   @override
   void initState() {
     super.initState();
+    futureUserClasses = ClassService().getUserClasses(user);
     fetchData();
   }
 
@@ -35,7 +37,6 @@ class _SchedulePageState extends State<SchedulePage> {
     userFuture = UserService().getUser("20692303");
     user = await userFuture;
 
-    futureUserClasses = ClassService().getUserClasses(user);
     userClasses = await futureUserClasses;
 
     findNextUpcomingClass(userClasses);
@@ -46,41 +47,51 @@ class _SchedulePageState extends State<SchedulePage> {
   }
 
 //sorts the classes by their next class date and picks the first one
-Classes findNextUpcomingClass(List<Classes> classes) {
-  classes.sort((a, b) => a.nextOccurrence.compareTo(b.nextOccurrence));
-  return classes[0];
-}
+  Classes findNextUpcomingClass(List<Classes> classes) {
+    classes.sort((a, b) => a.nextOccurrence.compareTo(b.nextOccurrence));
+    return classes[0];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(11),
-        child: Container(
-          color: const Color(0xFF522498),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(11),
+          child: Container(
+            color: const Color(0xFF522498),
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomBackButton(),
-            Padding(
-              padding: EdgeInsets.only(bottom: 32.0, right: 32.0, left: 32.0),
-              child: Column(
-                children: userClasses
-                    .expand((e) => [
-                          ClassCard(user: user, classes: e),
-                          SizedBox(
-                              height:
-                                  16),
-                        ])
-                    .toList(),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+        body: FutureBuilder<List<Classes>>(
+            future: futureUserClasses,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Data is still loading
+                return Loading();
+              } else if (snapshot.hasError) {
+                // Handle error state
+                return Center(child: Text("Error loading data"));
+              } else {
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomBackButton(),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            bottom: 32.0, right: 32.0, left: 32.0),
+                        child: Column(
+                          children: userClasses
+                              .expand((e) => [
+                                    ClassCard(user: user, classes: e),
+                                    SizedBox(height: 16),
+                                  ])
+                              .toList(),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }
+            }));
   }
 }

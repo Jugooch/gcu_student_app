@@ -10,37 +10,14 @@ import 'package:flutter/services.dart';
 const platform = MethodChannel('wallet_channel');
 
 class StudentId extends StatefulWidget {
-  const StudentId({Key? key}) : super(key: key);
+  final User user;
+  const StudentId({Key? key, required this.user}) : super(key: key);
 
   @override
   _StudentIdState createState() => _StudentIdState();
 }
 
 class _StudentIdState extends State<StudentId> {
-  late Future<User> userFuture;
-  User user = User(name: "", id: "", image: "assets/images/Me.png");
-
-  ///////////////////////
-  // Initialize Data
-  ///////////////////////
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
-
-  ///////////////////////
-  // Fetch User
-  ///////////////////////
-  Future<void> fetchData() async {
-    userFuture = UserService().getUser("20692303");
-    user = await userFuture;
-
-    setState(() {
-      // Trigger a rebuild with the fetched data
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     var themeNotifier = Provider.of<ThemeNotifier>(context);
@@ -74,7 +51,7 @@ class _StudentIdState extends State<StudentId> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(6.0),
                     child: Image.asset(
-                      user.image,
+                      widget.user.image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -84,7 +61,7 @@ class _StudentIdState extends State<StudentId> {
 
                 // 2. Student Name Text Widget
                 Text(
-                  user.name,
+                  widget.user.name,
                   style: TextStyle(
                     color: AppStyles.getTextPrimary(themeNotifier.currentMode),
                     fontSize: 24.0,
@@ -120,7 +97,7 @@ class _StudentIdState extends State<StudentId> {
 
           SizedBox(
             height: 80.0, // Specify the desired height for the CustomBarcode
-            child: CustomBarcode(user: user),
+            child: CustomBarcode(user: widget.user),
           ),
 
           const SizedBox(height: 8.0),

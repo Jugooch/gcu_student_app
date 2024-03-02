@@ -4,6 +4,7 @@ import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/widgets/community/widgets/market/user-business-card.dart';
 import 'package:gcu_student_app/src/widgets/community/widgets/market/user-info.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
+import 'package:gcu_student_app/src/widgets/shared/loading/loading.dart';
 import 'package:gcu_student_app/src/widgets/shared/side_scrolling/side_scrolling.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,7 @@ class _MarketUser extends State<MarketUser> {
   @override
   void initState() {
     super.initState();
+    likedProductsFuture = MarketService().getLikedProducts(user);
     fetchData();
   }
 
@@ -48,7 +50,6 @@ class _MarketUser extends State<MarketUser> {
     userBusinesses = await userBusinessesFuture;
     userBusinesses.add(Business(id: -1, name: "Add", description: "", image: "", ownerId: "", categories: []));
 
-    likedProductsFuture = MarketService().getLikedProducts(user);
     likedProducts = await likedProductsFuture;
 
     setState(() {
@@ -67,7 +68,17 @@ class _MarketUser extends State<MarketUser> {
               color: const Color(0xFF522498),
             )),
         backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
-        body: SingleChildScrollView(
+        body: FutureBuilder<List<Product>>(
+            future: likedProductsFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Data is still loading
+                return Loading();
+              } else if (snapshot.hasError) {
+                // Handle error state
+                return Center(child: Text("Error loading data"));
+              } else {
+                return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -103,6 +114,6 @@ class _MarketUser extends State<MarketUser> {
                   SideScrollingWidget(children: likedProducts.map((e) => ProductCard(product: e)).toList()),
                   SizedBox(height: 16)
                 ]),
-        ));
+        );}}));
   }
 }

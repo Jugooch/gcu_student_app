@@ -3,6 +3,7 @@ import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
+import 'package:gcu_student_app/src/widgets/shared/loading/loading.dart';
 import 'package:gcu_student_app/src/widgets/shared/pages/hours-page/widgets/hours-card.dart';
 import 'package:gcu_student_app/src/widgets/shared/side_scrolling/side_scrolling.dart';
 import 'package:provider/provider.dart';
@@ -24,11 +25,11 @@ class _HoursPageState extends State<HoursPage> {
   @override
   void initState() {
     super.initState();
+    futureVendors = HoursService().getVendors();
     fetchData();
   }
 
   Future<void> fetchData() async {
-    futureVendors = HoursService().getVendors();
     vendors = await futureVendors;
     applyFilters();
   }
@@ -161,26 +162,42 @@ class _HoursPageState extends State<HoursPage> {
                   color: const Color(0xFF522498),
                 )),
             backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
-            body: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomBackButton(),
-                  buildSearchBar(themeNotifier), // Insert the search bar
-                  buildFilterButtons(
-                      themeNotifier), // Insert the filter buttons
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: 32.0, right: 32.0, left: 32.0, top: 16.0),
-                    child: Column(
-                      children: filteredVendors.map((vendor) {
-                        // Use filteredVendors here
-                        return HoursCard(vendor: vendor);
-                      }).toList(),
-                    ),
-                  )
-                ],
-              ),
-            )));
+            body: FutureBuilder<List<Vendor>>(
+                future: futureVendors,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    // Data is still loading
+                    return Loading();
+                  } else if (snapshot.hasError) {
+                    // Handle error state
+                    return Center(child: Text("Error loading data"));
+                  } else {
+                    return SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomBackButton(),
+                          buildSearchBar(
+                              themeNotifier), // Insert the search bar
+                          buildFilterButtons(
+                              themeNotifier), // Insert the filter buttons
+                          Padding(
+                            padding: EdgeInsets.only(
+                                bottom: 32.0,
+                                right: 32.0,
+                                left: 32.0,
+                                top: 16.0),
+                            child: Column(
+                              children: filteredVendors.map((vendor) {
+                                // Use filteredVendors here
+                                return HoursCard(vendor: vendor);
+                              }).toList(),
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                })));
   }
 }

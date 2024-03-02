@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/services/services.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
+import 'package:gcu_student_app/src/widgets/shared/loading/loading.dart';
 
 import 'widgets/chapel-card.dart';
 
 class ChapelPage extends StatefulWidget {
   const ChapelPage({Key? key}) : super(key: key);
-  
+
   @override
   _ChapelPageState createState() => _ChapelPageState();
 }
@@ -24,6 +25,7 @@ class _ChapelPageState extends State<ChapelPage> {
   @override
   void initState() {
     super.initState();
+    futureUserChapels = ChapelService().getChapels();
     fetchData();
   }
 
@@ -34,7 +36,6 @@ class _ChapelPageState extends State<ChapelPage> {
     userFuture = UserService().getUser("20692303");
     user = await userFuture;
 
-    futureUserChapels = ChapelService().getChapels();
     userChapels = await futureUserChapels;
 
     userChapels.sort((a, b) => a.date.compareTo(b.date));
@@ -47,30 +48,42 @@ class _ChapelPageState extends State<ChapelPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-          preferredSize: Size.fromHeight(11),
-          child: Container(
-            color: const Color(0xFF522498),
-          )),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomBackButton(),
-            Padding(
-              padding: EdgeInsets.only(bottom: 32.0, right: 32.0, left: 32.0),
-              child: Column(
-                children: userChapels
-                    .expand((e) => [
-                          ChapelCard(user: user, chapel: e),
-                          SizedBox(height: 16),
-                        ])
-                    .toList(),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(11),
+            child: Container(
+              color: const Color(0xFF522498),
+            )),
+        body: FutureBuilder<List<Chapel>>(
+            future: futureUserChapels,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Data is still loading
+                return Loading();
+              } else if (snapshot.hasError) {
+                // Handle error state
+                return Center(child: Text("Error loading data"));
+              } else {
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomBackButton(),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            bottom: 32.0, right: 32.0, left: 32.0),
+                        child: Column(
+                          children: userChapels
+                              .expand((e) => [
+                                    ChapelCard(user: user, chapel: e),
+                                    SizedBox(height: 16),
+                                  ])
+                              .toList(),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }
+            }));
   }
 }

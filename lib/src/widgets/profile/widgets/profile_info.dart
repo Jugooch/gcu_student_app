@@ -5,37 +5,14 @@ import '../../../services/services.dart';
 import 'package:provider/provider.dart';
 
 class ProfileInfo extends StatefulWidget {
-  const ProfileInfo({Key? key}) : super(key: key);
+  final User user;
+  const ProfileInfo({Key? key, required this.user}) : super(key: key);
 
   @override
   _ProfileInfoState createState() => _ProfileInfoState();
 }
 
 class _ProfileInfoState extends State<ProfileInfo> {
-  late Future<User> userFuture;
-  User user =
-      User(name: "", id: "", image: "assets/images/Me.png");
-
-  ///////////////////////
-  // Initialize Data
-  ///////////////////////
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
-
-  ///////////////////////
-  // Fetch User
-  ///////////////////////
-  Future<void> fetchData() async {
-    userFuture = UserService().getUser("20692303");
-    user = await userFuture;
-
-    setState(() {
-      // Trigger a rebuild with the fetched data
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +25,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
           Container(
             child: ClipOval(
               child: Image.asset(
-                user.image,
+                widget.user.image,
                 fit: BoxFit.cover,
                 width: 104,
                 height: 104,
@@ -59,7 +36,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
 
           // Second Row: Student Name
           Text(
-            user.name,
+            widget.user.name,
             style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w600,
@@ -69,7 +46,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
 
           // Third Row: Student ID Number
           Text(
-            'ID Number: ${user.id}',
+            'ID Number: ${widget.user.id}',
             style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.normal,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
+import 'package:gcu_student_app/src/widgets/shared/loading/loading.dart';
 import 'package:provider/provider.dart';
 import '../../../navbar_pages.dart';
 import './widgets/card_account.dart';
@@ -27,6 +28,7 @@ class _CardAccountsPageState extends State<CardAccountsPage> {
   @override
   void initState() {
     super.initState();
+    futureUserCardAccounts = UserService().getUserCardAccounts(user);
     fetchData();
   }
 
@@ -37,7 +39,6 @@ class _CardAccountsPageState extends State<CardAccountsPage> {
     userFuture = UserService().getUser("20692303");
     user = await userFuture;
 
-    futureUserCardAccounts = UserService().getUserCardAccounts(user);
     userCardAccounts = await futureUserCardAccounts;
 
     setState(() {
@@ -55,25 +56,39 @@ class _CardAccountsPageState extends State<CardAccountsPage> {
             color: const Color(0xFF522498),
           )),
       backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
-      body: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        CustomBackButton(),
-        Padding(
-          padding: EdgeInsets.only(bottom: 32.0, right: 32.0, left: 32.0),
-          child: Column(
-            children: userCardAccounts.map((cardAccount) {
-              return CardAccountCard(
-                  user: user,
-                  account: cardAccount,
-                  name: cardAccount.name,
-                  dailyBudget: cardAccount.dailyBudget,
-                  currentBalance: cardAccount.currentBalance,
-                  backgroundImage: cardAccount.background);
-            }).toList(),
-          ),
-        )
-      ])),
+      body: FutureBuilder<List<CardAccount>>(
+          future: futureUserCardAccounts,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // Data is still loading
+              return Loading();
+            } else if (snapshot.hasError) {
+              // Handle error state
+              return Center(child: Text("Error loading data"));
+            } else {
+              return SingleChildScrollView(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    CustomBackButton(),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: 32.0, right: 32.0, left: 32.0),
+                      child: Column(
+                        children: userCardAccounts.map((cardAccount) {
+                          return CardAccountCard(
+                              user: user,
+                              account: cardAccount,
+                              name: cardAccount.name,
+                              dailyBudget: cardAccount.dailyBudget,
+                              currentBalance: cardAccount.currentBalance,
+                              backgroundImage: cardAccount.background);
+                        }).toList(),
+                      ),
+                    )
+                  ]));
+            }
+          }),
       bottomNavigationBar: null,
     );
   }

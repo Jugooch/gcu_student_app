@@ -6,6 +6,7 @@ import 'package:gcu_student_app/src/services/services.dart';
 import 'package:gcu_student_app/src/widgets/community/widgets/market/product-card.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
 import 'package:gcu_student_app/src/widgets/shared/expandable-text/expandable_text.dart';
+import 'package:gcu_student_app/src/widgets/shared/loading/loading.dart';
 import 'package:gcu_student_app/src/widgets/shared/side_scrolling/side_scrolling.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -22,10 +23,12 @@ class MarketProduct extends StatefulWidget {
 class _MarketProduct extends State<MarketProduct> {
   bool isProductLiked = false;
   List<Product> otherProducts = [];
+  late Future<List<Product>> futureOtherProducts;
 
   @override
   void initState() {
     super.initState();
+    futureOtherProducts = MarketService().getProducts(widget.product.businessId);
     fetchData();
   }
 
@@ -33,7 +36,7 @@ class _MarketProduct extends State<MarketProduct> {
     User user = await UserService().getUser("20692303");
     List<Product> likedProducts = await MarketService().getLikedProducts(user);
     otherProducts =
-        await MarketService().getProducts(widget.product.businessId);
+        await futureOtherProducts;
 
     otherProducts.removeWhere((e) => e.id == widget.product.id);
 
@@ -57,7 +60,17 @@ class _MarketProduct extends State<MarketProduct> {
             color: const Color(0xFF522498),
           )),
       backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
-      body: SingleChildScrollView(
+      body: FutureBuilder<List<Product>>(
+        future: futureOtherProducts,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Data is still loading
+            return Loading();
+          } else if (snapshot.hasError) {
+            // Handle error state
+            return Center(child: Text("Error loading data"));
+          } else {
+            return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -207,7 +220,7 @@ class _MarketProduct extends State<MarketProduct> {
                     SizedBox(height: 32)
           ],
         ),
-      ),
+      );}})
     );
   }
 }

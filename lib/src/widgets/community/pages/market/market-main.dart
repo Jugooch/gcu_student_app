@@ -3,6 +3,7 @@ import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/widgets/community/pages/market/market-user.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
+import 'package:gcu_student_app/src/widgets/shared/loading/loading.dart';
 import 'package:gcu_student_app/src/widgets/shared/side_scrolling/side_scrolling.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,7 @@ class _MarketPage extends State<MarketPage> {
   late Future<List<Business>> businessesFuture;
   List<Business> businesses = [];
   late Future<List<Business>> featuredLopesfuture;
+  late Future<List<Business>> futureFeaturedLopes;
   List<Business> featuredLopes = [];
   late Future<User> userFuture;
   User user = User(name: "", id: "", image: "assets/images/Me.png");
@@ -35,6 +37,8 @@ class _MarketPage extends State<MarketPage> {
   @override
   void initState() {
     super.initState();
+    futureFeaturedLopes = MarketService().getFeaturedBusinesses();
+    businessesFuture = MarketService().getBusinesses();
     fetchData();
   }
 
@@ -45,7 +49,6 @@ class _MarketPage extends State<MarketPage> {
     userFuture = UserService().getUser("20692303");
     user = await userFuture;
 
-    businessesFuture = MarketService().getBusinesses();
     businesses = await businessesFuture;
 
     featuredLopes = await MarketService().getFeaturedBusinesses();
@@ -56,10 +59,10 @@ class _MarketPage extends State<MarketPage> {
   }
 
   List<Widget> buildFeaturedCards() {
-    List<Widget> featured =
-        featuredLopes.map((e) => InkWell(onTap: () {
-          
-        }, child: FeaturedBusinessCard(business: e))).toList();
+    List<Widget> featured = featuredLopes
+        .map((e) =>
+            InkWell(onTap: () {}, child: FeaturedBusinessCard(business: e)))
+        .toList();
     return featured;
   }
 
@@ -74,99 +77,116 @@ class _MarketPage extends State<MarketPage> {
               color: const Color(0xFF522498),
             )),
         backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                  margin: EdgeInsets.all(16),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomBackButton(),
-                        InkWell(
-                            onTap: () => {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MarketUser()),
-                                  )
-                                },
-                            child: CircleAvatar(
-                              backgroundImage: AssetImage(user.image),
-                            ))
-                      ])),
-              Container(
-                  margin: EdgeInsets.symmetric(horizontal: 32),
-                  child: Text(
-                    'Featured Lopes',
-                    style: TextStyle(
-                      color:
-                          AppStyles.getTextPrimary(themeNotifier.currentMode),
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                child: featuredLopes.isNotEmpty
-                    ? SideScrollingWidget(children: buildFeaturedCards())
-                    : Text("No featured business to show..."),
-              ),
-              Padding(
-                  padding: EdgeInsets.all(32),
+        body: FutureBuilder<List<Business>>(
+            future: businessesFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Data is still loading
+                return Loading();
+              } else if (snapshot.hasError) {
+                // Handle error state
+                return Center(child: Text("Error loading data"));
+              } else {
+                return SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Find a Business',
-                        style: TextStyle(
-                          color: AppStyles.getTextPrimary(
-                              themeNotifier.currentMode),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 16),
-                      TextField(
-                        style: TextStyle(
-                          color: AppStyles.getTextPrimary(
-                              themeNotifier.currentMode), // Set text color
-                        ),
-                        decoration: InputDecoration(
-                          hintText: 'Search for a business...',
-                          hintStyle: TextStyle(
-                            color: AppStyles.getInactiveIcon(themeNotifier
-                                .currentMode), // Set hint text color
-                          ),
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: AppStyles.getTextPrimary(
-                                themeNotifier.currentMode), // Set icon color
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppStyles.getTextPrimary(themeNotifier
-                                  .currentMode), // Set border color
+                      Container(
+                          margin: EdgeInsets.all(16),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomBackButton(),
+                                InkWell(
+                                    onTap: () => {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MarketUser()),
+                                          )
+                                        },
+                                    child: CircleAvatar(
+                                      backgroundImage: AssetImage(user.image),
+                                    ))
+                              ])),
+                      Container(
+                          margin: EdgeInsets.symmetric(horizontal: 32),
+                          child: Text(
+                            'Featured Lopes',
+                            style: TextStyle(
+                              color: AppStyles.getTextPrimary(
+                                  themeNotifier.currentMode),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppStyles.getTextPrimary(themeNotifier
-                                  .currentMode), // Set border color when the TextField is focused
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                        onChanged: (value) {},
+                          )),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        child: featuredLopes.isNotEmpty
+                            ? SideScrollingWidget(
+                                children: buildFeaturedCards())
+                            : Text("No featured business to show..."),
                       ),
-                      SizedBox(height: 16),
-                      CategoriesCard()
+                      Padding(
+                          padding: EdgeInsets.all(32),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Find a Business',
+                                style: TextStyle(
+                                  color: AppStyles.getTextPrimary(
+                                      themeNotifier.currentMode),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 16),
+                              TextField(
+                                style: TextStyle(
+                                  color: AppStyles.getTextPrimary(themeNotifier
+                                      .currentMode), // Set text color
+                                ),
+                                decoration: InputDecoration(
+                                  hintText: 'Search for a business...',
+                                  hintStyle: TextStyle(
+                                    color: AppStyles.getInactiveIcon(
+                                        themeNotifier
+                                            .currentMode), // Set hint text color
+                                  ),
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    color: AppStyles.getTextPrimary(
+                                        themeNotifier
+                                            .currentMode), // Set icon color
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppStyles.getTextPrimary(
+                                          themeNotifier
+                                              .currentMode), // Set border color
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppStyles.getTextPrimary(themeNotifier
+                                          .currentMode), // Set border color when the TextField is focused
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                ),
+                                onChanged: (value) {},
+                              ),
+                              SizedBox(height: 16),
+                              CategoriesCard()
+                            ],
+                          )),
                     ],
-                  )),
-            ],
-          ),
-        ));
+                  ),
+                );
+              }
+            }));
   }
 }
