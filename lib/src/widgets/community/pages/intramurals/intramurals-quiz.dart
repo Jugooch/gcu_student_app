@@ -75,21 +75,22 @@ class _QuizPageState extends State<QuizPage> {
   Widget build(BuildContext context) {
     var themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
-        appBar: CupertinoNavigationBar(
-                  border: null,
-                  backgroundColor:
-                      AppStyles.getPrimary(themeNotifier.currentMode),
-                  middle: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/GCU_Logo.png',
-                        height: 32.0,
-                      ),
-                    ],
-                  ),
-                ),
+      appBar: CupertinoNavigationBar(
+        automaticallyImplyLeading: false,
+        border: null,
+        backgroundColor: AppStyles.getPrimary(themeNotifier.currentMode),
+        middle: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(width: 32),
+            Image.asset(
+              'assets/images/GCU_Logo.png',
+              height: 32.0,
+            ),
+          ],
+        ),
+      ),
         backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
         body: FutureBuilder<List<QuizQuestion>>(
             future: questionsFuture,

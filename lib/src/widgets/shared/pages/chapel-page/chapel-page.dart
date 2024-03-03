@@ -53,21 +53,22 @@ class _ChapelPageState extends State<ChapelPage> {
   Widget build(BuildContext context) {
     var themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
-        appBar: CupertinoNavigationBar(
-                  border: null,
-                  backgroundColor:
-                      AppStyles.getPrimary(themeNotifier.currentMode),
-                  middle: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/GCU_Logo.png',
-                        height: 32.0,
-                      ),
-                    ],
-                  ),
-                ),
+      appBar: CupertinoNavigationBar(
+        automaticallyImplyLeading: false,
+        border: null,
+        backgroundColor: AppStyles.getPrimary(themeNotifier.currentMode),
+        middle: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(width: 32),
+            Image.asset(
+              'assets/images/GCU_Logo.png',
+              height: 32.0,
+            ),
+          ],
+        ),
+      ),
         body: FutureBuilder<List<Chapel>>(
             future: futureUserChapels,
             builder: (context, snapshot) {
