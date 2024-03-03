@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
@@ -63,11 +64,21 @@ class _MarketBusiness extends State<MarketBusiness> {
     //global styling file
     var themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(11),
-            child: Container(
-              color: const Color(0xFF522498),
-            )),
+        appBar: CupertinoNavigationBar(
+                  border: null,
+                  backgroundColor:
+                      AppStyles.getPrimary(themeNotifier.currentMode),
+                  middle: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/GCU_Logo.png',
+                        height: 32.0,
+                      ),
+                    ],
+                  ),
+                ),
         backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
         body: FutureBuilder<List<Product>>(
         future: productsFuture,

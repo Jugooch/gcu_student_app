@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gcu_student_app/src/app_styling.dart';
+import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
 import 'package:gcu_student_app/src/widgets/shared/loading/loading.dart';
+import 'package:provider/provider.dart';
 
 import 'widgets/chapel-card.dart';
 
@@ -47,12 +51,23 @@ class _ChapelPageState extends State<ChapelPage> {
 
   @override
   Widget build(BuildContext context) {
+    var themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(11),
-            child: Container(
-              color: const Color(0xFF522498),
-            )),
+        appBar: CupertinoNavigationBar(
+                  border: null,
+                  backgroundColor:
+                      AppStyles.getPrimary(themeNotifier.currentMode),
+                  middle: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/GCU_Logo.png',
+                        height: 32.0,
+                      ),
+                    ],
+                  ),
+                ),
         body: FutureBuilder<List<Chapel>>(
             future: futureUserChapels,
             builder: (context, snapshot) {

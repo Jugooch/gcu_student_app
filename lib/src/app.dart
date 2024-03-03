@@ -28,7 +28,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
     //   // Intentional error for testing error handling
@@ -38,7 +37,8 @@ class _MyAppState extends State<MyApp> {
       builder: (context, child) {
         // Define the custom error widget with an asset image and text
         Widget error = Container(
-          decoration: BoxDecoration(color: AppStyles.getBackground(widget.themeNotifier.currentMode)),
+          decoration: BoxDecoration(
+              color: AppStyles.getBackground(widget.themeNotifier.currentMode)),
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +49,8 @@ class _MyAppState extends State<MyApp> {
                 'There was an error,\nPlease Try Again',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: AppStyles.getTextPrimary(widget.themeNotifier.currentMode),
+                  color: AppStyles.getTextPrimary(
+                      widget.themeNotifier.currentMode),
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   decoration: TextDecoration.none,
@@ -99,7 +100,7 @@ class _MyAppState extends State<MyApp> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(width: 24),
+                      SizedBox(width: 32),
                       Image.asset(
                         'assets/images/GCU_Logo.png',
                         height: 32.0,
@@ -116,10 +117,10 @@ class _MyAppState extends State<MyApp> {
           currentIndex: widget.navigationNotifier.selectedIndex,
           backgroundColor:
               AppStyles.getPrimary(widget.themeNotifier.currentMode),
-          activeColor: AppStyles.getNavIconActive(
-              widget.themeNotifier.currentMode),
-          inactiveColor: AppStyles.getNavIconInactive(
-              widget.themeNotifier.currentMode),
+          activeColor:
+              AppStyles.getNavIconActive(widget.themeNotifier.currentMode),
+          inactiveColor:
+              AppStyles.getNavIconInactive(widget.themeNotifier.currentMode),
           onTap: (index) {
             widget.navigationNotifier.updateIndex(index);
           },
