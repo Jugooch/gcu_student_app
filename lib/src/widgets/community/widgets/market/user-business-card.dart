@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
+import 'package:gcu_student_app/src/widgets/community/pages/market/market-add-business.dart';
 import 'package:gcu_student_app/src/widgets/community/pages/market/market-business.dart';
 import 'package:provider/provider.dart';
 
 class UserBusinessCard extends StatefulWidget {
   // Pass in a business object
   final Business business;
+  final User user;
 
-  const UserBusinessCard({Key? key, required this.business}) : super(key: key);
+  const UserBusinessCard({Key? key, required this.business, required this.user}) : super(key: key);
 
   @override
   _UserBusinessCardState createState() => _UserBusinessCardState();
@@ -61,7 +63,15 @@ class _UserBusinessCardState extends State<UserBusinessCard> {
                   ],
                 ),
               )
-            : Container(
+            : InkWell(onTap: () => {
+              Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    AddBusinessPage(user: widget.user)),
+          )
+            },
+            child: Container(
                 margin: EdgeInsets.only(bottom: 4),
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -69,6 +79,6 @@ class _UserBusinessCardState extends State<UserBusinessCard> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Center(
-                    child: Icon(Icons.add, color: Colors.white, size: 24))));
+                    child: Icon(Icons.add, color: Colors.white, size: 24)))));
   }
 }

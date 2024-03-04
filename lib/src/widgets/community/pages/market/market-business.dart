@@ -40,7 +40,12 @@ class _MarketBusiness extends State<MarketBusiness> {
   @override
   void initState() {
     super.initState();
-    productsFuture = MarketService().getProducts(widget.business.id);
+    if (widget.business.id == null) {
+    // Handle the null case, e.g., show an error or use a default value
+    throw Exception("Business ID is null");
+  } else {
+    productsFuture = MarketService().getProducts(widget.business.id!);
+  }
     fetchData();
   }
 
@@ -85,10 +90,35 @@ class _MarketBusiness extends State<MarketBusiness> {
 
   Widget buildSearchBar(ThemeNotifier themeNotifier) {
     return TextField(
+      style: TextStyle(
+        color: AppStyles.getTextPrimary(
+            themeNotifier.currentMode), // Set text color
+      ),
       decoration: InputDecoration(
         hintText: 'Search for a product...',
-        prefixIcon: Icon(Icons.search),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+        hintStyle: TextStyle(
+          color: AppStyles.getInactiveIcon(
+              themeNotifier.currentMode), // Set hint text color
+        ),
+        prefixIcon: Icon(
+          Icons.search,
+          color: AppStyles.getTextPrimary(
+              themeNotifier.currentMode), // Set icon color
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppStyles.getTextPrimary(
+                themeNotifier.currentMode), // Set border color
+          ),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppStyles.getTextPrimary(themeNotifier
+                .currentMode), // Set border color when the TextField is focused
+          ),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
       ),
       onChanged: updateSearchQuery,
     );
@@ -183,15 +213,17 @@ class _MarketBusiness extends State<MarketBusiness> {
                             buildSearchBar(themeNotifier),
                             SizedBox(height: 16),
                             //ChatGPT helped me figure out the syntax for accomplishing this layout
-                            products.length != 0
+                            filteredProducts.length != 0
                                 ? Column(
                                     children: List.generate(
-                                        (products.length / 2).ceil(), (index) {
+                                        (filteredProducts.length / 2).ceil(),
+                                        (index) {
                                       // Check if it is the last row with only one item (in case of odd number of products)
                                       bool isLastItemSingle =
-                                          products.length % 2 != 0 &&
+                                          filteredProducts.length % 2 != 0 &&
                                               index ==
-                                                  (products.length / 2).ceil() -
+                                                  (filteredProducts.length / 2)
+                                                          .ceil() -
                                                       1;
 
                                       return Column(children: [
@@ -201,7 +233,7 @@ class _MarketBusiness extends State<MarketBusiness> {
                                           children: [
                                             Expanded(
                                               child: CondensedProductCard(
-                                                  product: products[index *
+                                                  product: filteredProducts[index *
                                                       2]), // First item of the pair
                                             ),
                                             if (!isLastItemSingle)
@@ -212,9 +244,9 @@ class _MarketBusiness extends State<MarketBusiness> {
                                                 ? // Check if there's a second item in this row
                                                 Expanded(
                                                     child: CondensedProductCard(
-                                                        product: products[index *
-                                                                2 +
-                                                            1]), // Second item of the pair
+                                                        product: filteredProducts[
+                                                            index * 2 +
+                                                                1]), // Second item of the pair
                                                   )
                                                 : Expanded(child: Container())
                                           ],

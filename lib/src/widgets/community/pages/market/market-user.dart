@@ -49,7 +49,13 @@ class _MarketUser extends State<MarketUser> {
 
     userBusinessesFuture = MarketService().getUserBusinesses(user);
     userBusinesses = await userBusinessesFuture;
-    userBusinesses.add(Business(id: -1, name: "Add", description: "", image: "", ownerId: "", categories: []));
+    userBusinesses.add(Business(
+        id: -1,
+        name: "Add",
+        description: "",
+        image: "",
+        ownerId: "",
+        categories: []));
 
     likedProducts = await likedProductsFuture;
 
@@ -63,22 +69,22 @@ class _MarketUser extends State<MarketUser> {
     //global styling file
     var themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
-      appBar: CupertinoNavigationBar(
-        automaticallyImplyLeading: false,
-        border: null,
-        backgroundColor: AppStyles.getPrimary(themeNotifier.currentMode),
-        middle: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(width: 32),
-            Image.asset(
-              'assets/images/GCU_Logo.png',
-              height: 32.0,
-            ),
-          ],
+        appBar: CupertinoNavigationBar(
+          automaticallyImplyLeading: false,
+          border: null,
+          backgroundColor: AppStyles.getPrimary(themeNotifier.currentMode),
+          middle: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(width: 32),
+              Image.asset(
+                'assets/images/GCU_Logo.png',
+                height: 32.0,
+              ),
+            ],
+          ),
         ),
-      ),
         backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
         body: FutureBuilder<List<Product>>(
             future: likedProductsFuture,
@@ -91,41 +97,63 @@ class _MarketUser extends State<MarketUser> {
                 return Center(child: Text("Error loading data"));
               } else {
                 return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: double.infinity,
-                color: AppStyles.getCardBackground(themeNotifier.currentMode),
-                child:
-                    Stack(children: [UserInfo(user: user), CustomBackButton()]),
-              ),
-              SizedBox(height: 32),
-              Padding(padding: EdgeInsets.symmetric(horizontal: 32), child: Text(
-                    'Your Businesses',
-                    style: TextStyle(
-                      color:
-                          AppStyles.getTextPrimary(themeNotifier.currentMode),
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
-                  SizedBox(height: 16),
-                  SideScrollingWidget(children: userBusinesses.map((e) => UserBusinessCard(business: e)).toList()),
-                  SizedBox(height: 32),
-                  Padding(padding: EdgeInsets.symmetric(horizontal: 32), child: Text(
-                    'Liked Products',
-                    style: TextStyle(
-                      color:
-                          AppStyles.getTextPrimary(themeNotifier.currentMode),
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
-                  SizedBox(height: 16),
-                  SideScrollingWidget(children: likedProducts.map((e) => ProductCard(product: e)).toList()),
-                  SizedBox(height: 16)
-                ]),
-        );}}));
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          color: AppStyles.getCardBackground(
+                              themeNotifier.currentMode),
+                          child: Stack(children: [
+                            UserInfo(user: user),
+                            CustomBackButton()
+                          ]),
+                        ),
+                        SizedBox(height: 32),
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 32),
+                            child: Text(
+                              'Your Businesses',
+                              style: TextStyle(
+                                color: AppStyles.getTextPrimary(
+                                    themeNotifier.currentMode),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                        SizedBox(height: 16),
+                        SideScrollingWidget(
+                            children: userBusinesses
+                                .map((e) => UserBusinessCard(business: e, user: user))
+                                .toList()),
+                        SizedBox(height: 32),
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 32),
+                            child: Text(
+                              'Liked Products',
+                              style: TextStyle(
+                                color: AppStyles.getTextPrimary(
+                                    themeNotifier.currentMode),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                        SizedBox(height: 16),
+                        likedProducts.length != 0
+                            ? SideScrollingWidget(
+                                children: likedProducts
+                                    .map((e) => ProductCard(product: e))
+                                    .toList())
+                            : Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 32),
+                                child: Text("No products...",
+                                    style: TextStyle(
+                                        color: AppStyles.getTextPrimary(
+                                            themeNotifier.currentMode)))),
+                        SizedBox(height: 16)
+                      ]),
+                );
+              }
+            }));
   }
 }

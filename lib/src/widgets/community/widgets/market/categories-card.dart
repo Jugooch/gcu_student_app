@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
+import 'package:gcu_student_app/src/widgets/community/pages/market/market-search.dart';
 import 'package:provider/provider.dart';
 
 class CategoriesCard extends StatefulWidget {
@@ -49,14 +50,19 @@ class _CategoriesCardState extends State<CategoriesCard> {
             const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200, // Adjust based on your layout needs
-          childAspectRatio: 3 / 2, // Adjust the size ratio of width to height based on your content needs
+          childAspectRatio: 3 /
+              2, // Adjust the size ratio of width to height based on your content needs
         ),
         itemCount: categories.length,
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              // Add your click handler here
-              print('Category ${categories[index]["name"]} clicked');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        MarketSearch(category: categories[index]["name"])),
+              );
             },
             child: Container(
               decoration: BoxDecoration(

@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../../../../services/services.dart';
 import '../../widgets/market/categories-card.dart';
 import '../../widgets/market/featured-business-card.dart';
+import 'market-search.dart';
 
 class MarketPage extends StatefulWidget {
   const MarketPage({Key? key}) : super(key: key);
@@ -31,6 +32,7 @@ class _MarketPage extends State<MarketPage> {
   late Future<User> userFuture;
   User user = User(name: "", id: "", image: "assets/images/Me.png");
   String searchQuery = ''; // To hold the search query
+  late TextEditingController _searchController;
 
   ///////////////////////
   //Initialize State and Data
@@ -38,9 +40,16 @@ class _MarketPage extends State<MarketPage> {
   @override
   void initState() {
     super.initState();
+    _searchController = TextEditingController();
     futureFeaturedLopes = MarketService().getFeaturedBusinesses();
     businessesFuture = MarketService().getBusinesses();
     fetchData();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   ///////////////////////
@@ -67,27 +76,39 @@ class _MarketPage extends State<MarketPage> {
     return featured;
   }
 
+  void submitSearchQuery(BuildContext context) {
+    final searchQuery = _searchController.text.trim();
+    if (searchQuery.isNotEmpty) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MarketSearch(searchValue: searchQuery),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     //global styling file
     var themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
-      appBar: CupertinoNavigationBar(
-        automaticallyImplyLeading: false,
-        border: null,
-        backgroundColor: AppStyles.getPrimary(themeNotifier.currentMode),
-        middle: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(width: 32),
-            Image.asset(
-              'assets/images/GCU_Logo.png',
-              height: 32.0,
-            ),
-          ],
+        appBar: CupertinoNavigationBar(
+          automaticallyImplyLeading: false,
+          border: null,
+          backgroundColor: AppStyles.getPrimary(themeNotifier.currentMode),
+          middle: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(width: 32),
+              Image.asset(
+                'assets/images/GCU_Logo.png',
+                height: 32.0,
+              ),
+            ],
+          ),
         ),
-      ),
         backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
         body: FutureBuilder<List<Business>>(
             future: businessesFuture,
@@ -155,41 +176,64 @@ class _MarketPage extends State<MarketPage> {
                                 ),
                               ),
                               SizedBox(height: 16),
-                              TextField(
-                                style: TextStyle(
-                                  color: AppStyles.getTextPrimary(themeNotifier
-                                      .currentMode), // Set text color
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: 'Search for a business...',
-                                  hintStyle: TextStyle(
-                                    color: AppStyles.getInactiveIcon(
-                                        themeNotifier
-                                            .currentMode), // Set hint text color
-                                  ),
-                                  prefixIcon: Icon(
-                                    Icons.search,
-                                    color: AppStyles.getTextPrimary(
-                                        themeNotifier
-                                            .currentMode), // Set icon color
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppStyles.getTextPrimary(
-                                          themeNotifier
-                                              .currentMode), // Set border color
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextField(
+                                      style: TextStyle(
+                                        color: AppStyles.getTextPrimary(
+                                            themeNotifier
+                                                .currentMode), // Set text color
+                                      ),
+                                      decoration: InputDecoration(
+                                        hintText: 'Search for a business...',
+                                        hintStyle: TextStyle(
+                                          color: AppStyles.getInactiveIcon(
+                                              themeNotifier
+                                                  .currentMode), // Set hint text color
+                                        ),
+                                        prefixIcon: Icon(
+                                          Icons.search,
+                                          color: AppStyles.getTextPrimary(
+                                              themeNotifier
+                                                  .currentMode), // Set icon color
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: AppStyles.getTextPrimary(
+                                                themeNotifier
+                                                    .currentMode), // Set border color
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: AppStyles.getTextPrimary(
+                                                themeNotifier
+                                                    .currentMode), // Set border color when the TextField is focused
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                      ),
+                                      onChanged: (value) {},
                                     ),
-                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppStyles.getTextPrimary(themeNotifier
-                                          .currentMode), // Set border color when the TextField is focused
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
+                                  SizedBox(width: 16),
+                                  InkWell(
+                                    onTap: () => submitSearchQuery(context),
+                                    child: Container(
+                                      padding: EdgeInsets.all(16),
+                                        decoration: BoxDecoration(
+                                            color: AppStyles.getPrimaryLight(
+                                                themeNotifier.currentMode),
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        child: Icon(Icons.search,
+                                            color: Colors.white)),
                                   ),
-                                ),
-                                onChanged: (value) {},
+                                ],
                               ),
                               SizedBox(height: 16),
                               CategoriesCard()
