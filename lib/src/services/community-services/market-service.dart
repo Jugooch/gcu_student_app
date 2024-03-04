@@ -156,7 +156,7 @@ class Business {
 }
 
 class Product {
-  final int id;
+  int? id;
   final String name;
   final double price;
   final String description;
@@ -167,7 +167,8 @@ class Product {
   final bool featured;
 
   Product(
-      {required this.id,
+      {
+    this.id,
       required this.name,
       required this.price,
       required this.description,

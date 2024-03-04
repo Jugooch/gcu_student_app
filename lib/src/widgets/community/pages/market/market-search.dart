@@ -186,8 +186,8 @@ class _MarketSearch extends State<MarketSearch> {
                                   index * 2]), // First item of the pair
                         ),
                         SizedBox(
-                              width:
-                                  16), // Add space only if there's a second item
+                            width:
+                                16), // Add space only if there's a second item
                         !isLastItemSingle
                             ? // Check if there's a second item in this row
                             Expanded(
@@ -233,160 +233,168 @@ class _MarketSearch extends State<MarketSearch> {
   Widget build(BuildContext context) {
     //global styling file
     var themeNotifier = Provider.of<ThemeNotifier>(context);
-    return Scaffold(
-        appBar: CupertinoNavigationBar(
-          automaticallyImplyLeading: false,
-          border: null,
-          backgroundColor: AppStyles.getPrimary(themeNotifier.currentMode),
-          middle: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(width: 32),
-              Image.asset(
-                'assets/images/GCU_Logo.png',
-                height: 32.0,
-              ),
-            ],
-          ),
-        ),
-        backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
-        body: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Container(
-                margin: EdgeInsets.all(16),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomBackButton(),
-                      InkWell(
-                          onTap: () => {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MarketUser()),
-                                )
-                              },
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage(user.image),
-                          ))
-                    ])),
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: 32),
-                child: buildSearchBar(themeNotifier)),
-            SizedBox(height: 16),
-            buildFilterButtons(themeNotifier),
-            SizedBox(height: 32),
-            Container(
-              decoration: BoxDecoration(
-                color: AppStyles.getCardBackground(themeNotifier.currentMode),
-              ),
-              child: Row(
+    return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+            appBar: CupertinoNavigationBar(
+              automaticallyImplyLeading: false,
+              border: null,
+              backgroundColor: AppStyles.getPrimary(themeNotifier.currentMode),
+              middle: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        // Set the selected tab index to 0 (Products)
-                        selectedTabIndex = 0;
-                        itemsFuture = _fetchItems();
-                        setState(() {
-                          //update UI
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 24),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: selectedTabIndex == 0
-                                  ? AppStyles.getPrimaryLight(
-                                      themeNotifier.currentMode)
-                                  : Colors.transparent,
-                              width: 2,
-                            ),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Products",
-                            style: TextStyle(
-                              color: selectedTabIndex == 0
-                                  ? AppStyles.getPrimaryLight(
-                                      themeNotifier.currentMode)
-                                  : AppStyles.getTextPrimary(
-                                      themeNotifier.currentMode),
-                              fontSize: 16,
-                              fontWeight: selectedTabIndex == 0
-                                  ? FontWeight.w600
-                                  : FontWeight.normal,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        // Set the selected tab index to 1 (Businesses)
-                        selectedTabIndex = 1;
-                        itemsFuture = _fetchItems();
-                        setState(() {
-                          //update UI
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 24),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: selectedTabIndex == 1
-                                  ? AppStyles.getPrimaryLight(
-                                      themeNotifier.currentMode)
-                                  : Colors.transparent,
-                              width: 2,
-                            ),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Business",
-                            style: TextStyle(
-                              color: selectedTabIndex == 1
-                                  ? AppStyles.getPrimaryLight(
-                                      themeNotifier.currentMode)
-                                  : AppStyles.getTextPrimary(
-                                      themeNotifier.currentMode),
-                              fontSize: 16,
-                              fontWeight: selectedTabIndex == 1
-                                  ? FontWeight.w600
-                                  : FontWeight.normal,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  SizedBox(width: 32),
+                  Image.asset(
+                    'assets/images/GCU_Logo.png',
+                    height: 32.0,
                   ),
                 ],
               ),
             ),
-            FutureBuilder<List<dynamic>>(
-                future: itemsFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    // Data is still loading
-                    return Loading();
-                  } else if (snapshot.hasError) {
-                    // Handle error state
-                    return Center(child: Text("Error loading data"));
-                  } else {
-                    return buildResults(themeNotifier, snapshot.data!);
-                  }
-                })
-          ]),
-        ));
+            backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
+            body: SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        margin: EdgeInsets.all(16),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CustomBackButton(),
+                              InkWell(
+                                  onTap: () => {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MarketUser()),
+                                        )
+                                      },
+                                  child: CircleAvatar(
+                                    backgroundImage: AssetImage(user.image),
+                                  ))
+                            ])),
+                    Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 32),
+                        child: buildSearchBar(themeNotifier)),
+                    SizedBox(height: 16),
+                    buildFilterButtons(themeNotifier),
+                    SizedBox(height: 32),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppStyles.getCardBackground(
+                            themeNotifier.currentMode),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                // Set the selected tab index to 0 (Products)
+                                selectedTabIndex = 0;
+                                itemsFuture = _fetchItems();
+                                setState(() {
+                                  //update UI
+                                });
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 24),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: selectedTabIndex == 0
+                                          ? AppStyles.getPrimaryLight(
+                                              themeNotifier.currentMode)
+                                          : Colors.transparent,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "Products",
+                                    style: TextStyle(
+                                      color: selectedTabIndex == 0
+                                          ? AppStyles.getPrimaryLight(
+                                              themeNotifier.currentMode)
+                                          : AppStyles.getTextPrimary(
+                                              themeNotifier.currentMode),
+                                      fontSize: 16,
+                                      fontWeight: selectedTabIndex == 0
+                                          ? FontWeight.w600
+                                          : FontWeight.normal,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                // Set the selected tab index to 1 (Businesses)
+                                selectedTabIndex = 1;
+                                itemsFuture = _fetchItems();
+                                setState(() {
+                                  //update UI
+                                });
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 24),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: selectedTabIndex == 1
+                                          ? AppStyles.getPrimaryLight(
+                                              themeNotifier.currentMode)
+                                          : Colors.transparent,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "Business",
+                                    style: TextStyle(
+                                      color: selectedTabIndex == 1
+                                          ? AppStyles.getPrimaryLight(
+                                              themeNotifier.currentMode)
+                                          : AppStyles.getTextPrimary(
+                                              themeNotifier.currentMode),
+                                      fontSize: 16,
+                                      fontWeight: selectedTabIndex == 1
+                                          ? FontWeight.w600
+                                          : FontWeight.normal,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    FutureBuilder<List<dynamic>>(
+                        future: itemsFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            // Data is still loading
+                            return Loading();
+                          } else if (snapshot.hasError) {
+                            // Handle error state
+                            return Center(child: Text("Error loading data"));
+                          } else {
+                            return buildResults(themeNotifier, snapshot.data!);
+                          }
+                        })
+                  ]),
+            )));
   }
 }
