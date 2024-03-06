@@ -12,25 +12,24 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-class AddProductPage extends StatefulWidget {
-  final User user;
-  final Business business;
-  const AddProductPage({required this.user, Key? key, required this.business})
-      : super(key: key);
+class EditProduct extends StatefulWidget {
+  Product product;
+  EditProduct({required this.product, Key? key}) : super(key: key);
 
   @override
-  _AddProductPageState createState() => _AddProductPageState();
+  _EditProductState createState() => _EditProductState();
 }
 
-class _AddProductPageState extends State<AddProductPage> {
+class _EditProductState extends State<EditProduct> {
   String name = '';
-  List<String> categories = [];
   double price = 0;
+  List<String> categories = [];
   String description = '';
   String selectedCategory = 'All';
   bool agreementChecked = false;
+  late TextEditingController nameController;
+  late TextEditingController descriptionController;
   late TextEditingController priceController;
-
   final _numberFormat =
       NumberFormat.currency(locale: "en_US", symbol: "\$", decimalDigits: 2);
 
@@ -56,10 +55,16 @@ class _AddProductPageState extends State<AddProductPage> {
   @override
   void initState() {
     super.initState();
-
-    priceController = TextEditingController(text: _numberFormat.format(0));
+    name = widget.product.name;
+    description = widget.product.description;
+    nameController = TextEditingController(text: widget.product.name);
+    selectedCategory = widget.product.category;
+    descriptionController =
+        TextEditingController(text: widget.product.description);
+    priceController = TextEditingController(text: _numberFormat.format(widget.product.price));
 
     // Listener to update price variable
+    price = widget.product.price;
     priceController.addListener(() {
       final String text = priceController.text.replaceAll(RegExp('[^0-9]'), '');
       final doubleValue = double.tryParse(text) ?? 0;
@@ -79,13 +84,12 @@ class _AddProductPageState extends State<AddProductPage> {
 
   allInfoEntered() {
     print(
-        "name: ${name}, description: ${description}, price: ${price}, categories length: ${categories.length}, image: ${_image.toString()}");
+        "name: ${name}, description: ${description}, price: ${price}, category: ${selectedCategory}, image: ${_image.toString()}");
     if (name.isNotEmpty &&
         description.isNotEmpty &&
         selectedCategory.isNotEmpty &&
         _image != null &&
-        agreementChecked == true &&
-        price != 0) {
+        agreementChecked == true && price != 0) {
       return true;
     } else {
       return false;
@@ -186,18 +190,18 @@ class _AddProductPageState extends State<AddProductPage> {
   ///**Update this method to actually create a business when connected to a database**
   ///////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////
-  createProduct() {
-    Product newBusiness = Product(
+  updateProduct() {
+    Product newProduct = Product(
         name: name,
         description: description,
         image: "",
         id: null,
         price: price,
-        businessId: -1,
+        businessId: widget.product.businessId,
         category: '',
-        business: widget.business,
+        business: widget.product.business,
         featured: false);
-    print("user creating business with name: " + newBusiness.name);
+    print("user updating product with name: " + newProduct.name);
   }
 
   ///////////////////////////////////////////////////////////////////////////
@@ -295,6 +299,7 @@ class _AddProductPageState extends State<AddProductPage> {
                                       themeNotifier.currentMode))),
                           SizedBox(height: 16),
                           TextField(
+                            controller: nameController,
                             style: TextStyle(
                               color: AppStyles.getTextPrimary(
                                   themeNotifier.currentMode), // Set text color
@@ -441,6 +446,7 @@ class _AddProductPageState extends State<AddProductPage> {
                                       themeNotifier.currentMode))),
                           SizedBox(height: 16),
                           TextField(
+                            controller: descriptionController,
                             maxLines: 3,
                             style: TextStyle(
                               color: AppStyles.getTextPrimary(
@@ -494,7 +500,7 @@ class _AddProductPageState extends State<AddProductPage> {
                         ),
                         Expanded(
                           child: Text(
-                            "By Checking this box, you understand the terms and conditions of posting this product on GCU marketplace. ",
+                            "By checking this box, you understand the terms and conditions of posting this product on GCU marketplace. ",
                             style: TextStyle(
                               color: AppStyles.getTextPrimary(
                                 themeNotifier.currentMode,
@@ -516,7 +522,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       onPressed: allInfoEntered()
                           ? () {
                               // Logic to proceed after correct answers are correct\
-                              createProduct();
+                              updateProduct();
                             }
                           : null, // Button is disabled if not all info has been entered
                       style: ButtonStyle(
@@ -537,7 +543,7 @@ class _AddProductPageState extends State<AddProductPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Create Product',
+                            'Update Product',
                             style:
                                 TextStyle(color: Colors.white, fontSize: 20.0),
                           ),

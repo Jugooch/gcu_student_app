@@ -4,6 +4,7 @@ import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/widgets/community/pages/market/market-add-product.dart';
 import 'package:gcu_student_app/src/widgets/community/pages/market/market-edit-business.dart';
+import 'package:gcu_student_app/src/widgets/community/pages/market/market-edit-products.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
 import 'package:gcu_student_app/src/widgets/shared/loading/loading.dart';
 import 'package:gcu_student_app/src/widgets/shared/side_scrolling/side_scrolling.dart';
@@ -330,8 +331,16 @@ class _MarketBusiness extends State<MarketBusiness> {
                                       SizedBox(width: 16),
                                       InkWell(
                                           onTap: () => {
-                                            
-                                          },
+                                                //Navigator.push(
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          MarketEditProducts(
+                                                            products: products,
+                                                          )),
+                                                )
+                                              },
                                           child: Container(
                                               decoration: BoxDecoration(
                                                   shape: BoxShape.circle,
@@ -373,7 +382,7 @@ class _MarketBusiness extends State<MarketBusiness> {
                                                   child: CondensedProductCard(
                                                       product: filteredProducts[
                                                           index *
-                                                              2]), // First item of the pair
+                                                              2], isEdit: false,), // First item of the pair
                                                 ),
                                                 if (!isLastItemSingle)
                                                   SizedBox(
@@ -386,7 +395,7 @@ class _MarketBusiness extends State<MarketBusiness> {
                                                             product:
                                                                 filteredProducts[
                                                                     index * 2 +
-                                                                        1]), // Second item of the pair
+                                                                        1], isEdit: false,), // Second item of the pair
                                                       )
                                                     : Expanded(
                                                         child: Container())

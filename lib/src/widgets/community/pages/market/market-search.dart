@@ -183,7 +183,7 @@ class _MarketSearch extends State<MarketSearch> {
                         Expanded(
                           child: CondensedProductCard(
                               product: listItems[
-                                  index * 2]), // First item of the pair
+                                  index * 2], isEdit: false,), // First item of the pair
                         ),
                         SizedBox(
                             width:
@@ -193,7 +193,7 @@ class _MarketSearch extends State<MarketSearch> {
                             Expanded(
                                 child: CondensedProductCard(
                                     product: listItems[index * 2 +
-                                        1]), // Second item of the pair
+                                        1], isEdit: false,), // Second item of the pair
                               )
                             : Expanded(child: Container())
                       ],
