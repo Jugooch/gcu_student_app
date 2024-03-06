@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
+import 'package:gcu_student_app/src/widgets/community/filter_submissions.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
 import 'package:gcu_student_app/src/widgets/shared/side_scrolling/side_scrolling.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -514,9 +515,34 @@ class _AddProductPageState extends State<AddProductPage> {
                         BoxDecoration(borderRadius: BorderRadius.circular(8)),
                     child: ElevatedButton(
                       onPressed: allInfoEntered()
-                          ? () {
+                          ? () {if (ProfanityCheck.containsProfanity(name) ||
+                                  ProfanityCheck.containsProfanity(
+                                      description)) {
+                                // If inappropriate content is found, show a dialog
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: AppStyles.getCardBackground(themeNotifier.currentMode),
+                                      title: Text(
+                                          "Inappropriate Content Detected", style: TextStyle(color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
+                                      content: Text(
+                                          "Please remove any inappropriate content from the product details.", style: TextStyle(color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text('OK', style: TextStyle(color: AppStyles.getPrimaryLight(themeNotifier.currentMode))),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
                               // Logic to proceed after correct answers are correct\
                               createProduct();
+                              }
                             }
                           : null, // Button is disabled if not all info has been entered
                       style: ButtonStyle(
