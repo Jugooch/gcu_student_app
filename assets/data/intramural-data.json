@@ -1,10 +1,8 @@
-[
-  {
+[{
     "league": "Pickleball - Men's",
     "team-name": "Pro Picklers",
     "image": "assets/images/Me.png",
-    "members": [
-      {
+    "members": [{
         "name": "Justice Gooch",
         "id": "20692303",
         "join-date": "2024-03-04"
@@ -15,12 +13,15 @@
         "join-date": "2024-03-04"
       }
     ],
-    "captain": "Justice Gooch",
+    "captain": {
+      "name": "Justice Gooch",
+      "id": "20692303",
+      "join-date": "2024-03-04"
+    },
     "sportsmanship": 3,
     "auto-accept-members": true,
     "invite-only": true,
-    "games": [
-      {
+    "games": [{
         "date": "2024-04-07 18:00:00Z",
         "home": "Pro Picklers",
         "away": "Pickleball Masters",
@@ -68,8 +69,7 @@
     "league": "Pickleball - Men's",
     "team-name": "Pickleball Masters",
     "image": "assets/images/Basketball.jpg",
-    "members": [
-      {
+    "members": [{
         "name": "Jake Dolittle",
         "id": "44444444",
         "join-date": "2024-03-05"
@@ -85,12 +85,15 @@
         "join-date": "2024-03-04"
       }
     ],
-    "captain": "Patrick Mahomes",
+    "captain": {
+      "name": "Patrick Mahomes",
+      "id": "55555555",
+      "join-date": "2024-03-04"
+    },
     "sportsmanship": 3,
     "auto-accept-members": false,
     "invite-only": true,
-    "games": [
-      {
+    "games": [{
         "date": "2024-04-07 18:00:00Z",
         "home": "Pro Picklers",
         "away": "Pickleball Masters",
@@ -138,8 +141,7 @@
     "league": "Pickleball - Men's",
     "team-name": "Friendly Pickles",
     "image": "assets/images/Baseball.jpg",
-    "members": [
-      {
+    "members": [{
         "name": "Jimothy Jonny",
         "id": "77777777",
         "join-date": "2024-03-04"
@@ -150,12 +152,15 @@
         "join-date": "2024-03-04"
       }
     ],
-    "captain": "Steve Herth",
+    "captain": {
+      "name": "Steve Herth",
+      "id": "88888888",
+      "join-date": "2024-03-04"
+    },
     "sportsmanship": 2,
     "auto-accept-members": true,
     "invite-only": true,
-    "games": [
-      {
+    "games": [{
         "date": "2024-04-07 18:00:00Z",
         "home": "Pro Picklers",
         "away": "Pickleball Masters",
@@ -203,8 +208,7 @@
     "league": "Pickleball - Men's",
     "team-name": "Un-friendly Pickles",
     "image": "assets/images/SilentDisco.png",
-    "members": [
-      {
+    "members": [{
         "name": "Heith Bar",
         "id": "99999999",
         "join-date": "2024-03-04"
@@ -215,12 +219,15 @@
         "join-date": "2024-03-04"
       }
     ],
-    "captain": "Hershey bar",
+    "captain": {
+      "name": "Hershey Bar",
+      "id": "10101010",
+      "join-date": "2024-03-04"
+    },
     "sportsmanship": 2,
     "auto-accept-members": false,
     "invite-only": false,
-    "games": [
-      {
+    "games": [{
         "date": "2024-04-07 18:00:00Z",
         "home": "Pro Picklers",
         "away": "Pickleball Masters",
@@ -268,8 +275,7 @@
     "league": "Volleyball - Mixed B",
     "team-name": "Volley Ballers",
     "image": "assets/images/Me.png",
-    "members": [
-      {
+    "members": [{
         "name": "Justice Gooch",
         "id": "20692303",
         "join-date": "2024-03-04"
@@ -290,12 +296,15 @@
         "join-date": "2024-03-04"
       }
     ],
-    "captain": "Justice Gooch",
+    "captain": {
+      "name": "Justice Gooch",
+      "id": "20692303",
+      "join-date": "2024-03-04"
+    },
     "sportsmanship": 3,
     "auto-accept-members": true,
     "invite-only": false,
-    "games": [
-      {
+    "games": [{
         "date": "2024-02-22 18:00:00Z",
         "home": "Volley Ballers",
         "away": "Pickleball Masters",
@@ -350,8 +359,7 @@
     "league": "Volleyball - Mixed B",
     "team-name": "Bump Set Spike",
     "image": "assets/images/Baseball.jpg",
-    "members": [
-      {
+    "members": [{
         "name": "Jake Dolittle",
         "id": "11111112",
         "join-date": "2024-03-05"
@@ -377,12 +385,15 @@
         "join-date": "2024-03-04"
       }
     ],
-    "captain": "Patrick Mahomes",
+    "captain": {
+      "name": "Patrick Mahomes",
+      "id": "11111113",
+      "join-date": "2024-03-04"
+    },
     "sportsmanship": 2,
     "auto-accept-members": true,
     "invite-only": true,
-    "games": [
-      {
+    "games": [{
         "date": "2024-04-07 18:00:00Z",
         "home": "Pro Picklers",
         "away": "Pickleball Masters",
@@ -430,8 +441,7 @@
     "league": "Volleyball - Mixed B",
     "team-name": "The Bumpers",
     "image": "assets/images/Clubs.png",
-    "members": [
-      {
+    "members": [{
         "name": "Jimothy Jonny",
         "id": "11111117",
         "join-date": "2024-03-04"
@@ -452,12 +462,15 @@
         "join-date": "2024-03-04"
       }
     ],
-    "captain": "Steve Herth",
+    "captain": {
+      "name": "Steve Herth",
+      "id": "11111118",
+      "join-date": "2024-03-04"
+    },
     "sportsmanship": 1,
     "auto-accept-members": true,
     "invite-only": false,
-    "games": [
-      {
+    "games": [{
         "date": "2024-04-07 18:00:00Z",
         "home": "Pro Picklers",
         "away": "Pickleball Masters",
@@ -505,8 +518,7 @@
     "league": "Volleyball - Mixed B",
     "team-name": "Volleyball Pros",
     "image": "assets/images/LipSync.jpg",
-    "members": [
-      {
+    "members": [{
         "name": "Heith Bar",
         "id": "98709870",
         "join-date": "2024-03-04"
@@ -527,12 +539,15 @@
         "join-date": "2024-03-04"
       }
     ],
-    "captain": "Hershey bar",
+    "captain": {
+      "name": "Jennifer Lopez",
+      "id": "98709872",
+      "join-date": "2024-03-04"
+    },
     "sportsmanship": 2,
     "auto-accept-members": true,
     "invite-only": false,
-    "games": [
-      {
+    "games": [{
         "date": "2024-04-07 18:00:00Z",
         "home": "Pro Picklers",
         "away": "Pickleball Masters",
@@ -580,8 +595,7 @@
     "league": "Volleyball - Mixed A",
     "team-name": "Volleyball Pros",
     "image": "assets/images/LipSync.jpg",
-    "members": [
-      {
+    "members": [{
         "name": "Heith Bar",
         "id": "98709870",
         "join-date": "2024-03-04"
@@ -602,12 +616,15 @@
         "join-date": "2024-03-04"
       }
     ],
-    "captain": "Hershey Bar",
+    "captain": {
+      "name": "Hershey Bar",
+      "id": "98709871",
+      "join-date": "2024-03-04"
+    },
     "sportsmanship": 2,
     "auto-accept-members": true,
     "invite-only": false,
-    "games": [
-      {
+    "games": [{
         "date": "2024-04-07 18:00:00Z",
         "home": "Pro Picklers",
         "away": "Pickleball Masters",
@@ -655,8 +672,7 @@
     "league": "Soccer - Men's A",
     "team-name": "Soccer Legends",
     "image": "assets/images/LipSync.jpg",
-    "members": [
-      {
+    "members": [{
         "name": "Heith Bar",
         "id": "00000003",
         "join-date": "2024-03-04"
@@ -677,12 +693,15 @@
         "join-date": "2024-03-04"
       }
     ],
-    "captain": "Hershey Bar",
+    "captain": {
+      "name": "Hershey Bar",
+      "id": "00000004",
+      "join-date": "2024-03-04"
+    },
     "sportsmanship": 2,
     "auto-accept-members": true,
     "invite-only": false,
-    "games": [
-      {
+    "games": [{
         "date": "2024-04-07 18:00:00Z",
         "home": "Pro Picklers",
         "away": "Pickleball Masters",
@@ -730,8 +749,7 @@
     "league": "Soccer - Men's A",
     "team-name": "Messi Lovers",
     "image": "assets/images/Basketball.jpg",
-    "members": [
-      {
+    "members": [{
         "name": "John Smith",
         "id": "98709810",
         "join-date": "2024-03-04"
@@ -752,12 +770,15 @@
         "join-date": "2024-03-04"
       }
     ],
-    "captain": "Tee Rex",
+    "captain": {
+      "name": "Tee Rex",
+      "id": "98709820",
+      "join-date": "2024-03-04"
+    },
     "sportsmanship": 2,
     "auto-accept-members": true,
     "invite-only": false,
-    "games": [
-      {
+    "games": [{
         "date": "2024-04-07 18:00:00Z",
         "home": "Pro Picklers",
         "away": "Pickleball Masters",

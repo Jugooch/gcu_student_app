@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
+import 'package:gcu_student_app/src/widgets/community/filter_submissions.dart';
 import 'package:gcu_student_app/src/widgets/community/pages/intramurals/intramurals-quiz.dart';
 import 'package:gcu_student_app/src/widgets/community/widgets/intramurals/team_card.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
@@ -40,7 +41,7 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
       league: "",
       teamName: "",
       members: [],
-      captain: "",
+      captain: Member(id: "", name: "", joinDate: DateTime.now()),
       sportsmanship: 3,
       games: [],
       image: "assets/images/Lopes.jpg",
@@ -66,6 +67,10 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
   fetchData() async {
     userFuture = UserService().getUser("20692303");
     user = await userFuture;
+
+    newTeam.captain.id == user.id;
+    newTeam.captain.name == user.name;
+    newTeam.captain.joinDate == DateTime.now();
 
     teams = await futureTeams;
 
@@ -768,8 +773,8 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
                                               child: ElevatedButton(
                                                 onPressed: () {
                                                   //logic to open subpage for the card clicked
-                                                  newTeam.teamName != "" ||
-                                                          newTeam.image == ""
+                                              (newTeam.teamName != "" ||
+                                                          newTeam.image == "") && !ProfanityCheck.containsProfanity(newTeam.teamName)
                                                       ? Navigator.push(
                                                           context,
                                                           MaterialPageRoute(
@@ -784,7 +789,23 @@ class _IntramuralsJoinLeague2State extends State<IntramuralsJoinLeague2> {
                                                                             true,
                                                                       )),
                                                         )
-                                                      : null;
+                                                      : ProfanityCheck.containsProfanity(newTeam.teamName) ? showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Inappropriate Content Detected"),
+          content: Text("Please remove any inappropriate content from the team name."),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    ) : null;
                                                 },
                                                 style: ButtonStyle(
                                                   backgroundColor:

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
+import 'package:gcu_student_app/src/widgets/community/filter_submissions.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
 import 'package:gcu_student_app/src/widgets/shared/side_scrolling/side_scrolling.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -26,6 +27,7 @@ class _EditProductState extends State<EditProduct> {
   List<String> categories = [];
   String description = '';
   String selectedCategory = 'All';
+  bool isFeatured = false;
   bool agreementChecked = false;
   late TextEditingController nameController;
   late TextEditingController descriptionController;
@@ -57,11 +59,13 @@ class _EditProductState extends State<EditProduct> {
     super.initState();
     name = widget.product.name;
     description = widget.product.description;
+    isFeatured = widget.product.featured;
     nameController = TextEditingController(text: widget.product.name);
     selectedCategory = widget.product.category;
     descriptionController =
         TextEditingController(text: widget.product.description);
-    priceController = TextEditingController(text: _numberFormat.format(widget.product.price));
+    priceController =
+        TextEditingController(text: _numberFormat.format(widget.product.price));
 
     // Listener to update price variable
     price = widget.product.price;
@@ -89,7 +93,8 @@ class _EditProductState extends State<EditProduct> {
         description.isNotEmpty &&
         selectedCategory.isNotEmpty &&
         _image != null &&
-        agreementChecked == true && price != 0) {
+        agreementChecked == true &&
+        price != 0) {
       return true;
     } else {
       return false;
@@ -200,7 +205,7 @@ class _EditProductState extends State<EditProduct> {
         businessId: widget.product.businessId,
         category: '',
         business: widget.product.business,
-        featured: false);
+        featured: isFeatured);
     print("user updating product with name: " + newProduct.name);
   }
 
@@ -209,6 +214,12 @@ class _EditProductState extends State<EditProduct> {
   void updateCheckbox(bool? newValue) {
     setState(() {
       agreementChecked = newValue ?? false;
+    });
+  }
+
+  void updateFeatured(bool? newValue) {
+    setState(() {
+      isFeatured = newValue ?? false;
     });
   }
 
@@ -276,7 +287,55 @@ class _EditProductState extends State<EditProduct> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomBackButton(),
+                  Container(
+                      margin: EdgeInsets.all(16),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomBackButton(),
+                            InkWell(
+                                onTap: () => {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("Delete Product", style: TextStyle(color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
+                                            backgroundColor: AppStyles.getCardBackground(themeNotifier.currentMode),
+                                            content: Text(
+                                                "Are you sure you want to delete this product?", style: TextStyle(color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .pop(); // Close the dialog
+                                                },
+                                                child: Text("Cancel", style: TextStyle(color: AppStyles.getPrimaryLight(themeNotifier.currentMode))),
+                                              ),
+                                              TextButton(
+                                                style: TextButton.styleFrom(
+                                                  backgroundColor: Colors
+                                                      .red, // Red background color
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .pop(); // Close the dialog
+                                                  // Add your deletion logic here
+                                                },
+                                                child: Text(
+                                                  "Yes, Delete",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      )
+                                    },
+                                child: Icon(Icons.delete_forever,
+                                    color: Colors.red, size: 32))
+                          ])),
                   SizedBox(height: 16),
                   Padding(
                       padding: EdgeInsets.only(left: 32, right: 32, top: 16),
@@ -336,10 +395,14 @@ class _EditProductState extends State<EditProduct> {
                                       themeNotifier.currentMode))),
                           SizedBox(height: 16),
                           TextFormField(
-                            controller: priceController,
+                            controller: priceController,                            
+                            style: TextStyle(
+                              color: AppStyles.getTextPrimary(
+                                  themeNotifier.currentMode), // Set text color
+                            ),
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                              hintText: 'Product Title here...',
+                              hintText: 'Product Price here...',
                               hintStyle: TextStyle(
                                 color: AppStyles.getInactiveIcon(themeNotifier
                                     .currentMode), // Set hint text color
@@ -362,6 +425,38 @@ class _EditProductState extends State<EditProduct> {
                             onChanged: (value) {
                               // Handle changed value if needed
                             },
+                          ),
+                          SizedBox(height: 32),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Checkbox(
+                                side: BorderSide(
+                                  color: AppStyles.getTextPrimary(
+                                      themeNotifier.currentMode),
+                                  width: 2.0,
+                                ),
+                                checkColor: Colors.white,
+                                activeColor: AppStyles.getPrimaryLight(
+                                    themeNotifier.currentMode),
+                                value: isFeatured,
+                                onChanged: (bool? newValue) {
+                                  updateFeatured(newValue);
+                                },
+                              ),
+                              Expanded(
+                                child: Text(
+                                  "Feature this Product?",
+                                  style: TextStyle(
+                                    color: AppStyles.getTextPrimary(
+                                      themeNotifier.currentMode,
+                                    ),
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           SizedBox(height: 32),
                           Text("Product Image",
@@ -521,8 +616,34 @@ class _EditProductState extends State<EditProduct> {
                     child: ElevatedButton(
                       onPressed: allInfoEntered()
                           ? () {
-                              // Logic to proceed after correct answers are correct\
-                              updateProduct();
+                              if (ProfanityCheck.containsProfanity(name) ||
+                                  ProfanityCheck.containsProfanity(
+                                      description)) {
+                                // If inappropriate content is found, show a dialog
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: AppStyles.getCardBackground(themeNotifier.currentMode),
+                                      title: Text(
+                                          "Inappropriate Content Detected", style: TextStyle(color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
+                                      content: Text(
+                                          "Please remove any inappropriate content from the product details.", style: TextStyle(color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text('OK', style: TextStyle(color: AppStyles.getPrimaryLight(themeNotifier.currentMode))),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                // No inappropriate content found, proceed with updating the product
+                                updateProduct();
+                              }
                             }
                           : null, // Button is disabled if not all info has been entered
                       style: ButtonStyle(

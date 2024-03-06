@@ -197,6 +197,7 @@ class _MarketBusiness extends State<MarketBusiness> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     CustomBackButton(),
+                                    widget.business.ownerId == user.id ?
                                     MenuAnchor(
                                       builder: (BuildContext context,
                                           MenuController controller,
@@ -254,7 +255,48 @@ class _MarketBusiness extends State<MarketBusiness> {
                                               DropdownItem.values[index].name)),
                                         ),
                                       ),
-                                    ),
+                                    ) : InkWell(
+                                      onTap: () {
+                                        showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: AppStyles.getCardBackground(themeNotifier.currentMode),
+                                      title: Text(
+                                          "Report This Business", style: TextStyle(color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
+                                      content: Text(
+                                          "Are you sure you want to report this business because they are not following our guidelines for the student marketplace?", style: TextStyle(color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
+                                      actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .pop(); // Close the dialog
+                                                },
+                                                child: Text("Cancel", style: TextStyle(color: AppStyles.getPrimaryLight(themeNotifier.currentMode))),
+                                              ),
+                                              TextButton(
+                                                style: TextButton.styleFrom(
+                                                  backgroundColor: Colors
+                                                      .red,
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .pop(); // Close the dialog
+                                                  // Add the report logic here
+                                                },
+                                                child: Text(
+                                                  "Report",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                    );
+                                  },
+                                );
+                                      },
+                                      child:Container(padding: EdgeInsets.all(8), child:  Icon(Icons.report, color: Colors.red, size: 32)))
                                   ],
                                 )),
                           ]),

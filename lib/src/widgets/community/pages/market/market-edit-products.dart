@@ -15,8 +15,7 @@ import 'market-user.dart';
 
 class MarketEditProducts extends StatefulWidget {
   List<Product> products;
-  MarketEditProducts({Key? key, required this.products})
-      : super(key: key);
+  MarketEditProducts({Key? key, required this.products}) : super(key: key);
 
   @override
   _MarketEditProducts createState() => _MarketEditProducts();
@@ -42,13 +41,14 @@ class _MarketEditProducts extends State<MarketEditProducts> {
   }
 
   List<dynamic> _fetchItems() {
-    if(searchQuery != ""){
-    filteredProducts = widget.products.where((element) => element.name.contains(searchQuery)).toList();
+    if (searchQuery != "") {
+      filteredProducts = widget.products
+          .where((element) => element.name.contains(searchQuery))
+          .toList();
       return filteredProducts;
+    } else {
+      return widget.products;
     }
-      else{
-        return widget.products;
-      }
   }
 
   void _updateItems() {
@@ -101,48 +101,48 @@ class _MarketEditProducts extends State<MarketEditProducts> {
   }
 
   buildResults(themeNotifier, listItems) {
-      return Padding(
-        padding:
-            EdgeInsets.only(bottom: 32.0, right: 32.0, left: 32.0, top: 16.0),
-        child: listItems.length != 0
-            ? Column(
-                children: List.generate((listItems.length / 2).ceil(), (index) {
-                  // Check if it is the last row with only one item (in case of odd number of products)
-                  bool isLastItemSingle = listItems.length % 2 != 0 &&
-                      index == (listItems.length / 2).ceil() - 1;
+    return Padding(
+      padding:
+          EdgeInsets.only(bottom: 32.0, right: 32.0, left: 32.0, top: 16.0),
+      child: listItems.length != 0
+          ? Column(
+              children: List.generate((listItems.length / 2).ceil(), (index) {
+                // Check if it is the last row with only one item (in case of odd number of products)
+                bool isLastItemSingle = listItems.length % 2 != 0 &&
+                    index == (listItems.length / 2).ceil() - 1;
 
-                  return Column(children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment
-                          .spaceBetween, // This will give a "space-between" effect
-                      children: [
-                        Expanded(
-                          child: CondensedProductCard(
-                              product: listItems[
-                                  index * 2], isEdit: true,), // First item of the pair
-                        ),
-                        SizedBox(
-                            width:
-                                16), // Add space only if there's a second item
-                        !isLastItemSingle
-                            ? // Check if there's a second item in this row
-                            Expanded(
-                                child: CondensedProductCard(
-                                    product: listItems[index * 2 +
-                                        1], isEdit: true,), // Second item of the pair
-                              )
-                            : Expanded(child: Container())
-                      ],
-                    ),
-                    SizedBox(height: 16)
-                  ]);
-                }),
-              )
-            : Text("No products...",
-                style: TextStyle(
-                    color:
-                        AppStyles.getTextPrimary(themeNotifier.currentMode))),
-      );
+                return Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment
+                        .spaceBetween, // This will give a "space-between" effect
+                    children: [
+                      Expanded(
+                        child: CondensedProductCard(
+                          product: listItems[index * 2],
+                          isEdit: true,
+                        ), // First item of the pair
+                      ),
+                      SizedBox(
+                          width: 16), // Add space only if there's a second item
+                      !isLastItemSingle
+                          ? // Check if there's a second item in this row
+                          Expanded(
+                              child: CondensedProductCard(
+                                product: listItems[index * 2 + 1],
+                                isEdit: true,
+                              ), // Second item of the pair
+                            )
+                          : Expanded(child: Container())
+                    ],
+                  ),
+                  SizedBox(height: 16)
+                ]);
+              }),
+            )
+          : Text("No products...",
+              style: TextStyle(
+                  color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
+    );
   }
 
   @override
@@ -194,10 +194,19 @@ class _MarketEditProducts extends State<MarketEditProducts> {
                                     backgroundImage: AssetImage(user.image),
                                   ))
                             ])),
+                  Center(
+                        child: Text("Select a Product to Edit",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: AppStyles.getTextPrimary(
+                                    themeNotifier.currentMode)))),
+                    SizedBox(height: 32),               
                     Padding(
                         padding: EdgeInsets.symmetric(horizontal: 32),
                         child: buildSearchBar(themeNotifier)),
-                    SizedBox(height: 32),
+                    SizedBox(height: 32),                    
+                         
                     buildResults(themeNotifier, _fetchItems())
                   ]),
             )));

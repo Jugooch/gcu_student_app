@@ -158,7 +158,7 @@ class Team {
   String league;
   String teamName;
   List<Member> members;
-  String captain;
+  Member captain;
   int sportsmanship;
   List<Game> games;
   String image;
@@ -181,6 +181,9 @@ class Team {
     var membersList = json['members'] as List;
     List<Member> members = membersList.map((i) => Member.fromJson(i)).toList();
 
+    var _captain = json['captain'];
+    Member captain = Member.fromJson(_captain);
+
     //take in list of games from json
     var gamesList = json['games'] as List;
     List<Game> games = gamesList.map((i) => Game.fromJson(i)).toList();
@@ -189,7 +192,7 @@ class Team {
         league: json['league'],
         teamName: json['team-name'],
         members: members,
-        captain: json['captain'],
+        captain: captain,
         sportsmanship: json['sportsmanship'],
         games: games,
         image: json["image"],
