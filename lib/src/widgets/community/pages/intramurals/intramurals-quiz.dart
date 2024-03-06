@@ -58,8 +58,7 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   ///////////////////////////////////////////////////////////////////////////
-  ///Update these methods to actually create and join a team when using real data
-  ///////////////////////////////////////////////////////////////////////////
+  ///*TODO* Update these methods to actually create and join a team when using real data
   ///////////////////////////////////////////////////////////////////////////
   createTeam() {
     print("user creating team with name:" + widget.team.teamName);

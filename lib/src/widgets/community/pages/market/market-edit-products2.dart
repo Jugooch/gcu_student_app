@@ -192,8 +192,7 @@ class _EditProductState extends State<EditProduct> {
   }
 
   ///////////////////////////////////////////////////////////////////////////
-  ///**Update this method to actually create a business when connected to a database**
-  ///////////////////////////////////////////////////////////////////////////
+  ///*TODO* Update this method to actually edit a product when connected to a database**
   ///////////////////////////////////////////////////////////////////////////
   updateProduct() {
     Product newProduct = Product(
@@ -208,6 +207,11 @@ class _EditProductState extends State<EditProduct> {
         featured: isFeatured);
     print("user updating product with name: " + newProduct.name);
   }
+
+  ///////////////////////////////////////////////////////////////////////////
+  ///*TODO* Update this method to actually delete a product when connected to a database**
+  ///////////////////////////////////////////////////////////////////////////
+  deleteProduct() {}
 
   ///////////////////////////////////////////////////////////////////////////
   ///
@@ -299,17 +303,34 @@ class _EditProductState extends State<EditProduct> {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
-                                            title: Text("Delete Product", style: TextStyle(color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
-                                            backgroundColor: AppStyles.getCardBackground(themeNotifier.currentMode),
+                                            title: Text("Delete Product",
+                                                style: TextStyle(
+                                                    color: AppStyles
+                                                        .getTextPrimary(
+                                                            themeNotifier
+                                                                .currentMode))),
+                                            backgroundColor:
+                                                AppStyles.getCardBackground(
+                                                    themeNotifier.currentMode),
                                             content: Text(
-                                                "Are you sure you want to delete this product?", style: TextStyle(color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
+                                                "Are you sure you want to delete this product?",
+                                                style: TextStyle(
+                                                    color: AppStyles
+                                                        .getTextPrimary(
+                                                            themeNotifier
+                                                                .currentMode))),
                                             actions: <Widget>[
                                               TextButton(
                                                 onPressed: () {
                                                   Navigator.of(context)
                                                       .pop(); // Close the dialog
                                                 },
-                                                child: Text("Cancel", style: TextStyle(color: AppStyles.getPrimaryLight(themeNotifier.currentMode))),
+                                                child: Text("Cancel",
+                                                    style: TextStyle(
+                                                        color: AppStyles
+                                                            .getPrimaryLight(
+                                                                themeNotifier
+                                                                    .currentMode))),
                                               ),
                                               TextButton(
                                                 style: TextButton.styleFrom(
@@ -319,7 +340,7 @@ class _EditProductState extends State<EditProduct> {
                                                 onPressed: () {
                                                   Navigator.of(context)
                                                       .pop(); // Close the dialog
-                                                  // Add your deletion logic here
+                                                  deleteProduct();
                                                 },
                                                 child: Text(
                                                   "Yes, Delete",
@@ -395,7 +416,7 @@ class _EditProductState extends State<EditProduct> {
                                       themeNotifier.currentMode))),
                           SizedBox(height: 16),
                           TextFormField(
-                            controller: priceController,                            
+                            controller: priceController,
                             style: TextStyle(
                               color: AppStyles.getTextPrimary(
                                   themeNotifier.currentMode), // Set text color
@@ -624,14 +645,27 @@ class _EditProductState extends State<EditProduct> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      backgroundColor: AppStyles.getCardBackground(themeNotifier.currentMode),
+                                      backgroundColor:
+                                          AppStyles.getCardBackground(
+                                              themeNotifier.currentMode),
                                       title: Text(
-                                          "Inappropriate Content Detected", style: TextStyle(color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
+                                          "Inappropriate Content Detected",
+                                          style: TextStyle(
+                                              color: AppStyles.getTextPrimary(
+                                                  themeNotifier.currentMode))),
                                       content: Text(
-                                          "Please remove any inappropriate content from the product details.", style: TextStyle(color: AppStyles.getTextPrimary(themeNotifier.currentMode))),
+                                          "Please remove any inappropriate content from the product details.",
+                                          style: TextStyle(
+                                              color: AppStyles.getTextPrimary(
+                                                  themeNotifier.currentMode))),
                                       actions: <Widget>[
                                         TextButton(
-                                          child: Text('OK', style: TextStyle(color: AppStyles.getPrimaryLight(themeNotifier.currentMode))),
+                                          child: Text('OK',
+                                              style: TextStyle(
+                                                  color:
+                                                      AppStyles.getPrimaryLight(
+                                                          themeNotifier
+                                                              .currentMode))),
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },

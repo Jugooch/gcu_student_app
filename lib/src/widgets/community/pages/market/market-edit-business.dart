@@ -156,8 +156,7 @@ class _EditBusinessPageState extends State<EditBusinessPage> {
   }
 
   ///////////////////////////////////////////////////////////////////////////
-  ///**Update this method to actually create a business when connected to a database**
-  ///////////////////////////////////////////////////////////////////////////
+  ///*TODO* Update this method to actually edit a business when connected to a database**
   ///////////////////////////////////////////////////////////////////////////
   updateBusiness() {
     Business newBusiness = Business(

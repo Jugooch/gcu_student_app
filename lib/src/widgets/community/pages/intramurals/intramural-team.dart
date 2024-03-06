@@ -253,8 +253,7 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
                                                   AppStyles.getCardBackground(
                                                       themeNotifier
                                                           .currentMode),
-                                              title: Text(
-                                                  "Report This Team",
+                                              title: Text("Report This Team",
                                                   style: TextStyle(
                                                       color: AppStyles
                                                           .getTextPrimary(
@@ -639,7 +638,8 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
                                                 themeNotifier.currentMode))),
                                     SizedBox(height: 16),
                                     MemberCard(
-                                        member: widget.team.captain, isCaptain: true),
+                                        member: widget.team.captain,
+                                        isCaptain: true),
                                     if (widget.isJoin)
                                       Container(
                                         height: 80.0,
@@ -685,7 +685,8 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
                                           ),
                                         ),
                                       )
-                                    else if (isUserMember())
+                                    else if (isUserMember() &&
+                                        widget.team.members.length > 1)
                                       Container(
                                         height: 80.0,
                                         margin: EdgeInsets.only(top: 32),
@@ -694,8 +695,149 @@ class _IntramuralsTeamState extends State<IntramuralsTeam> {
                                                 BorderRadius.circular(8)),
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            //logic to open subpage for the card clicked
-                                            print("User tried leaving! Ha!");
+                                            if (user.id ==
+                                                widget.team.captain.id) {
+                                              showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: Text(
+                                                        "Select a new captain",
+                                                        style: TextStyle(
+                                                            color: AppStyles
+                                                                .getTextPrimary(
+                                                                    themeNotifier
+                                                                        .currentMode))),
+                                                    backgroundColor: AppStyles
+                                                        .getCardBackground(
+                                                            themeNotifier
+                                                                .currentMode),
+                                                    content: Container(
+                                                      // Optionally, set a specific height
+                                                      width: double.maxFinite,
+                                                      child: ListView.builder(
+                                                        shrinkWrap: true,
+                                                        itemCount: widget.team
+                                                            .members.length,
+                                                        itemBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                int index) {
+                                                          if (widget
+                                                                  .team
+                                                                  .members[
+                                                                      index]
+                                                                  .id ==
+                                                              user.id) {
+                                                            return Container(); // Don't show the current user
+                                                          }
+                                                          return ListTile(
+                                                            title: Text(
+                                                                widget
+                                                                    .team
+                                                                    .members[
+                                                                        index]
+                                                                    .name,
+                                                                style: TextStyle(
+                                                                    color: AppStyles.getTextPrimary(
+                                                                        themeNotifier
+                                                                            .currentMode))),
+                                                            onTap: () {
+                                                              /////////////////////////////////////////////////////////////////
+                                                              // *TODO* Implement logic to set the selected member as the new captain
+                                                              /////////////////////////////////////////////////////////////////
+                                                              ///
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop(); // Close the dialog
+                                                            },
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(),
+                                                        child: Text("Cancel",
+                                                            style: TextStyle(
+                                                                color: AppStyles
+                                                                    .getPrimaryLight(
+                                                                        themeNotifier
+                                                                            .currentMode))),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            } else {
+                                              showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    backgroundColor: AppStyles
+                                                        .getCardBackground(
+                                                            themeNotifier
+                                                                .currentMode),
+                                                    title: Text(
+                                                        "Leave This Team",
+                                                        style: TextStyle(
+                                                            color: AppStyles
+                                                                .getTextPrimary(
+                                                                    themeNotifier
+                                                                        .currentMode))),
+                                                    content: Text(
+                                                        "Are you sure you want to leave this intramural team?",
+                                                        style: TextStyle(
+                                                            color: AppStyles
+                                                                .getTextPrimary(
+                                                                    themeNotifier
+                                                                        .currentMode))),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop(); // Close the dialog
+                                                        },
+                                                        child: Text("Cancel",
+                                                            style: TextStyle(
+                                                                color: AppStyles
+                                                                    .getPrimaryLight(
+                                                                        themeNotifier
+                                                                            .currentMode))),
+                                                      ),
+                                                      TextButton(
+                                                        style: TextButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              Colors.red,
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+
+                                                          /////////////////////////////////////////////////////////////////
+                                                          // *TODO* Implement logic to let a user leave the team
+                                                          /////////////////////////////////////////////////////////////////
+                                                          print(
+                                                              "User tried leaving! Ha!");
+                                                        },
+                                                        child: Text(
+                                                          "Leave",
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            }
                                           },
                                           style: ButtonStyle(
                                             backgroundColor:
