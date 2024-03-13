@@ -30,23 +30,14 @@ class EventsService {
       return [];
     }
   }
-
-  //Return all th events from the data
+  // Return all the events from the data
   Future<List<Event>> getEvents() async {
     try {
-      // Use rootBundle to access files included with the app
-      String jsonString =
-          await rootBundle.loadString('assets/data/events-data.json');
+      String jsonString = await rootBundle.loadString('assets/data/events-data.json');
       List<dynamic> jsonList = jsonDecode(jsonString);
 
-      List<Event> events = jsonList.map((jsonItem) {
-        return Event(
-            title: jsonItem['title'],
-            date: DateTime.parse(jsonItem['date']),
-            description: jsonItem['description'],
-            image: jsonItem['image'],
-            major: jsonItem['major']);
-      }).toList();
+      // Use Event.fromJson factory method
+      List<Event> events = jsonList.map((jsonItem) => Event.fromJson(jsonItem)).toList();
 
       return events;
     } catch (e) {
@@ -57,22 +48,12 @@ class EventsService {
 
   Future<List<Event>> getMajorEvents() async {
     try {
-      String jsonString =
-          await rootBundle.loadString('assets/data/events-data.json');
+      String jsonString = await rootBundle.loadString('assets/data/events-data.json');
       List<dynamic> jsonList = jsonDecode(jsonString);
 
-      // Directly filter and map only major events from the JSON list
-      List<Event> majorEvents = jsonList
-          .where((jsonItem) => jsonItem['major'] == true)
-          .map((jsonItem) {
-        return Event(
-          title: jsonItem['title'],
-          date: DateTime.parse(jsonItem['date']),
-          description: jsonItem['description'],
-          image: jsonItem['image'],
-          major: jsonItem['major'],
-        );
-      }).toList();
+      // Directly filter and map only major events using Event.fromJson
+      List<Event> majorEvents = jsonList.where((jsonItem) => jsonItem['major'] == true)
+                                         .map((jsonItem) => Event.fromJson(jsonItem)).toList();
 
       return majorEvents;
     } catch (e) {
@@ -105,11 +86,27 @@ class Event {
   final String description;
   final String image;
   final bool major;
+  final String location;
+  final int clubId;
 
   Event(
       {required this.title,
       required this.date,
       required this.description,
       required this.image,
-      required this.major});
+      required this.major,
+      required this.location,
+      required this.clubId});
+
+  factory Event.fromJson(Map<String, dynamic> json) {
+        return Event(
+          title: json['title'],
+          date: DateTime.parse(json['date']),
+          description: json['description'],
+          image: json['image'],
+          major: json['major'],
+          location: json['location'],
+          clubId: json['clubId']
+        );
+  }
 }

@@ -1,21 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
+import 'package:gcu_student_app/src/services/services.dart';
 import 'package:provider/provider.dart';
 import './pages/pages.dart';
 
 class CommunityView extends StatefulWidget {
   const CommunityView({super.key});
 
-    static CommunityView newInstance() {
-      return const CommunityView();
-    }
-
   @override
   _CommunityState createState() => _CommunityState();
 }
 
 class _CommunityState extends State<CommunityView> {
+   ///////////////////////
+  //Properties
+  ///////////////////////
+  late Future<User> userFuture;
+  User user = User(name: "", id: "", image: "assets/images/Me.png");
+
+  ///////////////////////
+  //Initialize State and Data
+  ///////////////////////
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  ///////////////////////
+  //Fetch All Data on Events and Articles
+  ///////////////////////
+  Future<void> fetchData() async {
+    userFuture = UserService().getUser("20692303");
+    user = await userFuture;
+  }
 
 
 ///////////////////////
@@ -121,7 +140,7 @@ body: Container(
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ClubsPage()),
+                          builder: (context) => ClubsPage(user: user)),
                     );
                   },
                   style: ButtonStyle(

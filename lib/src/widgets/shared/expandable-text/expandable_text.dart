@@ -27,7 +27,7 @@ class _ExpandableTextState extends State<ExpandableText> {
       maxLines: 2, // Match the maxLines
       textDirection: TextDirection.ltr,
     );
-    textPainter.layout(maxWidth: MediaQuery.of(context).size.width - 32); // Assuming padding/margin from both sides
+    textPainter.layout(maxWidth: MediaQuery.of(context).size.width - 64); // Assuming padding/margin from both sides
 
     if (textPainter.didExceedMaxLines) {
       setState(() {
