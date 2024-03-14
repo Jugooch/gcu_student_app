@@ -97,6 +97,12 @@ A full view of the UI/UX case study can be found at this Behance link.
   </details></li></ul>
 </details>
 
+## OUT OF SCOPE FEATURES
+1. Integration with Halo - GCU Learning Management System
+2. Admin Website for updating/adding News Articles
+3. Admin Website for editing Intramurals information (scores, brackets, etc...)
+4. Admin website for featuring specific businesses on the student market
+
 ## HARDWARE AND SOFTWARE TECHNOLOGIES
 1. Flutter (v. 1.12) - Flutter was chosen because it allows for efficient cross-platform development. This allows me to develop the app to work on as many devices as possible, which is important since this app is created to be used by university students.
 2. Figma (v. 107.0.0) - Figma was chosen because it is the industry standard for UI/UX design and has any features that allow for a clean transition from design to development (like dev-mode and variables!).
