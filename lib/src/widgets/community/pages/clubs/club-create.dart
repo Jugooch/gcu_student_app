@@ -5,39 +5,37 @@ import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
+import 'package:gcu_student_app/src/widgets/community/filter_submissions.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
 import 'package:gcu_student_app/src/widgets/shared/side_scrolling/side_scrolling.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class EditBusinessPage extends StatefulWidget {
+class CreateClub extends StatefulWidget {
   final User user;
-  Business business;
-  EditBusinessPage({required this.user, Key? key, required this.business})
-      : super(key: key);
+  const CreateClub({required this.user, Key? key}) : super(key: key);
 
   @override
-  _EditBusinessPageState createState() => _EditBusinessPageState();
+  _CreateClubState createState() => _CreateClubState();
 }
 
-class _EditBusinessPageState extends State<EditBusinessPage> {
+class _CreateClubState extends State<CreateClub> {
   String name = '';
   List<String> categories = [];
   String description = '';
-  late TextEditingController nameController;
-  late TextEditingController descriptionController;
+  bool autoAccept = false;
 
   List<String> availableCategories = [
-    'Clothes',
-    'Art',
-    'Services',
-    'Crafts',
-    'Food',
     'Technology',
-    'Furniture',
-    'Home Supplies',
-    'Cosmetics',
+    'Nature',
+    'Sports',
+    'Entertainment',
+    'Creative',
+    'Volunteering',
+    'Diversity',
+    'Hobbies',
+    'Professional',
     'Other'
   ];
 
@@ -50,12 +48,6 @@ class _EditBusinessPageState extends State<EditBusinessPage> {
   @override
   void initState() {
     super.initState();
-    nameController = TextEditingController(text: widget.business.name);
-    descriptionController =
-        TextEditingController(text: widget.business.description);
-    name = widget.business.name;
-    categories = List.from(widget.business.categories);
-    description = widget.business.description;
   }
 
   allInfoEntered() {
@@ -71,15 +63,21 @@ class _EditBusinessPageState extends State<EditBusinessPage> {
     }
   }
 
-  void updateBusinessName(String input) {
+  void updateClubName(String input) {
     name = input;
     setState(() {});
   }
 
-  void updateBusinessDescription(String input) {
+  void updateClubDescription(String input) {
     description = input;
     setState(() {
       description = input;
+    });
+  }
+
+  void updateAutoAccept(bool? newValue) {
+    setState(() {
+      autoAccept = newValue ?? false;
     });
   }
 
@@ -156,16 +154,20 @@ class _EditBusinessPageState extends State<EditBusinessPage> {
   }
 
   ///////////////////////////////////////////////////////////////////////////
-  ///*TODO* Update this method to actually edit a business when connected to a database**
+  ///*TODO* Update this method to actually create a club when connected to a database
   ///////////////////////////////////////////////////////////////////////////
-  updateBusiness() {
-    Business newBusiness = Business(
+  createClub() {
+    Member newMember = Member(
+        id: widget.user.id, name: widget.user.name, joinDate: DateTime.now());
+    Club newClub = Club(
         name: name,
         description: description,
         image: "",
-        ownerId: widget.user.id,
-        categories: categories);
-    print("user updating business with name: " + newBusiness.name);
+        members: [newMember],
+        owner: newMember,
+        categories: categories,
+        autoAccept: autoAccept);
+    print("user creating club with name: " + newClub.name);
   }
   ///////////////////////////////////////////////////////////////////////////
 
@@ -245,14 +247,14 @@ class _EditBusinessPageState extends State<EditBusinessPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                              "You can edit your business information here. Your information will have to be re-approved, so changes may take a while to show on your business page.",
+                              "Create a club today! We at GCU love to foster community, and what better way to do that than to allow like-minded people to work together to do great things! If approved, you can create, collaborate, and enjoy community with those around you by creating a club on campus!",
                               style: TextStyle(
                                   color: AppStyles.getTextPrimary(
                                       themeNotifier.currentMode),
                                   fontWeight: FontWeight.w300,
                                   fontSize: 16)),
                           SizedBox(height: 32),
-                          Text("Business Name",
+                          Text("Club Name",
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -260,14 +262,13 @@ class _EditBusinessPageState extends State<EditBusinessPage> {
                                       themeNotifier.currentMode))),
                           SizedBox(height: 16),
                           TextField(
-                            controller: nameController,
                             maxLength: 25,
                             style: TextStyle(
                               color: AppStyles.getTextPrimary(
                                   themeNotifier.currentMode), // Set text color
                             ),
                             decoration: InputDecoration(
-                              hintText: 'Team name here...',
+                              hintText: 'Club name here...',
                               hintStyle: TextStyle(
                                 color: AppStyles.getInactiveIcon(themeNotifier
                                     .currentMode), // Set hint text color
@@ -287,10 +288,10 @@ class _EditBusinessPageState extends State<EditBusinessPage> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
-                            onChanged: updateBusinessName,
+                            onChanged: updateClubName,
                           ),
                           SizedBox(height: 32),
-                          Text("Business Image",
+                          Text("Club Image",
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -348,7 +349,7 @@ class _EditBusinessPageState extends State<EditBusinessPage> {
                             ],
                           ),
                           SizedBox(height: 32),
-                          Text("Business Categories",
+                          Text("Club Categories",
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -364,7 +365,7 @@ class _EditBusinessPageState extends State<EditBusinessPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Business Description",
+                          Text("Club Description",
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -372,7 +373,6 @@ class _EditBusinessPageState extends State<EditBusinessPage> {
                                       themeNotifier.currentMode))),
                           SizedBox(height: 16),
                           TextField(
-                            controller: descriptionController,
                             maxLines: 3,
                             style: TextStyle(
                               color: AppStyles.getTextPrimary(
@@ -399,10 +399,66 @@ class _EditBusinessPageState extends State<EditBusinessPage> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
-                            onChanged: updateBusinessDescription,
+                            onChanged: updateClubDescription,
                           ),
                         ],
                       )),
+                  SizedBox(height: 32),
+                  Text("Preferences",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: AppStyles.getTextPrimary(
+                              themeNotifier.currentMode))),
+                  SizedBox(height: 16),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: AppStyles.getCardBackground(
+                        themeNotifier.currentMode,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppStyles.darkBlack.withOpacity(.12),
+                          spreadRadius: 0,
+                          blurRadius: 4,
+                          offset:
+                              const Offset(0, 4), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Automatically Accept Members",
+                          style: TextStyle(
+                            color: AppStyles.getTextPrimary(
+                              themeNotifier.currentMode,
+                            ),
+                            fontSize: 16,
+                          ),
+                        ),
+                        Checkbox(
+                          side: BorderSide(
+                            color: AppStyles.getTextPrimary(
+                                themeNotifier.currentMode),
+                            width: 2.0,
+                          ),
+                          checkColor: Colors.white,
+                          activeColor: AppStyles.getPrimaryLight(
+                              themeNotifier.currentMode),
+                          value: autoAccept,
+                          onChanged: (bool? newValue) {
+                            updateAutoAccept(newValue);
+                          },
+                        )
+                      ],
+                    ),
+                  ),
                   SizedBox(height: 32),
                   Container(
                     margin: EdgeInsets.only(left: 32.0, right: 32, bottom: 32),
@@ -412,8 +468,47 @@ class _EditBusinessPageState extends State<EditBusinessPage> {
                     child: ElevatedButton(
                       onPressed: allInfoEntered()
                           ? () {
-                              // Logic to proceed after correct answers are correct\
-                              updateBusiness();
+                              if (ProfanityCheck.containsProfanity(name) ||
+                                  ProfanityCheck.containsProfanity(
+                                      description)) {
+                                // If inappropriate content is found, show a dialog
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor:
+                                          AppStyles.getCardBackground(
+                                              themeNotifier.currentMode),
+                                      title: Text(
+                                          "Inappropriate Content Detected",
+                                          style: TextStyle(
+                                              color: AppStyles.getTextPrimary(
+                                                  themeNotifier.currentMode))),
+                                      content: Text(
+                                          "Please remove any inappropriate content from the product details.",
+                                          style: TextStyle(
+                                              color: AppStyles.getTextPrimary(
+                                                  themeNotifier.currentMode))),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text('OK',
+                                              style: TextStyle(
+                                                  color:
+                                                      AppStyles.getPrimaryLight(
+                                                          themeNotifier
+                                                              .currentMode))),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                // Logic to proceed after correct answers are correct\
+                                createClub();
+                              }
                             }
                           : null, // Button is disabled if not all info has been entered
                       style: ButtonStyle(
@@ -434,7 +529,7 @@ class _EditBusinessPageState extends State<EditBusinessPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Edit Business',
+                            'Create Club',
                             style:
                                 TextStyle(color: Colors.white, fontSize: 20.0),
                           ),
@@ -445,12 +540,5 @@ class _EditBusinessPageState extends State<EditBusinessPage> {
                 ],
               ),
             )));
-  }
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    descriptionController.dispose();
-    super.dispose();
   }
 }

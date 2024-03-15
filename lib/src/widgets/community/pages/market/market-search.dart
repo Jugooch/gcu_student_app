@@ -35,6 +35,7 @@ class _MarketSearch extends State<MarketSearch> {
   String searchQuery = "";
   String selectedCategory = 'All';
   int selectedTabIndex = 0;
+  late TextEditingController _searchController;
 
   ///////////////////////
   //Initialize State and Data
@@ -42,6 +43,10 @@ class _MarketSearch extends State<MarketSearch> {
   @override
   void initState() {
     super.initState();
+    _searchController = TextEditingController();
+    if (widget.searchValue != "") {
+      _searchController.text = widget.searchValue;
+    }
     searchQuery = widget.searchValue;
     selectedCategory = widget.category;
     // Initialize data fetching based on the selected tab
@@ -81,6 +86,7 @@ class _MarketSearch extends State<MarketSearch> {
 
   Widget buildSearchBar(ThemeNotifier themeNotifier) {
     return TextField(
+      controller: _searchController,
       style: TextStyle(
         color: AppStyles.getTextPrimary(
             themeNotifier.currentMode), // Set text color
@@ -182,8 +188,9 @@ class _MarketSearch extends State<MarketSearch> {
                       children: [
                         Expanded(
                           child: CondensedProductCard(
-                              product: listItems[
-                                  index * 2], isEdit: false,), // First item of the pair
+                            product: listItems[index * 2],
+                            isEdit: false,
+                          ), // First item of the pair
                         ),
                         SizedBox(
                             width:
@@ -192,8 +199,9 @@ class _MarketSearch extends State<MarketSearch> {
                             ? // Check if there's a second item in this row
                             Expanded(
                                 child: CondensedProductCard(
-                                    product: listItems[index * 2 +
-                                        1], isEdit: false,), // Second item of the pair
+                                  product: listItems[index * 2 + 1],
+                                  isEdit: false,
+                                ), // Second item of the pair
                               )
                             : Expanded(child: Container())
                       ],

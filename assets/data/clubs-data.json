@@ -4,6 +4,7 @@
     "name": "Basketball Club",
     "image": "assets/images/Basketball.jpg",
     "description": "We like to do all things basketball here at the Basketball Club. Come shoot some hoops with us swish.",
+    "categories": ["Sports", "Hobbies"],
     "members": [{
         "name": "Jake Dolittle",
         "id": "44444444",
@@ -25,14 +26,14 @@
       "id": "55555555",
       "join-date": "2024-03-04"
     },
-    "auto-accept-members": false,
-    "invite-only": true
+    "auto-accept-members": false
   },
   {
     "id": 1,
     "name": "Board Games Club",
     "image": "assets/images/ErrorImage.png",
-    "description": "We like to do all things board Games here at the board games Club. Come play some games with us!.",
+    "description": "We like to do all things board Games here at the board games Club. Come play some games with us!",
+    "categories": ["Entertainment", "Hobbies"],
     "members": [{
         "name": "Justice Gooch",
         "id": "20692303",
@@ -49,14 +50,14 @@
       "id": "20692303",
       "join-date": "2024-03-05"
     },
-    "auto-accept-members": false,
-    "invite-only": true
+    "auto-accept-members": false
   },
   {
     "id": 2,
     "name": "Slide Club",
     "image": "assets/images/CanyonCooldown.jpg",
     "description": "We like to do all things slides here at the slide Club. Come slide with us.",
+    "categories": ["Hobbies"],
     "members": [{
         "name": "Jake Dolittle",
         "id": "44444444",
@@ -78,14 +79,14 @@
       "id": "55555555",
       "join-date": "2024-03-04"
     },
-    "auto-accept-members": true,
-    "invite-only": false
+    "auto-accept-members": true
   },
   {
     "id": 3,
     "name": "Clothes Club",
     "image": "assets/images/Market.png",
     "description": "We like to do all things clothes here at the clothes Club. Come admire some cool clothes with us.",
+    "categories": ["Creative", "Hobbies"],
     "members": [{
         "name": "Jake Dolittle",
         "id": "44444444",
@@ -107,7 +108,6 @@
       "id": "55555555",
       "join-date": "2024-03-04"
     },
-    "auto-accept-members": true,
-    "invite-only": false
+    "auto-accept-members": true
   }
 ]

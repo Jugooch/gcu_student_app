@@ -21,7 +21,7 @@ class _ClubInfoState extends State<ClubInfo> {
         width: double.infinity,
         padding: EdgeInsets.symmetric(vertical: 32),
         decoration: BoxDecoration(
-          color: AppStyles.getCardBackground(themeNotifier.currentMode),
+          color: AppStyles.getBackground(themeNotifier.currentMode),
           boxShadow: [
             BoxShadow(
               color: AppStyles.getBlack(themeNotifier.currentMode)

@@ -30,26 +30,26 @@ class EventPage extends StatelessWidget {
     //global styling file
     var themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
-      appBar: CupertinoNavigationBar(
-        automaticallyImplyLeading: false,
-        border: null,
-        backgroundColor: AppStyles.getPrimary(themeNotifier.currentMode),
-        middle: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(width: 32),
-            Image.asset(
-              'assets/images/GCU_Logo.png',
-              height: 32.0,
-            ),
-          ],
+        appBar: CupertinoNavigationBar(
+          automaticallyImplyLeading: false,
+          border: null,
+          backgroundColor: AppStyles.getPrimary(themeNotifier.currentMode),
+          middle: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(width: 32),
+              Image.asset(
+                'assets/images/GCU_Logo.png',
+                height: 32.0,
+              ),
+            ],
+          ),
         ),
-      ),
         backgroundColor: AppStyles.getBackground(themeNotifier.currentMode),
         body: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(children: [
               Container(
@@ -72,6 +72,7 @@ class EventPage extends StatelessWidget {
               CustomBackButton(),
             ]),
             Container(
+                width: double.infinity,
                 decoration: BoxDecoration(
                   color: AppStyles.getCardBackground(themeNotifier.currentMode),
                   boxShadow: [
@@ -95,28 +96,50 @@ class EventPage extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             fontSize: 24)),
                     SizedBox(height: 16),
-                    Text(_formatDate(event.date),
-                        style: TextStyle(
-                            color: AppStyles.getTextPrimary(
-                                themeNotifier.currentMode),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w300)),
-                    SizedBox(height: 16),
+                    Row(children: [
+                      Icon(Icons.calendar_month,
+                          color: AppStyles.getTextPrimary(
+                              themeNotifier.currentMode),
+                          size: 14),
+                      SizedBox(width: 8),
+                      Text(_formatDate(event.date),
+                          style: TextStyle(
+                              color: AppStyles.getTextPrimary(
+                                  themeNotifier.currentMode),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300)),
+                      SizedBox(height: 16),
+                    ]),
+                    Row(children: [
+                      Icon(Icons.location_on,
+                          color: AppStyles.getTextPrimary(
+                              themeNotifier.currentMode),
+                          size: 14),
+                      SizedBox(width: 8),
+                      Text(event.location,
+                          style: TextStyle(
+                              color: AppStyles.getTextPrimary(
+                                  themeNotifier.currentMode),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300))
+                    ]),
+                    SizedBox(height: 32),
                     ExpandableText(text: event.description),
                   ],
                 )),
             SizedBox(height: 32),
-            Container(padding: EdgeInsets.symmetric(horizontal: 32),
-            child: Text(
-              'Other Events',
-              style: TextStyle(
-                color: AppStyles.getTextPrimary(themeNotifier.currentMode),
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 32),
+              child: Text(
+                'Other Events',
+                style: TextStyle(
+                  color: AppStyles.getTextPrimary(themeNotifier.currentMode),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            ),        
-            SizedBox(height: 8),  
+            SizedBox(height: 8),
             SideScrollingWidget(
               children: otherEvents
                   // Filter out the current event
