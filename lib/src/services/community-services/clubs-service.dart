@@ -38,7 +38,7 @@ class ClubsService {
   Future<List<Event>> getClubEvents(club) async {
 // Filter the clubs to return only those that the user has not joined
     final String response =
-        await rootBundle.loadString('assets/data/club-events-data.json');
+        await rootBundle.loadString('assets/data/events-data.json');
     final data = json.decode(response);
 
     // Assuming `data` represents a list of teams
@@ -56,7 +56,7 @@ class ClubsService {
   Future<List<Event>> getAllClubEvents(club) async {
 // Filter the clubs to return only those that the user has not joined
     final String response =
-        await rootBundle.loadString('assets/data/club-events-data.json');
+        await rootBundle.loadString('assets/data/events-data.json');
     final data = json.decode(response);
 
     // Assuming `data` represents a list of teams

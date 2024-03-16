@@ -30,14 +30,17 @@ class EventsService {
       return [];
     }
   }
+
   // Return all the events from the data
   Future<List<Event>> getEvents() async {
     try {
-      String jsonString = await rootBundle.loadString('assets/data/events-data.json');
+      String jsonString =
+          await rootBundle.loadString('assets/data/events-data.json');
       List<dynamic> jsonList = jsonDecode(jsonString);
 
       // Use Event.fromJson factory method
-      List<Event> events = jsonList.map((jsonItem) => Event.fromJson(jsonItem)).toList();
+      List<Event> events =
+          jsonList.map((jsonItem) => Event.fromJson(jsonItem)).toList();
 
       return events;
     } catch (e) {
@@ -48,17 +51,37 @@ class EventsService {
 
   Future<List<Event>> getMajorEvents() async {
     try {
-      String jsonString = await rootBundle.loadString('assets/data/events-data.json');
+      String jsonString =
+          await rootBundle.loadString('assets/data/events-data.json');
       List<dynamic> jsonList = jsonDecode(jsonString);
 
       // Directly filter and map only major events using Event.fromJson
-      List<Event> majorEvents = jsonList.where((jsonItem) => jsonItem['major'] == true)
-                                         .map((jsonItem) => Event.fromJson(jsonItem)).toList();
+      List<Event> majorEvents = jsonList
+          .where((jsonItem) => jsonItem['major'] == true)
+          .map((jsonItem) => Event.fromJson(jsonItem))
+          .toList();
 
       return majorEvents;
     } catch (e) {
       print("Error reading JSON file: $e");
       return [];
+    }
+  }
+
+  Future<bool> isUserAdmin(user) async {
+    try {
+      String jsonString =
+          await rootBundle.loadString('assets/data/news-admin-data.json');
+      List<dynamic> jsonList = jsonDecode(jsonString);
+
+      if (jsonList.any((e) => e['id'] == user.id)) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Error reading JSON file: $e");
+      return false;
     }
   }
 }
@@ -99,14 +122,13 @@ class Event {
       required this.clubId});
 
   factory Event.fromJson(Map<String, dynamic> json) {
-        return Event(
-          title: json['title'],
-          date: DateTime.parse(json['date']),
-          description: json['description'],
-          image: json['image'],
-          major: json['major'],
-          location: json['location'],
-          clubId: json['clubId']
-        );
+    return Event(
+        title: json['title'],
+        date: DateTime.parse(json['date']),
+        description: json['description'],
+        image: json['image'],
+        major: json['major'],
+        location: json['location'],
+        clubId: json['clubId']);
   }
 }

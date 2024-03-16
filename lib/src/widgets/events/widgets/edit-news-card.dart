@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/services/services.dart';
+import 'package:gcu_student_app/src/widgets/events/pages/edit-news2.dart';
 import 'package:gcu_student_app/src/widgets/events/pages/news-article-page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app_styling.dart';
 
-class MainArticleButton extends StatefulWidget {
+class EditNewsCard extends StatefulWidget {
   //pass in an article object
   final Article article;
+  final User user;
 
-  const MainArticleButton({Key? key, required this.article}) : super(key: key);
+  const EditNewsCard({Key? key, required this.article, required this.user})
+      : super(key: key);
 
   @override
-  _MainArticleButton createState() => _MainArticleButton();
+  _EditNewsCard createState() => _EditNewsCard();
 }
 
-class _MainArticleButton extends State<MainArticleButton> {
+class _EditNewsCard extends State<EditNewsCard> {
   ///////////////////////
   //Main Widget
   ///////////////////////
@@ -25,17 +28,19 @@ class _MainArticleButton extends State<MainArticleButton> {
     //global styling file
     var themeNotifier = Provider.of<ThemeNotifier>(context);
     return InkWell(
-      onTap: () => {
-          //logic to open subpage for the Article
-          Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => NewsArticlePage(article: widget.article)),
-          )
-      },
-      child: Column(
+        onTap: () => {
+              //logic to open subpage for the Article
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => EditNewsPage2(
+                        article: widget.article, user: widget.user)),
+              )
+            },
+        child: Column(
           children: [
             Container(
-              width: 320,
+              width: double.infinity,
               child: Column(
                 children: [
                   ClipRRect(

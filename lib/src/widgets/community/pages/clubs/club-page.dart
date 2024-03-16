@@ -13,8 +13,10 @@ import 'package:intl/intl.dart';
 
 import '../../../../services/services.dart';
 import '../../widgets/clubs/club-info.dart';
+import 'add-event.dart';
 import 'delete-club.dart';
 import 'edit-club.dart';
+import 'edit-event.dart';
 
 class ClubPage extends StatefulWidget {
   final Club club;
@@ -577,22 +579,95 @@ class _ClubPage extends State<ClubPage> {
                                                       AppStyles.getTextPrimary(
                                                           themeNotifier
                                                               .currentMode)))),
-                                                              SizedBox(height: 32),
+                                  SizedBox(height: 32),
                                   Padding(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 32),
-                                    child: Text(
-                                      'All Events',
-                                      style: TextStyle(
-                                        color: AppStyles.getTextPrimary(
-                                            themeNotifier.currentMode),
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                              child: Text(
+                                            'All Events',
+                                            style: TextStyle(
+                                              color: AppStyles.getTextPrimary(
+                                                  themeNotifier.currentMode),
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )),
+                                          isOwner
+                                              ? InkWell(
+                                                  onTap: () => {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  AddEventPage(
+                                                                      user:
+                                                                          user,
+                                                                      club: widget
+                                                                          .club)),
+                                                        )
+                                                      },
+                                                  child: Container(
+                                                      decoration: BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: AppStyles
+                                                              .getPrimaryLight(
+                                                                  themeNotifier
+                                                                      .currentMode)),
+                                                      padding:
+                                                          EdgeInsets.all(8),
+                                                      child: Icon(Icons.add,
+                                                          color: Colors.white,
+                                                          size: 16)))
+                                              : Container(),
+                                          isOwner
+                                              ? SizedBox(width: 16)
+                                              : Container(),
+                                          isOwner
+                                              ? InkWell(
+                                                  onTap: () => {
+                                                        //Navigator.push(
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  EditEventsPage(
+                                                                    user: user,
+                                                                    events:
+                                                                        events,
+                                                                    club: widget
+                                                                        .club,
+                                                                  )),
+                                                        )
+                                                      },
+                                                  child: Container(
+                                                      decoration: BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: Colors
+                                                              .transparent),
+                                                      padding:
+                                                          EdgeInsets.all(4),
+                                                      child: Icon(Icons.edit,
+                                                          color: AppStyles
+                                                              .getPrimaryLight(
+                                                                  themeNotifier
+                                                                      .currentMode),
+                                                          size: 20)))
+                                              : Container(),
+                                        ]),
                                   ),
                                   Padding(
-                                      padding: EdgeInsets.only(left: 32, right: 32, top: 16, bottom: 16),
+                                      padding: EdgeInsets.only(
+                                          left: 32,
+                                          right: 32,
+                                          top: 16,
+                                          bottom: 16),
                                       child: Column(
                                           children: events
                                               .map((e) => CondensedEventCard(

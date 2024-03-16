@@ -7,6 +7,8 @@ import 'package:gcu_student_app/src/widgets/shared/side_scrolling/side_scrolling
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import './pages/pages.dart';
+import 'pages/add-news.dart';
+import 'pages/edit-news.dart';
 import 'widgets/events_card.dart';
 import 'widgets/main_article.dart';
 
@@ -25,6 +27,9 @@ class _EventsState extends State<EventsView> {
   List<Article> articles = [];
   late Future<List<Event>> eventsFuture;
   List<Event> events = [];
+  bool isUserAdmin = false;
+  late Future<User> userFuture;
+  User user = User(name: "", id: "", image: "assets/images/Me.png");
 
   ///////////////////////
   //Initialize State and Data
@@ -42,6 +47,9 @@ class _EventsState extends State<EventsView> {
   Future<void> fetchData() async {
     articlesFuture = EventsService().getArticles();
     articles = await articlesFuture;
+    userFuture = UserService().getUser("20692303");
+    user = await userFuture;
+    isUserAdmin = await EventsService().isUserAdmin(user);
 
     events = await eventsFuture;
 
@@ -78,15 +86,66 @@ class _EventsState extends State<EventsView> {
                       margin: const EdgeInsets.symmetric(horizontal: 32),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        child: Text(
-                          'Lopes News',
-                          style: TextStyle(
-                            color: AppStyles.getTextPrimary(
-                                themeNotifier.currentMode),
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                          Expanded(
+                          child: Text(
+                            'Lopes News',
+                            style: TextStyle(
+                              color: AppStyles.getTextPrimary(
+                                  themeNotifier.currentMode),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
                           ),
-                        ),
+                          isUserAdmin
+                              ? InkWell(
+                                  onTap: () => {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => AddNewsPage(
+                                                    user: user,
+                                                  )),
+                                        )
+                                      },
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: AppStyles.getPrimaryLight(
+                                              themeNotifier.currentMode)),
+                                      padding: EdgeInsets.all(8),
+                                      child: Icon(Icons.add,
+                                          color: Colors.white, size: 16)))
+                              : Container(),
+                          isUserAdmin ? SizedBox(width: 16) : Container(),
+                          isUserAdmin
+                              ? InkWell(
+                                  onTap: () => {
+                                        //Navigator.push(
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditNewsPage(
+                                                    user: user,
+                                                    articles: articles,
+                                                  )),
+                                        )
+                                      },
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.transparent),
+                                      padding: EdgeInsets.all(4),
+                                      child: Icon(Icons.edit,
+                                          color: AppStyles.getPrimaryLight(
+                                              themeNotifier.currentMode),
+                                          size: 20)))
+                              : Container(),
+                        ]),
                       ),
                     ),
                     SideScrollingWidget(

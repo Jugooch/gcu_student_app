@@ -346,7 +346,7 @@ class _MarketBusiness extends State<MarketBusiness> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       )),
-                                      InkWell(
+                                      widget.business.ownerId == user.id ? InkWell(
                                           onTap: () => {
                                                 Navigator.push(
                                                   context,
@@ -369,9 +369,9 @@ class _MarketBusiness extends State<MarketBusiness> {
                                               padding: EdgeInsets.all(8),
                                               child: Icon(Icons.add,
                                                   color: Colors.white,
-                                                  size: 16))),
-                                      SizedBox(width: 16),
-                                      InkWell(
+                                                  size: 16))): Container(),
+                                      widget.business.ownerId == user.id ? SizedBox(width: 16): Container(),
+                                      widget.business.ownerId == user.id ? InkWell(
                                           onTap: () => {
                                                 //Navigator.push(
                                                 Navigator.push(
@@ -393,7 +393,7 @@ class _MarketBusiness extends State<MarketBusiness> {
                                                       AppStyles.getPrimaryLight(
                                                           themeNotifier
                                                               .currentMode),
-                                                  size: 20))),
+                                                  size: 20))): Container(),
                                     ]),
 
                                 SizedBox(height: 16),
