@@ -24,14 +24,6 @@
         "categories": ["Art"]
       },
       {
-        "id": 9,
-        "name": "Sustainable Styles",
-        "description": "Eco-friendly clothing and accessories.",
-        "image": "assets/images/LipSync.jpg",
-        "ownerId": "20692303",
-        "categories": ["Clothes"]
-      },
-      {
         "id": 11,
         "name": "Study Supplies",
         "description": "All the essentials for a successful academic year.",

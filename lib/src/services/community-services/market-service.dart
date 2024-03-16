@@ -124,6 +124,23 @@ class MarketService {
       return matchesCategory && matchesSearch;
     }).toList();
   }
+
+    Future<bool> isUserAdmin(user) async {
+    try {
+      String jsonString =
+          await rootBundle.loadString('assets/data/market-admin-data.json');
+      List<dynamic> jsonList = jsonDecode(jsonString);
+
+      if (jsonList.any((e) => e['id'] == user.id)) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Error reading JSON file: $e");
+      return false;
+    }
+  }
 }
 
 class Business {

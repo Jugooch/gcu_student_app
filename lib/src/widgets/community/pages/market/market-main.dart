@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../../../../services/services.dart';
 import '../../widgets/market/categories-card.dart';
 import '../../widgets/market/featured-business-card.dart';
+import 'edit-featured.dart';
 import 'market-search.dart';
 
 class MarketPage extends StatefulWidget {
@@ -33,6 +34,7 @@ class _MarketPage extends State<MarketPage> {
   User user = User(name: "", id: "", image: "assets/images/Me.png");
   String searchQuery = ''; // To hold the search query
   late TextEditingController _searchController;
+  bool isAdmin = false;
 
   ///////////////////////
   //Initialize State and Data
@@ -62,6 +64,8 @@ class _MarketPage extends State<MarketPage> {
     businesses = await businessesFuture;
 
     featuredLopes = await MarketService().getFeaturedBusinesses();
+
+    isAdmin = await MarketService().isUserAdmin(user);
 
     setState(() {
       // Trigger a rebuild with the fetched data
@@ -149,17 +153,44 @@ class _MarketPage extends State<MarketPage> {
                                               AssetImage(user.image),
                                         ))
                                   ])),
-                          Container(
-                              margin: EdgeInsets.symmetric(horizontal: 32),
-                              child: Text(
-                                'Featured Lopes',
-                                style: TextStyle(
-                                  color: AppStyles.getTextPrimary(
-                                      themeNotifier.currentMode),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 32),
+                              child: Row(children: [
+                                Expanded(
+                                    child: Text(
+                                  'Featured Lopes',
+                                  style: TextStyle(
+                                    color: AppStyles.getTextPrimary(
+                                        themeNotifier.currentMode),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )),
+                                isAdmin
+                                    ? InkWell(
+                                        onTap: () => {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        EditFeatured(
+                                                            featured:
+                                                                featuredLopes, businesses: businesses)),
+                                              )
+                                            },
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.transparent),
+                                            padding: EdgeInsets.all(4),
+                                            child: Icon(Icons.edit,
+                                                color:
+                                                    AppStyles.getPrimaryLight(
+                                                        themeNotifier
+                                                            .currentMode),
+                                                size: 20)))
+                                    : Container()
+                              ])),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 16),
                             child: featuredLopes.isNotEmpty
