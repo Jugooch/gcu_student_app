@@ -123,6 +123,7 @@ class _EditFeatured extends State<EditFeatured> {
       'Cosmetics',
       'Other'
     ];
+    
     List<Widget> categoryButtons = categories.map((category) {
       return ElevatedButton(
         onPressed: () => selectCategory(category),
