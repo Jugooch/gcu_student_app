@@ -5,7 +5,6 @@ import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:gcu_student_app/src/widgets/shared/back-button/back-button.dart';
 import 'package:gcu_student_app/src/widgets/shared/loading/loading.dart';
 import 'package:provider/provider.dart';
-import '../../../navbar_pages.dart';
 import './widgets/card_account.dart';
 import '../../../../services/services.dart';
 
@@ -26,20 +25,26 @@ class _CardAccountsPageState extends State<CardAccountsPage> {
   ///////////////////////
   // Initialize Data
   ///////////////////////
-  @override
-  void initState() {
-    super.initState();
-    futureUserCardAccounts = UserService().getUserCardAccounts(user);
-    fetchData();
-  }
+@override
+void initState() {
+  super.initState();
+  userFuture = UserService().getUser("20692303"); // Assumes this is also async and returns a Future<User>
+  // Initialize with an empty list or some initial data that doesn't depend on the user being fetched
+  futureUserCardAccounts = Future.value([]); // Placeholder future
+
+  userFuture.then((fetchedUser) {
+    // Now that you have the user, you can set the real future for card accounts
+    setState(() {
+      user = fetchedUser;
+      futureUserCardAccounts = UserService().getUserCardAccounts(user);
+    });
+  });
+}
 
   ///////////////////////
   // Fetch User
   ///////////////////////
   Future<void> fetchData() async {
-    userFuture = UserService().getUser("20692303");
-    user = await userFuture;
-
     userCardAccounts = await futureUserCardAccounts;
 
     setState(() {
@@ -87,7 +92,7 @@ class _CardAccountsPageState extends State<CardAccountsPage> {
                       padding: EdgeInsets.only(
                           bottom: 32.0, right: 32.0, left: 32.0),
                       child: Column(
-                        children: userCardAccounts.map((cardAccount) {
+                        children: (snapshot.data != null) ? snapshot.data!.map((cardAccount) {
                           return CardAccountCard(
                               user: user,
                               account: cardAccount,
@@ -95,7 +100,7 @@ class _CardAccountsPageState extends State<CardAccountsPage> {
                               dailyBudget: cardAccount.dailyBudget,
                               currentBalance: cardAccount.currentBalance,
                               backgroundImage: cardAccount.background);
-                        }).toList(),
+                        }).toList() : []
                       ),
                     )
                   ]));
