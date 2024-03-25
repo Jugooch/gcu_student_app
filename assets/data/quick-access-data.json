@@ -2,10 +2,10 @@
     {"icon": "calendar_today_outlined", "label": "Schedule", "isIncluded": true},
     {"icon": "hourglass_empty_outlined", "label": "Hours", "isIncluded": true},
     {"icon": "map_outlined", "label": "Map", "isIncluded": true},
-    {"icon": "add_to_home_screen_outlined", "label": "Portal"},
-    {"icon": "church_outlined", "label": "Chapel"},
-    {"icon": "account_balance_wallet", "label": "Budget"},
-    {"icon": "qr_code_2_outlined", "label": "Event QR"},
-    {"icon": "settings_outlined", "label": "Settings"},
+    {"icon": "add_to_home_screen_outlined", "label": "Portal", "isIncluded": false},
+    {"icon": "church_outlined", "label": "Chapel", "isIncluded": false},
+    {"icon": "account_balance_wallet", "label": "Budget", "isIncluded": false},
+    {"icon": "qr_code_2_outlined", "label": "Event QR", "isIncluded": false},
+    {"icon": "settings_outlined", "label": "Settings", "isIncluded": false},
     {"icon": "add", "label": "", "isIncluded": true}
 ]

@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:gcu_student_app/src/app_styling.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as path;
 
 class AddEventPage extends StatefulWidget {
   final User user;
@@ -25,18 +27,16 @@ class _AddEventPageState extends State<AddEventPage> {
   String title = "";
   String location = "";
   String description = "";
-  late DateTime date;
+  DateTime date = DateTime.now();
   final ImagePicker _picker = ImagePicker();
-
 
   // This is the file that will be used to store the image
   File? _image;
 
-    @override
+  @override
   void initState() {
     super.initState();
   }
-  
 
   void updateEventTitle(String input) {
     title = input;
@@ -71,7 +71,7 @@ class _AddEventPageState extends State<AddEventPage> {
                 leading: const Icon(Icons.photo_library),
                 title: const Text('Photo Library'),
                 onTap: () {
-                  getImage(ImageSource.gallery, themeNotifier);
+                  getImage(ImageSource.gallery, themeNotifier, context);
                   Navigator.of(context).pop();
                 },
               ),
@@ -79,7 +79,7 @@ class _AddEventPageState extends State<AddEventPage> {
                 leading: const Icon(Icons.photo_camera),
                 title: const Text('Camera'),
                 onTap: () {
-                  getImage(ImageSource.camera, themeNotifier);
+                  getImage(ImageSource.camera, themeNotifier, context);
                   Navigator.of(context).pop();
                 },
               ),
@@ -101,7 +101,8 @@ class _AddEventPageState extends State<AddEventPage> {
     }
   }
 
-  Future getImage(ImageSource source, ThemeNotifier themeNotifier) async {
+  Future getImage(ImageSource source, ThemeNotifier themeNotifier,
+      BuildContext context) async {
     final pickedFile = await _picker.pickImage(source: source);
 
     if (pickedFile != null) {
@@ -219,17 +220,40 @@ class _AddEventPageState extends State<AddEventPage> {
     }
   }
 
-  createEvent() {
-    Event newEvent = Event(
-        title: title,
-        date: date,
-        description: description,
-        image: "",
-        major: false,
-        location: location,
-        clubId: widget.club.id!);
+  void createEvent() async {
+    try {
+      if (_image != null) {
+        FirebaseStorage storage = FirebaseStorage.instance;
+        String fileName = path.basename(_image!.path);
 
-    print("user editing event with title: " + newEvent.title);
+        File imageFile = File(_image!.path);
+
+        // Uploading the selected image with some custom meta data
+        TaskSnapshot snapshot = await storage.ref(fileName).putFile(imageFile);
+
+        // Retrieve the URL of the uploaded image
+        String imageUrl = await snapshot.ref.getDownloadURL();
+
+        // Use the image URL for your event object
+        Event newEvent = Event(
+          title: title,
+          date: date,
+          description: description,
+          image: imageUrl,
+          major: false,
+          location: location,
+          clubId: widget.club.id!,
+        );
+
+        print("User adding event with title: " + newEvent.title);
+        await ClubsService().addEvent(newEvent);
+      } else {
+        print("No image selected for the event");
+      }
+    } catch (e, stackTrace) {
+      print("General error in createEvent: $e");
+      print("Stack trace: $stackTrace");
+    }
   }
 
   @override
@@ -554,7 +578,7 @@ class _AddEventPageState extends State<AddEventPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Create Article',
+                                'Create Event',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 20.0),
                               ),

@@ -47,7 +47,7 @@ class _ClubCardState extends State<ClubCard> {
           child: Row(
             children: [
               CircleAvatar(
-                  backgroundImage: AssetImage(widget.club.image), radius: 24, backgroundColor: Colors.white,),
+                  backgroundImage: NetworkImage(widget.club.image), radius: 24, backgroundColor: Colors.white,),
               SizedBox(width: 8),
               Text(widget.club.name,
                     maxLines: 1,

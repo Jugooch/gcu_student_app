@@ -37,7 +37,7 @@ class _ClubInfoState extends State<ClubInfo> {
           padding: EdgeInsets.symmetric(horizontal: 32),
           child: Column(
           children: [
-            CircleAvatar(backgroundImage: AssetImage(widget.club.image), radius: 52, backgroundColor: Colors.white,),
+            CircleAvatar(backgroundImage: NetworkImage(widget.club.image), radius: 52, backgroundColor: Colors.white,),
             SizedBox(height: 8),
             Text(
               widget.club.name,

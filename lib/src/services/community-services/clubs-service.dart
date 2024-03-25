@@ -1,81 +1,78 @@
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../base-service.dart';
 import '../services.dart';
+
+final String _eventsCollection = 'events';
+final String _clubsCollection = 'clubs';
+final BaseFirestoreService _baseService = BaseFirestoreService();
 
 class ClubsService {
   Future<List<Club>> getClubs(user) async {
-    // Filter the clubs to return only those that the user has not joined
-    final String response =
-        await rootBundle.loadString('assets/data/clubs-data.json');
-    final data = json.decode(response);
-
-    // Assuming `data` represents a list of teams
-    List<Club> clubs = (data as List)
-        .map((i) => Club.fromJson(i))
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await _baseService.getCollection(_clubsCollection).get();
+    List<Club> clubs =
+        querySnapshot.docs.map((doc) => Club.fromJson(doc.data())).toList();
+    return clubs
         .where((club) => !club.members.any((member) => member.id == user.id))
         .toList();
-
-    return clubs;
   }
 
   Future<List<Club>> getUserClubs(user) async {
-    // Filter the clubs to return only those that the user has not joined
-    final String response =
-        await rootBundle.loadString('assets/data/clubs-data.json');
-    final data = json.decode(response);
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await _baseService.getCollection(_clubsCollection).get();
+    List<Club> clubs = querySnapshot.docs.map((doc) {
+      // Create a new Club object from the document data
+      var club = Club.fromJson(doc.data());
+      // Set the document ID
+      club.id = doc.id;
+      return club;
+    }).toList();
 
-    // Assuming `data` represents a list of teams
-    List<Club> clubs = (data as List)
-        .map((i) => Club.fromJson(i))
+    // Now you can use the `id` field in your comparisons or wherever needed
+    print(clubs[0].id); // Should print the document ID of the first club
+    return clubs
         .where((i) => i.members.any((member) => member.id == user.id))
         .toList();
-
-    return clubs;
   }
 
   Future<List<Event>> getClubEvents(club) async {
-// Filter the clubs to return only those that the user has not joined
-    final String response =
-        await rootBundle.loadString('assets/data/events-data.json');
-    final data = json.decode(response);
-
-    // Assuming `data` represents a list of teams
-    List<Event> events = (data as List)
-        .map((i) => Event.fromJson(i))
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await _baseService.getCollection(_eventsCollection).get();
+    List<Event> events = querySnapshot.docs
+        .map((doc) => Event.fromJson(doc.data()))
         .where((i) =>
             i.clubId == club.id &&
             (i.date.isAfter(DateTime.now()) ||
                 i.date.isAtSameMomentAs(DateTime.now())))
         .toList();
-
     return events;
+  }
+
+  Future<void> addClub(Club club) async {
+    await _baseService.addItem(_clubsCollection, club.toJson());
+  }
+
+  Future<void> addEvent(Event event) async {
+    await _baseService.addItem(_eventsCollection, event.toJson());
   }
 
   Future<List<Event>> getAllClubEvents(club) async {
-// Filter the clubs to return only those that the user has not joined
-    final String response =
-        await rootBundle.loadString('assets/data/events-data.json');
-    final data = json.decode(response);
-
-    // Assuming `data` represents a list of teams
-    List<Event> events = (data as List)
-        .map((i) => Event.fromJson(i))
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await _baseService.getCollection(_eventsCollection).get();
+    List<Event> events = querySnapshot.docs
+        .map((doc) => Event.fromJson(doc.data()))
         .where((i) => i.clubId == club.id)
         .toList();
-
     return events;
   }
 
-  // Fetch businesses by category and search query
   Future<List<Club>> getFilteredClubs(
       {String category = "All", String search = ""}) async {
-    final String response =
-        await rootBundle.loadString('assets/data/clubs-data.json');
-    final List data = json.decode(response);
-
-    return data.map((i) => Club.fromJson(i)).where((club) {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await _baseService.getCollection(_clubsCollection).get();
+    List<Club> clubs =
+        querySnapshot.docs.map((doc) => Club.fromJson(doc.data())).toList();
+    return clubs.where((club) {
       bool matchesCategory =
           club.categories.contains(category) || category == "All";
       bool matchesSearch = search.isEmpty ||
@@ -86,7 +83,7 @@ class ClubsService {
 }
 
 class Club {
-  int? id;
+  String? id;
   String name;
   String image;
   List<Member> members;
@@ -104,6 +101,17 @@ class Club {
       required this.description,
       required this.categories,
       required this.autoAccept});
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'image': image,
+        'members': members.map((member) => member.toJson()).toList(),
+        'owner': owner.toJson(),
+        'description': description,
+        'categories': categories,
+        'auto-accept-members': autoAccept,
+      };
 
   factory Club.fromJson(Map<String, dynamic> json) {
     //take in list of members from json

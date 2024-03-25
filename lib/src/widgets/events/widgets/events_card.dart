@@ -81,7 +81,7 @@ class _EventCard extends State<EventCard> {
                         .withOpacity(0.3), // Adjust opacity as needed
                     BlendMode.srcATop,
                   ),
-                  child: Image.asset(
+                  child: Image.network(
                     widget.event.image,
                     fit: BoxFit.cover,
                     ),

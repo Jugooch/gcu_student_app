@@ -62,7 +62,7 @@ class EventPage extends StatelessWidget {
                           .withOpacity(0.3),
                       BlendMode.srcATop,
                     ),
-                    child: Image.asset(
+                    child: Image.network(
                       event.image,
                       fit: BoxFit.cover,
                     ),

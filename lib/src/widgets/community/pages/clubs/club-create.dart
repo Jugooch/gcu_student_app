@@ -168,6 +168,8 @@ class _CreateClubState extends State<CreateClub> {
         categories: categories,
         autoAccept: autoAccept);
     print("user creating club with name: " + newClub.name);
+
+    ClubsService().addClub(newClub);
   }
   ///////////////////////////////////////////////////////////////////////////
 
@@ -404,61 +406,65 @@ class _CreateClubState extends State<CreateClub> {
                         ],
                       )),
                   SizedBox(height: 32),
-                  Text("Preferences",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppStyles.getTextPrimary(
-                              themeNotifier.currentMode))),
-                  SizedBox(height: 16),
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: AppStyles.getCardBackground(
-                        themeNotifier.currentMode,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppStyles.darkBlack.withOpacity(.12),
-                          spreadRadius: 0,
-                          blurRadius: 4,
-                          offset:
-                              const Offset(0, 4), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Automatically Accept Members",
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 32),
+                      child: Text("Preferences",
                           style: TextStyle(
-                            color: AppStyles.getTextPrimary(
-                              themeNotifier.currentMode,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppStyles.getTextPrimary(
+                                  themeNotifier.currentMode)))),
+                  SizedBox(height: 16),
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 32),
+                      child: Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: AppStyles.getCardBackground(
+                            themeNotifier.currentMode,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppStyles.darkBlack.withOpacity(.12),
+                              spreadRadius: 0,
+                              blurRadius: 4,
+                              offset: const Offset(
+                                  0, 4), // changes position of shadow
                             ),
-                            fontSize: 16,
-                          ),
+                          ],
                         ),
-                        Checkbox(
-                          side: BorderSide(
-                            color: AppStyles.getTextPrimary(
-                                themeNotifier.currentMode),
-                            width: 2.0,
-                          ),
-                          checkColor: Colors.white,
-                          activeColor: AppStyles.getPrimaryLight(
-                              themeNotifier.currentMode),
-                          value: autoAccept,
-                          onChanged: (bool? newValue) {
-                            updateAutoAccept(newValue);
-                          },
-                        )
-                      ],
-                    ),
-                  ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Automatically Accept Members",
+                              style: TextStyle(
+                                color: AppStyles.getTextPrimary(
+                                  themeNotifier.currentMode,
+                                ),
+                                fontSize: 16,
+                              ),
+                            ),
+                            Checkbox(
+                              side: BorderSide(
+                                color: AppStyles.getTextPrimary(
+                                    themeNotifier.currentMode),
+                                width: 2.0,
+                              ),
+                              checkColor: Colors.white,
+                              activeColor: AppStyles.getPrimaryLight(
+                                  themeNotifier.currentMode),
+                              value: autoAccept,
+                              onChanged: (bool? newValue) {
+                                updateAutoAccept(newValue);
+                              },
+                            )
+                          ],
+                        ),
+                      )),
                   SizedBox(height: 32),
                   Container(
                     margin: EdgeInsets.only(left: 32.0, right: 32, bottom: 32),

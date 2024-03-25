@@ -50,7 +50,7 @@ class _SearchClubCardState extends State<SearchClubCard> {
             children: [
               CircleAvatar(
                 backgroundColor: Colors.white,
-                  backgroundImage: AssetImage(widget.club.image),
+                  backgroundImage: NetworkImage(widget.club.image),
                   radius: 24),
               SizedBox(width: 8),
               Expanded(child: Text(widget.club.name,

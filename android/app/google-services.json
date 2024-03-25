@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "541431715977",
+    "project_id": "gcu-student-app-90280",
+    "storage_bucket": "gcu-student-app-90280.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541431715977:android:6f439021868692a2f20e58",
+        "android_client_info": {
+          "package_name": "com.example.gcu_student_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbKzGv34UIPAg0vtm_UL7H6LaP39Akaoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

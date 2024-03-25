@@ -212,6 +212,12 @@ class Member {
     required this.joinDate,
   });
 
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'join-date': joinDate
+    };
+
   factory Member.fromJson(Map<String, dynamic> json) {
     return Member(
       id: json['id'],
@@ -235,6 +241,13 @@ class Game {
       required this.result,
       required this.location});
 
+    Map<String, dynamic> toJson() => {
+        'date': date.toIso8601String(),
+        'home': home,
+        'away': away,
+        'result': result,
+        'location': location
+    };
   factory Game.fromJson(Map<String, dynamic> json) {
     return Game(
         date: DateTime.parse(json['date']),
@@ -257,6 +270,13 @@ class QuizQuestion {
     required this.choices,
     required this.answer,
   });
+
+    Map<String, dynamic> toJson() => {
+        'sport': sport,
+        'question': question,
+        'choices': choices,
+        'answer': answer
+    };
 
   factory QuizQuestion.fromJson(Map<String, dynamic> json) {
     return QuizQuestion(

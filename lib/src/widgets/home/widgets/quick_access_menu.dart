@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gcu_student_app/src/current_theme.dart';
+import 'package:gcu_student_app/src/services/user-preferences.dart';
 import 'package:gcu_student_app/src/widgets/shared/pages/pages.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../app_styling.dart';
@@ -34,6 +35,8 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
   void initState() {
     super.initState();
 
+    quickAccessItemsFuture = HomeService().getAllQuickAccessItems();
+
     fetchData();
     _shakeController = AnimationController(
       duration: const Duration(milliseconds: 50),
@@ -63,27 +66,8 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
   //Fetch Quick Access Items
 ///////////////////////
   Future<void> fetchData() async {
-    
-    // Capture the context before entering the asynchronous part
-    final currentContext = context;
-
-    try {
-      quickAccessItemsFuture = HomeService().getAllQuickAccessItems();
-      quickAccessItems = await quickAccessItemsFuture;
-      setState(() {
-        // Trigger a rebuild with the fetched data
-      });
-    } catch (error) {
-      print('Error fetching data: $error');
-      // Navigate to ErrorPage in case of an error
-      Navigator.pushReplacement(
-        currentContext,
-        MaterialPageRoute(builder: (context) => const ErrorPage()),
-      );
-    }
-    setState(() {
-      // Trigger a rebuild with the fetched data
-    });
+    quickAccessItems = await quickAccessItemsFuture;
+    setState(() {});
   }
 
 ///////////////////////
@@ -306,6 +290,7 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
           element.isSelected = false;
         }
       }
+      HomeService().saveQuickAccessItems(quickAccessItems);
       isEditButtonPressed = false;
     });
   }
@@ -355,6 +340,7 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
         var addButton = quickAccessItems.firstWhere((element) => element.label == '');
         addButton.isIncluded = true;
       }
+      HomeService().saveQuickAccessItems(quickAccessItems);
     });
   }
 
@@ -369,6 +355,7 @@ class _QuickAccessMenuState extends State<QuickAccessMenu> with TickerProviderSt
         var addButton = quickAccessItems.firstWhere((element) => element.label == '');
         addButton.isIncluded = false;
       }
+      HomeService().saveQuickAccessItems(quickAccessItems);
     });
   }
 

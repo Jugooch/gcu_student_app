@@ -1,6 +1,11 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/services.dart';
+
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final String _eventsCollection = 'events';
+  final String _newsCollection = 'news';
 
 class EventsService {
 ///////////////////////
@@ -29,6 +34,10 @@ class EventsService {
       print("Error reading JSON file: $e");
       return [];
     }
+  }
+
+  Future<void> addArticle(Map<String, dynamic> data) async {
+    await _db.collection(_newsCollection).add(data);
   }
 
   // Return all the events from the data
@@ -84,6 +93,8 @@ class EventsService {
       return false;
     }
   }
+
+
 }
 
 //Article Object
@@ -100,6 +111,15 @@ class Article {
       required this.content,
       required this.image,
       required this.date});
+
+      Map<String, dynamic> toJson() => {
+    'title': title,
+    'author': author,
+    'content': content,
+    'image': image,
+    // Convert DateTime to a string or timestamp as required
+    'date': date.toIso8601String(), // Example using ISO 8601 format
+  };
 }
 
 //Event Object
@@ -110,7 +130,7 @@ class Event {
   final String image;
   final bool major;
   final String location;
-  final int clubId;
+  final String clubId;
 
   Event(
       {required this.title,
@@ -120,6 +140,16 @@ class Event {
       required this.major,
       required this.location,
       required this.clubId});
+
+       Map<String, dynamic> toJson() => {
+    'title': title,
+    'date': date.toIso8601String(), // Serialize DateTime as a string
+    'description': description,
+    'image': image,
+    'major': major,
+    'location': location,
+    'clubId': clubId,
+  };
 
   factory Event.fromJson(Map<String, dynamic> json) {
     return Event(

@@ -59,7 +59,7 @@ class _CondensedEventCard extends State<CondensedEventCard> {
                 children: [
                   CircleAvatar(
                       radius: 24,
-                      backgroundImage: AssetImage(widget.event.image)),
+                      backgroundImage: NetworkImage(widget.event.image)),
                   SizedBox(width: 8),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
