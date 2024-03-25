@@ -10,7 +10,7 @@ A full view of the UI/UX case study can be found at this Behance link.
 
 [Behance - UI/UX Case Study](https://www.behance.net/gallery/185136569/University-Student-Application-Redesign)
 
-### Functional and non-Functional Requirements
+## Functional and non-Functional Requirements
 <details open>
   <summary>Functional Requirements</summary>
 
