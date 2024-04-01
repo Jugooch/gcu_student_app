@@ -29,7 +29,6 @@ class ClubsService {
     }).toList();
 
     // Now you can use the `id` field in your comparisons or wherever needed
-    print(clubs[0].id); // Should print the document ID of the first club
     return clubs
         .where((i) => i.members.any((member) => member.id == user.id))
         .toList();
@@ -39,11 +38,17 @@ class ClubsService {
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
         await _baseService.getCollection(_eventsCollection).get();
     List<Event> events = querySnapshot.docs
-        .map((doc) => Event.fromJson(doc.data()))
-        .where((i) =>
-            i.clubId == club.id &&
-            (i.date.isAfter(DateTime.now()) ||
-                i.date.isAtSameMomentAs(DateTime.now())))
+        .map((doc) {
+          // Create a new Event object from the document data
+          var event = Event.fromJson(doc.data());
+          // Set the document ID
+          event.id = doc.id;
+          return event;
+        })
+        .where((event) =>
+            event.clubId == club.id &&
+            (event.date.isAfter(DateTime.now()) ||
+                event.date.isAtSameMomentAs(DateTime.now())))
         .toList();
     return events;
   }
@@ -54,6 +59,14 @@ class ClubsService {
 
   Future<void> addEvent(Event event) async {
     await _baseService.addItem(_eventsCollection, event.toJson());
+  }
+
+  Future<void> removeClub(Club club) async {
+    await _baseService.deleteItem(_clubsCollection, club.id!);
+  }
+
+  Future<void> removeEvent(Event event) async {
+    await _baseService.deleteItem(_eventsCollection, event.id!);
   }
 
   Future<List<Event>> getAllClubEvents(club) async {

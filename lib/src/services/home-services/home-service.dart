@@ -86,7 +86,7 @@ class QuickAccessItem {
 
   factory QuickAccessItem.fromJson(Map<String, dynamic> json) {
     return QuickAccessItem(
-      icon: IconData(json['icon'], fontFamily: 'MaterialIcons'),
+      icon: IconData(int.parse(json['icon']), fontFamily: 'MaterialIcons'),
       label: json['label'],
       isSelected: json['isSelected'],
       isIncluded: json['isIncluded'],

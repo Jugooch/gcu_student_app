@@ -25,6 +25,7 @@ class _EditEventsPage2State extends State<EditEventsPage2> {
   String title = "";
   String location = "";
   String description = "";
+  bool repeatWeekly = false;
   late DateTime date;
   final ImagePicker _picker = ImagePicker();
 
@@ -45,6 +46,7 @@ class _EditEventsPage2State extends State<EditEventsPage2> {
     description = widget.event.description;
     _descriptionController =
         TextEditingController(text: widget.event.description);
+    repeatWeekly = widget.event.weekly;
     initializeDateTime();
   }
 
@@ -56,8 +58,6 @@ class _EditEventsPage2State extends State<EditEventsPage2> {
     selectedTime = TimeOfDay(
         hour: widget.event.date.hour, minute: widget.event.date.minute);
 
-    // If you need to perform any state updates based on these, make sure to call setState
-    // For example, to update UI elements that depend on these values
     setState(() {});
   }
 
@@ -78,6 +78,11 @@ class _EditEventsPage2State extends State<EditEventsPage2> {
 
   void updateEventDate(DateTime input) {
     date = input;
+    setState(() {});
+  }
+
+  void updateWeekly(bool? newValue) {
+    repeatWeekly = newValue!;
     setState(() {});
   }
 
@@ -250,15 +255,16 @@ class _EditEventsPage2State extends State<EditEventsPage2> {
         image: "",
         major: widget.event.major,
         location: location,
-        clubId: widget.event.clubId);
+        clubId: widget.event.clubId,
+        weekly: repeatWeekly);
 
     print("user editing event with title: " + newEvent.title);
   }
 
-    ///////////////////////////////////////////////////////////////////////////
-  ///*TODO* Update this method to actually delete an event when connected to a database**
-  ///////////////////////////////////////////////////////////////////////////
-  deleteEvent() {}
+  deleteEvent(event) {
+    print("user deleting event with title: " + event.title);
+    ClubsService().removeEvent(event);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -291,71 +297,71 @@ class _EditEventsPage2State extends State<EditEventsPage2> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                      margin: EdgeInsets.all(16),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomBackButton(),
-                            InkWell(
-                                onTap: () => {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: Text("Delete Product",
+                  margin: EdgeInsets.all(16),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomBackButton(),
+                        InkWell(
+                            onTap: () => {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Delete Product",
+                                            style: TextStyle(
+                                                color: AppStyles.getTextPrimary(
+                                                    themeNotifier
+                                                        .currentMode))),
+                                        backgroundColor:
+                                            AppStyles.getCardBackground(
+                                                themeNotifier.currentMode),
+                                        content: Text(
+                                            "Are you sure you want to delete this event?",
+                                            style: TextStyle(
+                                                color: AppStyles.getTextPrimary(
+                                                    themeNotifier
+                                                        .currentMode))),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context)
+                                                  .pop(); // Close the dialog
+                                            },
+                                            child: Text("Cancel",
                                                 style: TextStyle(
                                                     color: AppStyles
-                                                        .getTextPrimary(
+                                                        .getPrimaryLight(
                                                             themeNotifier
                                                                 .currentMode))),
-                                            backgroundColor:
-                                                AppStyles.getCardBackground(
-                                                    themeNotifier.currentMode),
-                                            content: Text(
-                                                "Are you sure you want to delete this product?",
-                                                style: TextStyle(
-                                                    color: AppStyles
-                                                        .getTextPrimary(
-                                                            themeNotifier
-                                                                .currentMode))),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context)
-                                                      .pop(); // Close the dialog
-                                                },
-                                                child: Text("Cancel",
-                                                    style: TextStyle(
-                                                        color: AppStyles
-                                                            .getPrimaryLight(
-                                                                themeNotifier
-                                                                    .currentMode))),
+                                          ),
+                                          TextButton(
+                                            style: TextButton.styleFrom(
+                                              backgroundColor: Colors
+                                                  .red, // Red background color
+                                            ),
+                                            onPressed: () {
+                                              deleteEvent(widget.event);
+                                              Navigator.of(context)
+                                                  .pop();
+                                              Navigator.of(context)
+                                                  .pop();
+                                            },
+                                            child: Text(
+                                              "Yes, Delete",
+                                              style: TextStyle(
+                                                color: Colors.white,
                                               ),
-                                              TextButton(
-                                                style: TextButton.styleFrom(
-                                                  backgroundColor: Colors
-                                                      .red, // Red background color
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.of(context)
-                                                      .pop(); // Close the dialog
-                                                  deleteEvent();
-                                                },
-                                                child: Text(
-                                                  "Yes, Delete",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      )
+                                            ),
+                                          ),
+                                        ],
+                                      );
                                     },
-                                child: Icon(Icons.delete_forever,
-                                    color: Colors.red, size: 32))
-                          ])),
+                                  )
+                                },
+                            child: Icon(Icons.delete_forever,
+                                color: Colors.red, size: 32))
+                      ])),
               Padding(
                   padding: EdgeInsets.all(32.0),
                   child: Column(
@@ -575,6 +581,55 @@ class _EditEventsPage2State extends State<EditEventsPage2> {
                           ),
                         ),
                         onChanged: updateEventDescription,
+                      ),
+                      SizedBox(height: 32),
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: AppStyles.getCardBackground(
+                            themeNotifier.currentMode,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppStyles.darkBlack.withOpacity(.12),
+                              spreadRadius: 0,
+                              blurRadius: 4,
+                              offset: const Offset(
+                                  0, 4), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Repeat Weekly?",
+                              style: TextStyle(
+                                color: AppStyles.getTextPrimary(
+                                  themeNotifier.currentMode,
+                                ),
+                                fontSize: 16,
+                              ),
+                            ),
+                            Checkbox(
+                              side: BorderSide(
+                                color: AppStyles.getTextPrimary(
+                                    themeNotifier.currentMode),
+                                width: 2.0,
+                              ),
+                              checkColor: Colors.white,
+                              activeColor: AppStyles.getPrimaryLight(
+                                  themeNotifier.currentMode),
+                              value: repeatWeekly,
+                              onChanged: (bool? newValue) {
+                                updateWeekly(newValue);
+                              },
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(height: 32),
                       Container(

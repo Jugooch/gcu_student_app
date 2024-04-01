@@ -124,6 +124,7 @@ class Article {
 
 //Event Object
 class Event {
+  String? id;
   final String title;
   final DateTime date;
   final String description;
@@ -131,17 +132,22 @@ class Event {
   final bool major;
   final String location;
   final String clubId;
+  bool weekly;
 
   Event(
-      {required this.title,
+      {
+      this.id,
+      required this.title,
       required this.date,
       required this.description,
       required this.image,
       required this.major,
       required this.location,
-      required this.clubId});
+      required this.clubId,
+      required this.weekly});
 
        Map<String, dynamic> toJson() => {
+    'id': id, // Add id to the JSON output if it's not null
     'title': title,
     'date': date.toIso8601String(), // Serialize DateTime as a string
     'description': description,
@@ -149,16 +155,19 @@ class Event {
     'major': major,
     'location': location,
     'clubId': clubId,
+    'weekly': weekly,
   };
 
   factory Event.fromJson(Map<String, dynamic> json) {
     return Event(
+        id: json['id'],
         title: json['title'],
         date: DateTime.parse(json['date']),
         description: json['description'],
         image: json['image'],
         major: json['major'],
         location: json['location'],
-        clubId: json['clubId']);
+        clubId: json['clubId'],
+        weekly: json['weekly']);
   }
 }

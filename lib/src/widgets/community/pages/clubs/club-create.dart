@@ -152,10 +152,7 @@ class _CreateClubState extends State<CreateClub> {
       );
     }
   }
-
-  ///////////////////////////////////////////////////////////////////////////
-  ///*TODO* Update this method to actually create a club when connected to a database
-  ///////////////////////////////////////////////////////////////////////////
+  
   createClub() {
     Member newMember = Member(
         id: widget.user.id, name: widget.user.name, joinDate: DateTime.now());

@@ -27,6 +27,7 @@ class _AddEventPageState extends State<AddEventPage> {
   String title = "";
   String location = "";
   String description = "";
+  bool repeatWeekly = false;
   DateTime date = DateTime.now();
   final ImagePicker _picker = ImagePicker();
 
@@ -55,6 +56,11 @@ class _AddEventPageState extends State<AddEventPage> {
 
   void updateEventDate(DateTime input) {
     date = input;
+    setState(() {});
+  }
+
+  void updateWeekly(bool? newValue) {
+    repeatWeekly = newValue!;
     setState(() {});
   }
 
@@ -184,6 +190,14 @@ class _AddEventPageState extends State<AddEventPage> {
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
+        // Combine selectedDate and selectedTime into a single DateTime object
+        date = DateTime(
+          selectedDate.year,
+          selectedDate.month,
+          selectedDate.day,
+          selectedTime.hour,
+          selectedTime.minute,
+        );
       });
     }
   }
@@ -216,6 +230,14 @@ class _AddEventPageState extends State<AddEventPage> {
     if (picked != null && picked != selectedTime) {
       setState(() {
         selectedTime = picked;
+        // Update the date variable to reflect the new time
+        date = DateTime(
+          selectedDate.year,
+          selectedDate.month,
+          selectedDate.day,
+          selectedTime.hour,
+          selectedTime.minute,
+        );
       });
     }
   }
@@ -226,26 +248,26 @@ class _AddEventPageState extends State<AddEventPage> {
         FirebaseStorage storage = FirebaseStorage.instance;
         String fileName = path.basename(_image!.path);
 
-        File imageFile = File(_image!.path);
+        Reference ref = storage.ref().child("Events/" + fileName);
+        UploadTask uploadTask = ref.putFile(_image!);
 
         // Uploading the selected image with some custom meta data
-        TaskSnapshot snapshot = await storage.ref(fileName).putFile(imageFile);
+        TaskSnapshot snapshot = await uploadTask;
 
-        // Retrieve the URL of the uploaded image
+        // Awaiting the download URL
         String imageUrl = await snapshot.ref.getDownloadURL();
 
         // Use the image URL for your event object
         Event newEvent = Event(
-          title: title,
-          date: date,
-          description: description,
-          image: imageUrl,
-          major: false,
-          location: location,
-          clubId: widget.club.id!,
-        );
+            title: title,
+            date: date,
+            description: description,
+            image: imageUrl,
+            major: false,
+            location: location,
+            clubId: widget.club.id!,
+            weekly: repeatWeekly);
 
-        print("User adding event with title: " + newEvent.title);
         await ClubsService().addEvent(newEvent);
       } else {
         print("No image selected for the event");
@@ -410,7 +432,7 @@ class _AddEventPageState extends State<AddEventPage> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                        onChanged: updateEventTitle,
+                        onChanged: updateEventLocation,
                       ),
                       SizedBox(height: 32),
                       Text("Event Image",
@@ -503,6 +525,55 @@ class _AddEventPageState extends State<AddEventPage> {
                           ),
                         ),
                         onChanged: updateEventDescription,
+                      ),
+                      SizedBox(height: 32),
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: AppStyles.getCardBackground(
+                            themeNotifier.currentMode,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppStyles.darkBlack.withOpacity(.12),
+                              spreadRadius: 0,
+                              blurRadius: 4,
+                              offset: const Offset(
+                                  0, 4), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Repeat Weekly?",
+                              style: TextStyle(
+                                color: AppStyles.getTextPrimary(
+                                  themeNotifier.currentMode,
+                                ),
+                                fontSize: 16,
+                              ),
+                            ),
+                            Checkbox(
+                              side: BorderSide(
+                                color: AppStyles.getTextPrimary(
+                                    themeNotifier.currentMode),
+                                width: 2.0,
+                              ),
+                              checkColor: Colors.white,
+                              activeColor: AppStyles.getPrimaryLight(
+                                  themeNotifier.currentMode),
+                              value: repeatWeekly,
+                              onChanged: (bool? newValue) {
+                                updateWeekly(newValue);
+                              },
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(height: 32),
                       Container(
